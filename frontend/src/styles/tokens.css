@@ -1,0 +1,38 @@
+/* 디자인 규칙 (색·글자·간격). 담당: 김태건
+   다른 파일에서는 색이나 크기를 직접 쓰지 말고 var(--이름)으로 가져다 쓴다. */
+:root {
+  /* 색 — 글자/배경 대비 4.5:1 이상 유지 */
+  --color-bg: #fffaf5;
+  --color-surface: #ffffff;
+  --color-text: #222222;
+  --color-text-muted: #5c5c5c;
+  --color-border: #e6ddd3;
+  --color-primary: #c2410c;
+  --color-primary-hover: #9a3412;
+  --color-on-primary: #ffffff;
+  --color-star: #b45309;
+  --color-star-empty: #d6d3d1;
+  --color-danger: #b91c1c;
+  --color-danger-bg: #fef2f2;
+  --color-success: #15803d;
+  --color-focus: #2563eb;
+
+  /* 글자 */
+  --font-family: 'Pretendard', 'Noto Sans KR', system-ui, sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.75rem;
+
+  /* 간격 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  --radius: 12px;
+  --radius-pill: 999px;
+  --content-width: 800px;
+}
