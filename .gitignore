@@ -6,11 +6,12 @@ dist/
 .env.*
 !.env.example
 
-# Spring
-backend/build/
-backend/.gradle/
-backend/target/
-backend/out/
+# Python (FastAPI)
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.db
 
 # OS / IDE
 .DS_Store
