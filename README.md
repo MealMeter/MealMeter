@@ -12,7 +12,22 @@ npm run dev        # http://localhost:5173
 ```
 
 - 처음에는 **가짜 데이터**로 동작해요 (`src/api/mock.js`). 서버 없이도 모든 화면을 눌러 볼 수 있어요.
-- Spring 서버(`localhost:8080`)에 연결하려면 `frontend/.env.example`을 `frontend/.env.local`로 복사하고 `VITE_USE_MOCK=false`로 바꾼 뒤 `npm run dev`를 다시 켜요. `/api` 요청은 Vite proxy가 서버로 넘겨 줘요.
+- 백엔드 서버(`localhost:8080`)에 연결하려면 `frontend/.env.example`을 `frontend/.env.local`로 복사하고 `VITE_USE_MOCK=false`로 바꾼 뒤 `npm run dev`를 다시 켜요. `/api` 요청은 Vite proxy가 서버로 넘겨 줘요.
+
+## 실행 방법 (백엔드, FastAPI)
+
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8080
+```
+
+- API 문서: http://localhost:8080/docs (여기서 바로 눌러 볼 수 있어요)
+- 테스트: `pytest`
+- 오늘 메뉴는 나이스 급식 API에서 가져와 SQLite(`backend/mealmeter.db`)에 저장해요.
+- 설정은 `backend/.env.example`을 `backend/.env`로 복사해서 바꿔요. 주말처럼 급식이 없는 날 시연하려면 `MEALMETER_TODAY=2026-10-19`처럼 날짜를 고정해요.
 
 ## 폴더와 담당
 
