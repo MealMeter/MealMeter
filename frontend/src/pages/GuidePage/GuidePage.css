@@ -1,0 +1,10 @@
+/* 이용 안내 페이지 전용 스타일. 담당: 조현우 */
+.guide-page ol,
+.guide-page ul {
+  padding-left: var(--space-6);
+  margin: 0 0 var(--space-6);
+}
+
+.guide-page li + li {
+  margin-top: var(--space-2);
+}
