@@ -1,4 +1,4 @@
-"""평균 별점·태그 집계 도우미."""
+"""역할: 평균 별점·대표 태그 집계 도우미 (메뉴 상세와 인기 순위에서 같이 쓴다)."""
 from collections import Counter
 from typing import Dict, Iterable, List
 

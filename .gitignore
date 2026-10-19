@@ -1,3 +1,5 @@
+# 역할: 깃에 올리지 않을 파일 목록 (설치 폴더, 빌드 결과, 비밀 설정 .env, DB 파일 등)
+
 # Node / Vite
 node_modules/
 dist/

@@ -1,4 +1,4 @@
-"""화면과 주고받는 값의 모양 (명세서 5장). JSON 키는 camelCase로 나간다 (menu_id → menuId)."""
+"""역할: 화면과 주고받는 값의 모양 (명세서 5장). JSON 키는 camelCase로 나간다 (menu_id → menuId)."""
 from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict

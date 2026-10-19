@@ -1,4 +1,4 @@
-"""SQLite 저장소. 서버를 켜면 표가 없을 때 자동으로 만든다."""
+"""역할: SQLite 저장소 (menus·fetched_meals·reviews 표 정의와 DB 연결). 서버를 켜면 표가 없을 때 자동으로 만든다."""
 import sqlite3
 from contextlib import contextmanager
 

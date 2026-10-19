@@ -1,4 +1,4 @@
-"""설정값. 환경 변수(.env)로 바꿀 수 있다."""
+"""역할: 서버 설정값 모음 (나이스 학교 코드·인증키, DB 파일 위치, 오늘 날짜). backend/.env로 바꿀 수 있다."""
 import os
 from datetime import date, datetime
 from pathlib import Path

@@ -1,4 +1,4 @@
-"""API 명세(5장)대로 동작하는지 확인. 나이스는 가짜로 바꿔서 인터넷 없이 돈다."""
+"""역할: API 테스트. 명세서 5장대로 동작하는지 확인한다. 나이스는 가짜로 바꿔서 인터넷 없이 돈다. 실행: pytest"""
 from datetime import date
 
 import pytest

@@ -1,4 +1,4 @@
-"""4. 인기 순위 조회"""
+"""역할: 순위 API — 4. 인기 순위 조회 (GET /api/ranking). 같은 이름 메뉴를 합쳐 평균 별점 높은 순으로 정렬한다."""
 from collections import defaultdict
 
 from fastapi import APIRouter

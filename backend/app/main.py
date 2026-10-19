@@ -1,4 +1,5 @@
-"""MealMeter API 서버. 실행: uvicorn app.main:app --reload --port 8080"""
+"""역할: MealMeter API 서버의 시작점. 라우터 3개를 붙이고, 모든 오류를 { "message": ... } 모양으로 바꾼다.
+실행: uvicorn app.main:app --reload --port 8080"""
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request

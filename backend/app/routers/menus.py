@@ -1,4 +1,5 @@
-"""1. 오늘의 메뉴 조회 / 2. 메뉴별 평가 목록 조회"""
+"""역할: 메뉴 API — 1. 오늘의 메뉴 조회 (GET /api/menus/today) / 2. 메뉴별 평가 목록 조회 (GET /api/menus/{menuId}/reviews)
+오늘 메뉴가 DB에 없으면 나이스에서 가져와 저장한다."""
 from datetime import date
 
 from fastapi import APIRouter, HTTPException, Query

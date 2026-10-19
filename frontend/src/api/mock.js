@@ -1,4 +1,4 @@
-// 서버가 준비되기 전에 쓰는 가짜 서버. 진짜 서버와 같은 모양의 값을 돌려준다.
+// 역할: 서버가 준비되기 전에 쓰는 가짜 서버. 진짜 서버와 같은 모양의 값을 돌려준다.
 // 새로고침하면 등록한 평가는 사라진다.
 import { HYGIENE_FIELD, HYGIENE_PROBLEM, MEAL_TYPES, TAG_FIELDS } from './reviewFields.js';
 

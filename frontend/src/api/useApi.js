@@ -1,4 +1,4 @@
-// 페이지에서 서버 데이터를 불러올 때 쓰는 훅.
+// 역할: 페이지에서 서버 데이터를 불러올 때 쓰는 훅 (불러오는 중 / 오류 / 데이터 상태 관리).
 // const { data, loading, error, setData, reload } = useApi(() => getRanking(), []);
 import { useCallback, useEffect, useState } from 'react';
 

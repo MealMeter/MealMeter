@@ -1,4 +1,4 @@
-"""나이스 급식 API에서 메뉴 이름 목록을 가져온다."""
+"""역할: 나이스 급식 API에서 그날 메뉴 이름 목록을 가져온다 (알레르기 번호·특수 표시는 지운다)."""
 import re
 from datetime import date
 from typing import List

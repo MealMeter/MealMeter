@@ -1,4 +1,4 @@
-"""3. 평가 등록"""
+"""역할: 평가 API — 3. 평가 등록 (POST /api/reviews). 별점·태그·글자 수·금칙어를 검사하고 한국어 오류 메시지를 보낸다."""
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, HTTPException
