@@ -1,0 +1,159 @@
+/* 메뉴 상세 페이지 전용 스타일. 담당: 박준호 */
+.menu-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.menu-detail > section,
+.menu-detail > form {
+  width: 100%;
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.review-form fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.review-form legend {
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.star-input__stars {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.star-input__star {
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--color-star-empty);
+  cursor: pointer;
+}
+
+.star-input__star--on {
+  color: var(--color-star);
+}
+
+.star-input__star:has(input:focus-visible) {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.star-input__value {
+  margin-left: var(--space-2);
+  font-weight: 700;
+}
+
+.review-form__tags {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+.tag-selector__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tag-selector__option {
+  min-height: 40px;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.tag-selector__option[aria-pressed='true'] {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 700;
+}
+
+.review-form__hygiene {
+  padding: var(--space-3);
+  border: 2px solid var(--color-danger);
+  border-radius: var(--radius);
+  background: var(--color-danger-bg);
+}
+
+.tag-selector--warning legend {
+  color: var(--color-danger);
+}
+
+.review-form__comment label {
+  font-weight: 700;
+}
+
+.review-form__comment p {
+  margin: var(--space-1) 0;
+}
+
+.review-form__comment textarea {
+  width: 100%;
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font: inherit;
+}
+
+.review-form__count {
+  text-align: right;
+  font-size: var(--font-size-sm);
+}
+
+.review-form__error,
+.review-form__success {
+  margin: 0;
+  font-weight: 700;
+}
+
+.review-form__error {
+  color: var(--color-danger);
+}
+
+.review-form__success {
+  color: var(--color-success);
+}
+
+.review-list ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.review-list__head {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.review-list__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+
+.review-list__item p {
+  margin: var(--space-2) 0 0;
+}
