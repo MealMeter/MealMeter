@@ -1,0 +1,379 @@
+/* 역할: 모든 페이지가 같이 쓰는 스타일. 모든 HTML이 이 파일 하나를 불러온다.
+   1) 전체 기본 스타일 (담당: 김태건)
+   2) 공통 틀: 헤더·본문·푸터·건너뛰기 링크 (담당: 박준호)
+   3) 공통 UI 부품: 버튼·카드·별점·태그 배지 (담당: 김태건)
+   4) 상태 표시: 불러오는 중·오류·빈 화면 (담당: 김근영) */
+
+@import url("./tokens.css");
+
+/* ================= 1) 전체 기본 스타일 (김태건) ================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-title);
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: var(--font-size-title);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--color-accent-strong);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* 키보드(Tab)로 이동할 때 지금 어디 있는지 파란 테두리로 보여 준다 (접근성) */
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.muted {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sub);
+}
+
+.small {
+  font-size: var(--font-size-small);
+}
+
+/* 화면에는 안 보이지만 화면 낭독기는 읽는 글자 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ================= 2) 공통 틀 (박준호) ================= */
+
+/* 본문 건너뛰기 링크: 평소에는 화면 위쪽 밖에 숨어 있다가, Tab으로 포커스를 받으면 내려온다 */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-3);
+  z-index: 10;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-accent-strong);
+  color: var(--color-surface);
+  border-radius: var(--radius-button);
+}
+
+.skip-link:focus {
+  top: var(--space-3);
+}
+
+.site-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-header__inner {
+  display: flex;
+  flex-wrap: wrap; /* 화면이 좁으면 메뉴가 다음 줄로 내려간다 */
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-4);
+}
+
+.site-header__logo {
+  font-family: var(--font-title);
+  font-size: 24px;
+  color: var(--color-accent-strong);
+}
+
+.site-header__logo:hover {
+  text-decoration: none;
+}
+
+.site-header__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-header__link {
+  display: inline-block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-button);
+  color: var(--color-text);
+}
+
+.site-header__link:hover {
+  background: var(--color-accent-soft);
+  text-decoration: none;
+}
+
+/* 지금 보고 있는 페이지 링크. 색만으로 구분하지 않도록 굵은 글씨 + 밑줄도 함께 쓴다 */
+.site-header__link[aria-current="page"] {
+  font-weight: 700;
+  color: var(--color-accent-strong);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.site-main {
+  width: 100%;
+  max-width: var(--content-width);
+  min-height: calc(100vh - 160px); /* 내용이 짧아도 푸터가 아래쪽에 있게 */
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4);
+}
+
+/* 건너뛰기 링크로 본문에 포커스가 와도 테두리는 그리지 않는다 (누를 수 있는 요소가 아니라서) */
+.site-main:focus {
+  outline: none;
+}
+
+.site-footer {
+  padding: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-small);
+}
+
+/* 페이지 맨 위 "← 돌아가기" 같은 작은 링크 */
+.back-link {
+  display: inline-block;
+  margin-bottom: var(--space-3);
+  font-size: var(--font-size-small);
+}
+
+/* ================= 3) 공통 UI 부품 (김태건) ================= */
+
+/* 버튼: <button class="btn btn--primary"> 또는 <a class="btn btn--secondary" href="..."> */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-button);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: 700;
+  line-height: 1.4;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, opacity 0.15s;
+}
+
+.btn:hover {
+  text-decoration: none;
+}
+
+/* 채워진 주 버튼 (평가 등록). 흰 글자 대비 4.5:1을 넘기려고 진한 주황(accent-strong)을 쓴다 */
+.btn--primary {
+  background: var(--color-accent-strong);
+  color: var(--color-surface);
+}
+.btn--primary:hover {
+  background: var(--color-text);
+}
+
+/* 테두리 버튼 (전체 순위) */
+.btn--secondary {
+  background: var(--color-surface);
+  border-color: var(--color-accent);
+  color: var(--color-accent-strong);
+}
+.btn--secondary:hover {
+  background: var(--color-accent-soft);
+}
+
+/* 위험/신고 버튼 (위생 문제 제보) */
+.btn--danger {
+  background: var(--color-surface);
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+.btn--danger:hover {
+  background: var(--color-danger-soft);
+}
+
+/* 비활성 (비활성 버튼은 호버 효과 없음) */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn--primary:disabled:hover {
+  background: var(--color-accent-strong);
+}
+.btn--secondary:disabled:hover,
+.btn--danger:disabled:hover {
+  background: var(--color-surface);
+}
+
+/* 카드 틀 (흰 배경 + 테두리). 메뉴 카드, 평가 카드 등에 쓴다 */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+  color: var(--color-text);
+}
+
+/* 별점 표시 (읽기 전용) → js/common/ui.js의 starRatingHtml() */
+.star-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.star-rating__stars {
+  letter-spacing: 2px;
+}
+
+.star-rating__star {
+  color: var(--color-border-input);
+}
+
+.star-rating__star.is-filled {
+  color: var(--color-star);
+}
+
+.star-rating__value {
+  font-size: var(--font-size-small);
+  color: var(--color-text);
+}
+
+/* 태그 배지 → js/common/ui.js의 tagBadgeHtml() */
+.tag-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border-input);
+  border-radius: var(--radius-chip);
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-small);
+  white-space: nowrap;
+}
+
+/* 위생 "문제 있음" 같은 경고 배지. 색 + 느낌표 + 굵은 글씨로 함께 구분한다 */
+.tag-badge--warning {
+  border-color: var(--color-danger);
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+  font-weight: 700;
+}
+
+/* ================= 4) 상태 표시 (김근영) ================= */
+/* → js/common/state.js의 renderLoading / renderError / renderEmpty */
+
+.state-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.state-box--error {
+  border-color: var(--color-danger);
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+/* 폼 안에 들어가는 작은 오류 상자 */
+.state-box--inline {
+  flex-direction: row;
+  justify-content: center;
+  padding: var(--space-3) var(--space-4);
+}
+
+.state-box__icon {
+  font-size: 32px;
+  line-height: 1;
+}
+
+/* 빙글빙글 도는 불러오는 중 표시 */
+.state-box__spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: state-spin 0.8s linear infinite;
+}
+
+@keyframes state-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* "움직임 줄이기"를 켠 사용자에게는 돌지 않게 한다 (접근성) */
+@media (prefers-reduced-motion: reduce) {
+  .state-box__spinner {
+    animation: none;
+  }
+}

@@ -1,15 +1,42 @@
 <!doctype html>
-<!-- 역할: 브라우저가 처음 여는 HTML. #root 자리에 src/main.jsx가 React 화면을 그린다. -->
+<!-- 역할: 메인 페이지 (/) — 오늘의 메뉴 목록 (명세서 3장 기능 1). 담당: 김태건
+     화면 틀만 여기 있고, 메뉴 카드는 js/pages/main.js가 서버 데이터를 받아 채운다. -->
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#fffaf5" />
+    <meta name="theme-color" content="#fff9f4" />
     <meta name="description" content="오늘 급식을 평가하고 더 나은 메뉴를 함께 만들어요." />
-    <title>MealMeter</title>
+    <title>오늘의 메뉴 · MealMeter</title>
+    <!-- 글꼴: 제목은 Jua, 본문은 Pretendard -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <!-- 스타일: 공통(base.css) + 이 페이지 전용(main.css) -->
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/main.css" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <!-- 헤더는 layout.js가 이 위에 넣어 준다 -->
+    <main id="main" class="site-main" tabindex="-1">
+      <div class="main-page">
+        <header class="main-page__head">
+          <h1>오늘의 메뉴</h1>
+          <!-- 날짜와 식사 구분 (main.js가 채운다) -->
+          <span class="muted" id="main-date"></span>
+        </header>
+
+        <!-- 불러오는 중 / 오류 / 메뉴 카드 목록이 이 자리에 들어간다 -->
+        <section id="main-menus" aria-label="오늘 급식 메뉴"></section>
+
+        <p class="main-page__footer muted small">
+          메뉴 정보는 나이스 교육정보 개방 포털의 대덕소프트웨어마이스터고 급식 정보를 따릅니다.
+        </p>
+      </div>
+    </main>
+
+    <!-- type="module": import/export를 쓸 수 있게 한다. 위에서부터 순서대로 실행된다 -->
+    <script type="module" src="/js/common/layout.js"></script>
+    <script type="module" src="/js/pages/main.js"></script>
   </body>
 </html>
