@@ -1,1 +1,105 @@
 /* 역할: 공통 틀 스타일 (.site-header, .site-main, .site-footer, .skip-link). 담당: 박준호 */
+/* var(--이름, 기본값): tokens.css(김태건)에 값이 생기면 그 값을 쓰고, 아직 없으면 쉼표 뒤 기본값을 쓴다. */
+
+.site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ---------- 본문 건너뛰기 링크 ---------- */
+/* 평소에는 화면 위쪽 밖에 숨어 있다가, Tab으로 포커스를 받으면 내려온다 */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-3, 12px);
+  z-index: 10;
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  background: var(--color-primary, #c2410c);
+  color: var(--color-on-primary, #ffffff);
+  border-radius: var(--radius-md, 8px);
+}
+
+.skip-link:focus {
+  top: var(--space-3, 12px);
+}
+
+/* ---------- 헤더 ---------- */
+.site-header {
+  background: var(--color-surface, #ffffff);
+  border-bottom: 1px solid var(--color-border, #e7e0d8);
+}
+
+.site-header__inner {
+  display: flex;
+  flex-wrap: wrap; /* 화면이 좁으면 메뉴가 다음 줄로 내려간다 */
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3, 12px);
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+}
+
+.site-header__logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary, #c2410c);
+  text-decoration: none;
+}
+
+.site-header__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1, 4px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-header__link {
+  display: inline-block;
+  padding: var(--space-2, 8px) var(--space-3, 12px);
+  border-radius: var(--radius-md, 8px);
+  color: var(--color-text, #2b2118);
+  text-decoration: none;
+}
+
+.site-header__link:hover {
+  background: var(--color-surface-muted, #f5efe8);
+}
+
+/* 지금 보고 있는 페이지 링크. 색만으로 구분하지 않도록 굵은 글씨 + 밑줄도 함께 쓴다 */
+.site-header__link[aria-current='page'] {
+  font-weight: 700;
+  color: var(--color-primary, #c2410c);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------- 본문 ---------- */
+.site-main {
+  flex: 1; /* 내용이 짧아도 푸터가 화면 맨 아래에 붙게 한다 */
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-5, 24px) var(--space-4, 16px);
+}
+
+/* 건너뛰기 링크로 본문에 포커스가 와도 테두리는 그리지 않는다 (클릭할 수 있는 요소가 아니라서) */
+.site-main:focus {
+  outline: none;
+}
+
+/* ---------- 푸터 ---------- */
+.site-footer {
+  padding: var(--space-4, 16px);
+  border-top: 1px solid var(--color-border, #e7e0d8);
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--color-text-muted, #6b5d50);
+}
+
+.site-footer p {
+  margin: 0;
+}
