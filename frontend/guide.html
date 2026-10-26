@@ -1,0 +1,83 @@
+<!doctype html>
+<!-- 역할: 이용 안내 페이지 (guide.html). 서버를 부르지 않는 정적 페이지로,
+     평가 방법과 의견이 급식 개선으로 이어지는 과정을 설명한다. 담당: 김근영 -->
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fff9f4" />
+    <title>이용 안내 · MealMeter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/guide.css" />
+  </head>
+  <body>
+    <main id="main" class="site-main" tabindex="-1">
+      <div class="guide-page">
+        <header class="guide-page__head">
+          <h1>이용 안내</h1>
+          <p class="muted">MealMeter는 로그인 없이, 이름을 남기지 않고 급식을 평가하는 서비스예요.</p>
+        </header>
+
+        <section class="card guide-page__section" aria-labelledby="guide-why">
+          <h2 id="guide-why">왜 평가해야 하나요?</h2>
+          <p>
+            급식에 대한 불만은 말로만 오가고 어디에도 쌓이지 않아요. 양이 부족한 건 예산으로 풀 수 있지만,
+            맛과 품질은 <strong>평가 데이터</strong>가 있어야 고칠 수 있어요. 여러분이 남긴 별점과 태그가
+            모이면 어떤 메뉴가 왜 아쉬웠는지 숫자로 보여 줄 수 있어요.
+          </p>
+        </section>
+
+        <section class="card guide-page__section" aria-labelledby="guide-how">
+          <h2 id="guide-how">평가하는 방법</h2>
+          <ol class="guide-page__steps">
+            <li><strong>오늘의 메뉴</strong>에서 평가할 메뉴의 "평가하기" 버튼을 눌러요.</li>
+            <li><strong>별점(1~5점)</strong>을 골라요. 별점은 꼭 골라야 등록할 수 있어요.</li>
+            <li>원하면 <strong>항목별 태그</strong>를 골라요. 같은 태그를 다시 누르면 취소돼요.</li>
+            <li>하고 싶은 말이 있으면 <strong>의견</strong>을 100자까지 써요. (선택)</li>
+            <li><strong>평가 등록</strong>을 누르면 바로 평가 목록 맨 위에 보여요.</li>
+          </ol>
+        </section>
+
+        <section class="card guide-page__section" aria-labelledby="guide-tags">
+          <h2 id="guide-tags">태그 설명</h2>
+          <dl class="guide-page__tags">
+            <div><dt>간</dt><dd>짜다 / 적당 / 싱겁다</dd></div>
+            <div><dt>양</dt><dd>많다 / 적당 / 적다</dd></div>
+            <div><dt>온도</dt><dd>뜨겁다 / 적당 / 차갑다</dd></div>
+            <div><dt>식감</dt><dd>무름 / 적당 / 딱딱</dd></div>
+            <div class="guide-page__tag--warning">
+              <dt>위생</dt>
+              <dd>문제 있음 / 없음 — 이물질이 나왔거나 상한 것 같을 때 골라 주세요. 다른 태그와 달리 눈에 띄게 표시돼요.</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="card guide-page__section" aria-labelledby="guide-ranking">
+          <h2 id="guide-ranking">인기 순위는 어떻게 정하나요?</h2>
+          <p>
+            지금까지 쌓인 평가의 <strong>평균 별점이 높은 순서</strong>로 보여 줘요.
+            같은 메뉴가 다른 날 또 나오면 메뉴 이름을 기준으로 하나로 합쳐서 계산해요.
+          </p>
+        </section>
+
+        <section class="card guide-page__section" aria-labelledby="guide-rules">
+          <h2 id="guide-rules">지켜 주세요</h2>
+          <ul class="guide-page__list">
+            <li>메뉴에 대한 의견만 써 주세요. 특정인(조리원, 친구 등)을 향한 글은 삼가 주세요.</li>
+            <li>욕설이나 비방 표현이 들어간 의견은 등록되지 않아요.</li>
+            <li>로그인이 없어서 같은 사람이 여러 번 평가하는 걸 막지 못해요. 한 메뉴에 한 번만 솔직하게 평가해 주세요.</li>
+          </ul>
+        </section>
+
+        <p class="guide-page__cta">
+          <a class="btn btn--primary" href="/">오늘의 메뉴 평가하러 가기</a>
+        </p>
+      </div>
+    </main>
+
+    <script type="module" src="/js/common/layout.js"></script>
+  </body>
+</html>

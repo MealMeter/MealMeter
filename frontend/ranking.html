@@ -1,0 +1,32 @@
+<!doctype html>
+<!-- 역할: 인기 순위 페이지 (ranking.html) — 명세서 3장 기능 3. 담당: 조현우
+     순위 표는 js/pages/ranking.js가 서버 데이터를 받아 채운다. -->
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fff9f4" />
+    <title>인기 순위 · MealMeter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/ranking.css" />
+  </head>
+  <body>
+    <main id="main" class="site-main" tabindex="-1">
+      <div class="ranking-page">
+        <header class="ranking-page__head">
+          <h1>인기 순위</h1>
+          <p class="muted">지금까지 쌓인 평가의 평균 별점이 높은 순서예요. 같은 메뉴는 다른 날 나와도 하나로 합쳐요.</p>
+        </header>
+
+        <!-- 불러오는 중 / 오류 / 순위 표가 이 자리에 들어간다 -->
+        <div id="ranking-content"></div>
+      </div>
+    </main>
+
+    <script type="module" src="/js/common/layout.js"></script>
+    <script type="module" src="/js/pages/ranking.js"></script>
+  </body>
+</html>
