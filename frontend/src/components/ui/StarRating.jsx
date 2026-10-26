@@ -31,4 +31,3 @@ export default function StarRating({ value = 0, showValue = true }) {
     </span>
   );
 }
-}
