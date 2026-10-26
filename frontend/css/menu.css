@@ -1,0 +1,248 @@
+/* 역할: 메뉴 상세 페이지 전용 스타일 (.menu-detail, .review-form__…, .star-input, .tag-selector, .review-list). 담당: 박준호 */
+
+/* ---------- 페이지 전체 ---------- */
+.menu-detail {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.menu-detail__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* hidden 속성이 display:flex에 덮이지 않게 한다 */
+.menu-detail__content[hidden] {
+  display: none;
+}
+
+.menu-detail__summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.menu-detail__heading {
+  margin-bottom: var(--space-3);
+  font-size: 22px;
+}
+
+/* ---------- 평가 폼 ---------- */
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+/* fieldset의 기본 테두리·여백을 없앤다 (묶음 정보는 화면 낭독기용으로 그대로 남는다) */
+.review-form fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.review-form__legend {
+  display: block;
+  margin-bottom: var(--space-2);
+  padding: 0;
+  font-weight: 700;
+}
+
+.review-form__tags {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-3);
+}
+
+.review-form__hygiene {
+  padding: var(--space-3);
+  border: 2px solid var(--color-danger);
+  border-radius: var(--radius-button);
+  background: var(--color-danger-soft);
+}
+
+.review-form__help {
+  margin: var(--space-1) 0 var(--space-2);
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
+.review-form__hygiene .review-form__help {
+  margin-bottom: 0;
+}
+
+.review-form__textarea {
+  display: block;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-input);
+  border-radius: var(--radius-button);
+  background: var(--color-surface);
+  resize: vertical;
+}
+
+.review-form__count {
+  margin-top: var(--space-1);
+  text-align: right;
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
+.review-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+.review-form__hint {
+  font-size: var(--font-size-small);
+  color: var(--color-danger);
+}
+
+.review-form__success {
+  color: var(--color-success);
+  font-weight: 700;
+}
+
+/* 등록 성공 문구가 없을 때는 자리를 차지하지 않게 한다 (role="status" 요소 자체는 남겨 둬야 낭독기가 읽는다) */
+.review-form__success:empty {
+  display: none;
+}
+
+/* ---------- 별점 입력 ---------- */
+.star-input__required {
+  color: var(--color-danger);
+  font-weight: 400;
+}
+
+.star-input__stars {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.star-input__option {
+  cursor: pointer;
+  border-radius: var(--radius-button);
+}
+
+/* 숨긴 라디오 버튼에 키보드 포커스가 오면, 감싸고 있는 별에 테두리를 그려 어디 있는지 보이게 한다 */
+.star-input__option:has(input:focus-visible) {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.star-input__star {
+  display: inline-block;
+  font-size: 34px;
+  line-height: 1;
+  color: var(--color-border-input);
+}
+
+.star-input__star.is-filled {
+  color: var(--color-star);
+}
+
+.star-input__value {
+  margin-left: var(--space-2);
+  color: var(--color-text-muted);
+}
+
+/* ---------- 태그 선택 ---------- */
+.tag-selector__legend {
+  margin-bottom: var(--space-1);
+  padding: 0;
+  font-size: var(--font-size-sub);
+}
+
+.tag-selector--warning .tag-selector__legend {
+  font-weight: 700;
+  color: var(--color-danger);
+}
+
+.tag-selector__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tag-selector__option {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 40px; /* 손가락으로 누르기 쉬운 크기 */
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border-input);
+  border-radius: var(--radius-chip);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.tag-selector__option:hover {
+  background: var(--color-accent-soft);
+}
+
+/* ✓ 표시는 평소에 숨겨 두고, 눌린 버튼(aria-pressed="true")에서만 보인다 */
+.tag-selector__check {
+  display: none;
+}
+
+/* 고른 태그: 색 + 굵은 글씨 + ✓ 표시로 함께 구분한다 (색만으로 구분하지 않기) */
+.tag-selector__option[aria-pressed="true"] {
+  border-color: var(--color-accent-strong);
+  background: var(--color-accent-strong);
+  color: var(--color-surface);
+  font-weight: 700;
+}
+
+.tag-selector__option[aria-pressed="true"] .tag-selector__check {
+  display: inline;
+}
+
+.tag-selector--warning .tag-selector__option[aria-pressed="true"] {
+  border-color: var(--color-danger);
+  background: var(--color-danger);
+}
+
+/* ---------- 평가 목록 ---------- */
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.review-list__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.review-list__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.review-list__comment {
+  margin-top: var(--space-2);
+  white-space: pre-wrap; /* 줄바꿈을 쓴 그대로 보여 준다 */
+  overflow-wrap: anywhere; /* 띄어쓰기 없이 긴 글도 카드 밖으로 넘치지 않게 */
+}

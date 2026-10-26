@@ -1,0 +1,70 @@
+/* 역할: 인기 순위 페이지 전용 스타일 (.ranking-page, .ranking-table). 담당: 조현우 */
+
+.ranking-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ranking-page__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* 표가 화면보다 넓으면 이 상자 안에서만 옆으로 밀린다 (페이지 전체가 밀리지 않게) */
+.ranking-table__wrap {
+  overflow-x: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.ranking-table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+}
+
+.ranking-table th,
+.ranking-table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.ranking-table thead th {
+  background: var(--color-accent-soft);
+  font-size: var(--font-size-small);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ranking-table tbody tr:last-child th,
+.ranking-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.ranking-table__rank {
+  white-space: nowrap;
+  color: var(--color-text-muted);
+}
+
+.ranking-table__rank.is-top {
+  font-weight: 800;
+  color: var(--color-accent-strong);
+}
+
+.ranking-table__name {
+  font-weight: 700;
+}
+
+.ranking-table__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

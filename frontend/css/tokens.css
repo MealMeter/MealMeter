@@ -1,0 +1,44 @@
+/* 역할: 디자인 규칙 (색·글자·간격·모서리 등 CSS 변수). 담당: 김태건
+   다른 파일에서는 색이나 크기를 직접 쓰지 말고 var(--color-…), var(--space-…)로 가져다 쓴다.
+   색은 글자/배경 대비 4.5:1 이상을 유지한다. */
+
+:root {
+  /* ── 색 ── */
+  --color-accent: #D9480F;
+  --color-accent-strong: #B23A0B;
+  --color-accent-soft: #FFEBDD;
+  --color-accent-tint: #FFE3CC;
+  --color-star: #F59F00;
+  --color-text: #211C18;
+  --color-text-muted: #6B625B;
+  --color-bg: #FFF9F4;
+  --color-surface: #FFFFFF;
+  --color-border: #F1E4D8;
+  --color-border-input: #D8C6B6;
+  --color-danger: #B42318;
+  --color-danger-soft: #FEF3F2;
+  --color-success: #157F3D;
+  --color-focus: #2563EB; /* 키보드 포커스 테두리 */
+
+  /* ── 글꼴 (HTML의 <link>로 불러온다. 못 불러오면 쉼표 뒤 글꼴을 쓴다) ── */
+  --font-title: "Jua", "Pretendard", system-ui, sans-serif;
+  --font-body: "Pretendard", system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+
+  --font-size-title: 28px;
+  --font-size-body: 16px;
+  --font-size-sub: 15px;
+  --font-size-small: 14px;
+
+  --radius-card: 16px;
+  --radius-button: 12px;
+  --radius-chip: 999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --content-width: 900px;
+}
