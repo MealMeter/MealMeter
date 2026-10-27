@@ -18,3 +18,6 @@ export const COMMENT_MAX_LENGTH = 100;
 // 식사 구분 (나이스 급식 API 식사코드)
 export const MEAL_TYPES = { 1: '조식', 2: '중식', 3: '석식' };
 export const DEFAULT_MEAL_CODE = 2;
+
+// 별점마다 붙는 말 (화면 전용. 서버로 보내지 않아서 app/rules.py에는 없다). RATING_LABELS[4] → '좋아요'
+export const RATING_LABELS = ['', '별로예요', '아쉬워요', '보통이에요', '좋아요', '최고예요'];

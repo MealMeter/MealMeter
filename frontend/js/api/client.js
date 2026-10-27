@@ -14,9 +14,15 @@ export async function request(path, options = {}) {
     throw new Error('서버에 연결하지 못했어요. 인터넷 연결을 확인해 주세요.');
   }
 
-  const body = await response.json().catch(() => null);
+  // 본문이 JSON이 아니면(깨진 응답 등) INVALID로 표시해 둔다
+  const INVALID = Symbol('invalid');
+  const body = await response.json().catch(() => INVALID);
   if (!response.ok) {
-    throw new Error(body?.message || DEFAULT_ERROR);
+    throw new Error((body !== INVALID && body?.message) || DEFAULT_ERROR);
+  }
+  // 성공 응답인데 JSON이 깨졌으면 오류로 알려 준다 (그냥 넘기면 화면이 "불러오는 중"에 멈춘다)
+  if (body === INVALID) {
+    throw new Error('서버 응답을 읽지 못했어요. 잠시 후 다시 시도해 주세요.');
   }
   return body;
 }

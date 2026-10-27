@@ -1,11 +1,14 @@
 // 역할: 메뉴 상세 페이지 동작 — 평가 불러오기, 평가 폼, 평가 목록 (명세서 3장 기능 2). 담당: 박준호
-// 순서: 주소에서 메뉴 번호 꺼내기 → 태그 버튼 만들기 → 폼 동작 연결 → 서버에서 평가 불러오기
+// 순서: 주소에서 메뉴 번호 꺼내기 → 태그 버튼 만들기 → 폼 동작 연결 → 서버에서 평가 불러오기 → 나이스에서 알레르기 덧붙이기
 // 새 평가를 등록하면 새로고침 없이 목록 맨 위에 넣고, 평균·개수를 다시 계산하고, 폼을 비운다.
-import { createReview, getMenuReviews } from '../api/index.js';
-import { COMMENT_MAX_LENGTH, HYGIENE_FIELD, HYGIENE_PROBLEM, TAG_FIELDS } from '../api/reviewFields.js';
+import { createReview, getMealInfo, getMenuReviews } from '../api/index.js';
+import { findDish } from '../api/neis.js';
+import {
+  COMMENT_MAX_LENGTH, HYGIENE_FIELD, HYGIENE_PROBLEM, MEAL_TYPES, RATING_LABELS, TAG_FIELDS,
+} from '../api/reviewFields.js';
 import { escapeHtml, formatDate, formatDateTime } from '../common/format.js';
-import { errorHtml, loadData, renderEmpty, renderError } from '../common/state.js';
-import { starRatingHtml, tagBadgeHtml } from '../common/ui.js';
+import { loadData, renderEmpty, renderError } from '../common/state.js';
+import { tagBadgeHtml } from '../common/ui.js';
 
 // ---------- HTML에서 쓸 자리 찾아 두기 ----------
 const stateBox = document.getElementById('menu-state');
@@ -13,19 +16,22 @@ const content = document.getElementById('menu-content');
 const form = document.getElementById('review-form');
 const starInput = document.getElementById('star-input');
 const ratingValue = document.getElementById('rating-value');
-const ratingHint = document.getElementById('rating-hint');
 const commentInput = document.getElementById('review-comment');
 const commentCount = document.getElementById('comment-count');
 const submitButton = document.getElementById('review-submit');
 const formError = document.getElementById('review-form-error');
 const formSuccess = document.getElementById('review-form-success');
+const hygieneHint = document.getElementById('hygiene-hint');
 const listBox = document.getElementById('review-list');
 
 // ---------- 페이지가 기억하는 값 ----------
-// 주소 menu.html?menuId=3 에서 "3"을 꺼낸다
-const menuId = new URLSearchParams(window.location.search).get('menuId');
+// 주소 menu.html?menuId=3&meal=2 에서 "3"과 2를 꺼낸다
+const params = new URLSearchParams(window.location.search);
+const menuId = params.get('menuId');
+const mealCode = MEAL_TYPES[params.get('meal')] ? Number(params.get('meal')) : null;
 
 let menu = null; // 서버에서 받은 메뉴 정보 + 평가 목록 { menuId, name, date, averageRating, reviewCount, reviews }
+let newReviewId = null; // 방금 등록한 평가 (목록에서 강조)
 let submitting = false; // 서버에 보내는 중인지 (두 번 누르기 방지)
 
 // 고른 태그. 처음에는 모두 "안 고름"(null)
@@ -33,28 +39,41 @@ let submitting = false; // 서버에 보내는 중인지 (두 번 누르기 방�
 const ALL_FIELDS = [...TAG_FIELDS, HYGIENE_FIELD];
 const tags = Object.fromEntries(ALL_FIELDS.map((field) => [field.key, null]));
 
+// 위생 버튼에 보이는 글자 (서버 값 "없음"은 화면에서 "문제 없음"으로 보여 준다)
+const HYGIENE_TEXT = { [HYGIENE_PROBLEM]: '문제 있음', 없음: '문제 없음' };
+
 // ================= 태그 선택 버튼 =================
 
-// 항목 하나(예: 간)의 버튼 묶음 HTML. 선택지는 reviewFields.js에서 가져온다 (한 곳에서만 관리)
-function tagSelectorHtml(field, warning = false) {
-  const buttons = field.options.map((option) => `
-    <button type="button" class="tag-selector__option" aria-pressed="false" data-value="${escapeHtml(option)}">
-      <span class="tag-selector__check" aria-hidden="true">✓</span>${escapeHtml(option)}
-    </button>`).join('');
-
+function optionButtonHtml(option, text = option) {
   // type="button": form 안의 버튼은 기본이 "제출"이라, 이걸 안 쓰면 태그만 눌러도 평가가 등록돼 버린다
   // aria-pressed: 화면 낭독기가 "눌림 / 안 눌림"을 읽어 준다 (켜고 끄는 버튼)
   return `
-    <fieldset class="tag-selector${warning ? ' tag-selector--warning' : ''}" data-key="${field.key}">
-      <legend class="tag-selector__legend">${escapeHtml(field.label)}</legend>
-      <div class="tag-selector__options">${buttons}</div>
+    <button type="button" class="tag-selector__option" aria-pressed="false" data-value="${escapeHtml(option)}">
+      <span class="tag-selector__check" aria-hidden="true">✓</span>${escapeHtml(text)}
+    </button>`;
+}
+
+// 항목 하나(예: 간)의 버튼 묶음. 선택지는 reviewFields.js에서 가져온다 (한 곳에서만 관리)
+// legend는 화면 낭독기용으로 두고, 화면에는 왼쪽에 짧은 이름을 따로 보여 준다 (legend는 줄 배치가 어려워서)
+function tagSelectorHtml(field) {
+  return `
+    <fieldset class="tag-selector" data-key="${field.key}">
+      <legend class="sr-only">${escapeHtml(field.label)}</legend>
+      <span class="tag-selector__label" aria-hidden="true">${escapeHtml(field.label)}</span>
+      <div class="tag-selector__options">${field.options.map((option) => optionButtonHtml(option)).join('')}</div>
     </fieldset>`;
 }
 
 function buildTagSelectors() {
-  document.getElementById('tag-groups').innerHTML = TAG_FIELDS.map((field) => tagSelectorHtml(field)).join('');
-  // 위생은 안내 문구 위에 따로 넣는다
-  document.getElementById('hygiene-group').insertAdjacentHTML('afterbegin', tagSelectorHtml(HYGIENE_FIELD, true));
+  document.getElementById('tag-groups').innerHTML = TAG_FIELDS.map(tagSelectorHtml).join('');
+  // 위생은 "문제 없음"을 앞에 두고, 이미 있는 위생 fieldset 안에 넣는다
+  const hygiene = document.getElementById('hygiene-group');
+  hygiene.dataset.key = HYGIENE_FIELD.key;
+  hygiene.classList.add('tag-selector', 'tag-selector--warning');
+  document.getElementById('hygiene-options').innerHTML = [...HYGIENE_FIELD.options]
+    .reverse()
+    .map((option) => optionButtonHtml(option, HYGIENE_TEXT[option] ?? option))
+    .join('');
 }
 
 // tags 값에 맞게 버튼의 "눌림" 표시를 다시 그린다
@@ -65,6 +84,7 @@ function updateTagButtons() {
       button.setAttribute('aria-pressed', String(button.dataset.value === selected));
     });
   });
+  hygieneHint.hidden = tags[HYGIENE_FIELD.key] !== HYGIENE_PROBLEM;
 }
 
 // ================= 별점 =================
@@ -74,23 +94,26 @@ function getRating() {
   return Number(form.elements.rating.value) || 0;
 }
 
-// 별점에 맞게 별 모양·숫자·안내 문구·등록 버튼을 바꾼다
+// 별 모양과 "4점 · 좋아요" 글자를 바꾼다
 function updateRatingUi() {
   const rating = getRating();
-
   form.querySelectorAll('.star-input__star').forEach((star, index) => {
     const filled = index < rating; // 고른 점수까지는 꽉 찬 별
     star.textContent = filled ? '★' : '☆';
     star.classList.toggle('is-filled', filled);
   });
-  ratingValue.textContent = rating ? `${rating}점` : '골라 주세요';
+  ratingValue.textContent = rating ? `${rating}점 · ${RATING_LABELS[rating]}` : '별을 눌러 1~5점 중에 골라 주세요';
+  ratingValue.classList.toggle('is-chosen', rating > 0);
+  if (rating > 0) setRatingInvalid(false);
+}
 
-  // 별점을 안 골랐으면: 안내 문구를 보여 주고 등록 버튼을 막는다 (서버에 보내기 전에 막기)
-  const missing = rating === 0;
-  ratingHint.hidden = !missing;
-  if (missing) starInput.setAttribute('aria-describedby', 'rating-hint');
-  else starInput.removeAttribute('aria-describedby');
-  submitButton.disabled = missing || submitting;
+// 별점을 안 고르고 등록하려 했을 때 별점 칸을 빨갛게 표시한다
+function setRatingInvalid(invalid) {
+  starInput.classList.toggle('is-invalid', invalid);
+  form.querySelectorAll('input[name="rating"]').forEach((input) => {
+    if (invalid) input.setAttribute('aria-invalid', 'true');
+    else input.removeAttribute('aria-invalid');
+  });
 }
 
 // ================= 의견 글자 수 =================
@@ -99,9 +122,21 @@ function updateCommentCount() {
   commentCount.textContent = `${commentInput.value.length} / ${COMMENT_MAX_LENGTH}자`;
 }
 
+// ================= 오류 표시 =================
+
+// 오류 상자를 그리고 포커스를 옮겨서, 키보드·낭독기 사용자도 무엇이 잘못됐는지 바로 알게 한다
+function showFormError(message) {
+  formError.innerHTML = `
+    <div class="review-form__error" role="alert" tabindex="-1">
+      <p class="review-form__error-title">등록하지 못했어요</p>
+      <p class="review-form__error-line"><span class="review-form__error-tag">오류</span><span>${escapeHtml(message)}</span></p>
+    </div>`;
+  formError.firstElementChild.focus();
+}
+
 // ================= 평가 요약과 목록 =================
 
-// 평균 별점을 소수 첫째 자리까지 계산한다 (가짜 서버 mock.js와 같은 방식)
+// 평균 별점을 소수 첫째 자리까지 계산한다 (서버 app/stats.py와 같은 방식)
 function averageOf(reviews) {
   if (reviews.length === 0) return 0;
   const total = reviews.reduce((sum, review) => sum + review.rating, 0);
@@ -109,14 +144,36 @@ function averageOf(reviews) {
 }
 
 function renderSummary() {
-  document.getElementById('menu-date').textContent = formatDate(menu.date);
+  const meal = mealCode ? `<span class="chip chip--accent">${MEAL_TYPES[mealCode]}</span>` : '';
+  document.getElementById('menu-meta').innerHTML = `${meal}<span>${formatDate(menu.date)}</span>`;
   document.getElementById('menu-name').textContent = menu.name;
   document.getElementById('menu-summary').innerHTML = menu.reviewCount > 0
-    ? `${starRatingHtml(menu.averageRating)}<span class="muted">평가 ${menu.reviewCount}개</span>`
-    : '<span class="muted">아직 평가가 없어요</span>';
+    ? `<span class="menu-detail__star" aria-hidden="true">★</span>
+       <span class="sr-only">평균 별점</span>
+       <span class="menu-detail__average">${menu.averageRating.toFixed(1)}</span>
+       <span class="menu-detail__count">/ 5 · 평가 ${menu.reviewCount}개</span>`
+    : '<span class="menu-detail__count">아직 평가가 없어요. 첫 평가를 남겨 보세요</span>';
 }
 
-// 평가 카드 하나 (별점, 태그 배지, 의견, 작성 시각)
+// 나이스에서 알레르기 정보를 찾아 덧붙인다. 못 찾거나 실패하면 그냥 숨겨 둔다 (평가에는 영향 없음)
+async function renderAllergy() {
+  let info;
+  try {
+    info = await getMealInfo(menu.date);
+  } catch {
+    return;
+  }
+  // 식사 코드를 알면 그 끼니에서, 모르면 세 끼 모두에서 찾는다
+  const meals = mealCode ? [info[mealCode]] : Object.values(info);
+  const dish = meals.map((meal) => findDish(meal, menu.name)).find(Boolean);
+  if (!dish?.allergies.length) return;
+
+  const box = document.getElementById('menu-allergy');
+  box.textContent = `알레르기 유발 식품: ${dish.allergies.join(', ')}`;
+  box.hidden = false;
+}
+
+// 평가 한 건 (별점, 태그 배지, 의견, 작성 시각)
 function reviewHtml(review) {
   // 위생 문제는 가장 먼저, 경고 모양으로 보여 준다. "없음"은 굳이 표시하지 않는다
   const badges = [];
@@ -133,13 +190,21 @@ function reviewHtml(review) {
     : '';
   // 의견은 안 쓰면 빈 문자열("")이라 그때는 아무것도 그리지 않는다. escapeHtml로 꼭 감싼다!
   const commentHtml = review.comment ? `<p class="review-list__comment">${escapeHtml(review.comment)}</p>` : '';
+  const isNew = review.reviewId === newReviewId;
+  const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
 
   // <time>: 기계가 읽는 시각(datetime)과 사람이 읽는 글자를 함께 담는다
   return `
-    <li class="card review-list__item">
+    <li class="review-list__item${isNew ? ' is-new' : ''}">
       <div class="review-list__top">
-        ${starRatingHtml(review.rating, { showValue: false })}
-        <time class="muted small" datetime="${escapeHtml(review.createdAt)}">${formatDateTime(review.createdAt)}</time>
+        <p class="review-list__rating">
+          <span class="review-list__stars" aria-hidden="true">${stars}</span>
+          <span>${review.rating}점 · ${RATING_LABELS[review.rating]}</span>
+        </p>
+        <p class="review-list__meta">
+          ${isNew ? '<span class="chip chip--new">방금 등록</span>' : ''}
+          <time datetime="${escapeHtml(review.createdAt)}">${formatDateTime(review.createdAt)}</time>
+        </p>
       </div>
       ${tagsHtml}
       ${commentHtml}
@@ -148,7 +213,7 @@ function reviewHtml(review) {
 
 function renderReviews() {
   if (menu.reviews.length === 0) {
-    renderEmpty(listBox, '아직 평가가 없어요. 첫 평가를 남겨 보세요');
+    renderEmpty(listBox, '아직 평가가 없어요', '<p class="small">첫 평가를 남겨 보세요. 등록하면 여기에 바로 보여요.</p>');
     return;
   }
   listBox.innerHTML = `<ul class="review-list">${menu.reviews.map(reviewHtml).join('')}</ul>`;
@@ -196,15 +261,21 @@ function setupForm() {
   form.addEventListener('submit', async (event) => {
     // form의 기본 동작(페이지 새로고침)을 막는다. 새로고침 없이 목록에 바로 보여 줘야 하니까.
     event.preventDefault();
+    if (submitting) return;
+    formError.innerHTML = '';
+    formSuccess.textContent = '';
+
     const rating = getRating();
-    // 버튼이 막혀 있어도 Enter 키 등으로 들어올 수 있어서 한 번 더 검사한다
-    if (rating === 0 || submitting) return;
+    // 별점은 꼭 필요하다. 서버에 보내기 전에 여기서 먼저 알려 준다
+    if (rating === 0) {
+      setRatingInvalid(true);
+      showFormError('별점을 골라 주세요. 별점은 꼭 필요해요.');
+      return;
+    }
 
     submitting = true;
     submitButton.disabled = true;
     submitButton.textContent = '등록하는 중…';
-    formError.innerHTML = '';
-    formSuccess.textContent = '';
 
     try {
       // 명세서 5장 3번: 메뉴 번호, 별점, 간, 양, 온도, 식감, 위생, 의견
@@ -219,18 +290,19 @@ function setupForm() {
       menu.reviews = [saved, ...menu.reviews];
       menu.reviewCount = menu.reviews.length;
       menu.averageRating = averageOf(menu.reviews);
+      newReviewId = saved.reviewId;
       renderSummary();
       renderReviews();
       resetForm();
-      formSuccess.textContent = '평가가 등록됐어요. 소중한 의견 고마워요!';
+      formSuccess.textContent = '✓ 평가가 등록됐어요. 목록 맨 위에서 확인할 수 있어요.';
     } catch (err) {
       // 서버(또는 가짜 서버)가 보낸 메시지를 그대로 보여 준다. 예: "욕설이나 비방 표현은 등록할 수 없어요."
-      formError.innerHTML = errorHtml(err.message);
+      showFormError(err.message);
     } finally {
       // 성공하든 실패하든 "보내는 중" 상태는 끝낸다
       submitting = false;
+      submitButton.disabled = false;
       submitButton.textContent = '평가 등록';
-      updateRatingUi();
     }
   });
 }
@@ -255,6 +327,7 @@ function start() {
     document.title = `${data.name} 평가 · MealMeter`; // 브라우저 탭 제목
     renderSummary();
     renderReviews();
+    renderAllergy();
   }, '평가를 불러오는 중이에요');
 }
 

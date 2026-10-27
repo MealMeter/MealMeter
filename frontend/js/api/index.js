@@ -1,8 +1,9 @@
-// 역할: 서버 부르는 함수 4개 모음 (명세서 5장). 담당: 박준호
+// 역할: 서버 부르는 함수 모음 (명세서 5장의 4개 + 나이스 급식 정보). 담당: 박준호
 // 페이지에서는 주소를 직접 쓰지 말고 이 함수들만 불러 쓴다.
-// VITE_USE_MOCK=false 로 바꾸면 가짜 데이터 대신 진짜 서버를 부른다 (.env.example 참고).
+// VITE_USE_MOCK=false 로 바꾸면 가짜 데이터 대신 진짜 서버와 진짜 나이스를 부른다 (.env.example 참고).
 import { request } from './client.js';
 import * as mock from './mock.js';
+import { fetchMealInfo } from './neis.js';
 import { DEFAULT_MEAL_CODE } from './reviewFields.js';
 
 const USE_MOCK = import.meta.env.VITE_USE_MOCK !== 'false';
@@ -48,6 +49,26 @@ export function createReview(review) {
 export function getRanking() {
   if (USE_MOCK) return mock.getRanking();
   return request('/api/ranking');
+}
+
+// 같은 날짜는 한 번만 부른다 (탭을 바꿀 때마다 나이스를 다시 부르지 않게)
+const mealInfoCache = new Map();
+
+/**
+ * 5. 그날 급식의 칼로리·영양소·알레르기 — 나이스 급식 API (우리 서버를 거치지 않는다)
+ * 실패하면 Error를 던진다. 이 정보 없이도 평가는 할 수 있으니, 페이지는 실패해도 계속 동작해야 한다.
+ * 메뉴 찾기는 neis.js의 findDish(meal, 메뉴이름)를 쓴다.
+ * @param {string} date "2026-10-27" (getTodayMenus나 getMenuReviews가 준 date)
+ * @returns {Promise<Record<number, import('./neis.js').MealInfo>>} 식사 코드(1·2·3) → 정보
+ */
+export function getMealInfo(date) {
+  if (!mealInfoCache.has(date)) {
+    const promise = USE_MOCK ? mock.getMealInfo(date) : fetchMealInfo(date);
+    // 실패한 결과는 기억하지 않는다 (다시 시도하면 새로 부르도록)
+    promise.catch(() => mealInfoCache.delete(date));
+    mealInfoCache.set(date, promise);
+  }
+  return mealInfoCache.get(date);
 }
 
 /**

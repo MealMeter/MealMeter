@@ -1,6 +1,7 @@
 <!doctype html>
-<!-- 역할: 메인 페이지 (/) — 오늘의 메뉴 목록 (명세서 3장 기능 1). 담당: 김태건
-     화면 틀만 여기 있고, 메뉴 카드는 js/pages/main.js가 서버 데이터를 받아 채운다. -->
+<!-- 역할: 메인 페이지 (/) — 오늘의 메뉴 (명세서 3장 기능 1). 담당: 김태건
+     조식·중식·석식 탭, 칼로리·영양소, 메뉴마다 알레르기와 바로 별점 남기기, 오늘 인기 TOP 3.
+     화면 틀만 여기 있고, 내용은 js/pages/main.js가 서버(메뉴·평가)와 나이스(칼로리·알레르기) 데이터로 채운다. -->
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
@@ -19,18 +20,39 @@
   <body>
     <!-- 헤더는 layout.js가 이 위에 넣어 준다 -->
     <main id="main" class="site-main" tabindex="-1">
-      <div class="main-page">
-        <header class="main-page__head">
+      <div class="today">
+        <header class="today__head">
           <h1>오늘의 메뉴</h1>
-          <!-- 날짜와 식사 구분 (main.js가 채운다) -->
-          <span class="muted" id="main-date"></span>
+          <!-- 날짜 (main.js가 채운다) -->
+          <p class="today__date" id="today-date"></p>
         </header>
 
-        <!-- 불러오는 중 / 오류 / 메뉴 카드 목록이 이 자리에 들어간다 -->
-        <section id="main-menus" aria-label="오늘 급식 메뉴"></section>
+        <!-- 식사 탭. 화살표 키로 옮겨 다닐 수 있다. 칼로리·없음 표시는 main.js가 채운다 -->
+        <div class="meal-tabs" role="tablist" aria-label="식사 선택" id="meal-tabs">
+          <button type="button" class="meal-tabs__tab" role="tab" id="meal-tab-1" data-meal="1" aria-controls="meal-panel" aria-selected="false" tabindex="-1">
+            <span class="meal-tabs__label">조식</span><span class="meal-tabs__sub">…</span>
+          </button>
+          <button type="button" class="meal-tabs__tab" role="tab" id="meal-tab-2" data-meal="2" aria-controls="meal-panel" aria-selected="true">
+            <span class="meal-tabs__label">중식</span><span class="meal-tabs__sub">…</span>
+          </button>
+          <button type="button" class="meal-tabs__tab" role="tab" id="meal-tab-3" data-meal="3" aria-controls="meal-panel" aria-selected="false" tabindex="-1">
+            <span class="meal-tabs__label">석식</span><span class="meal-tabs__sub">…</span>
+          </button>
+        </div>
 
-        <p class="main-page__footer muted small">
-          메뉴 정보는 나이스 교육정보 개방 포털의 대덕소프트웨어마이스터고 급식 정보를 따릅니다.
+        <!-- 고른 식사의 메뉴 목록 (불러오는 중 / 오류 / 급식 없음도 이 자리에 나온다) -->
+        <section class="today__panel" id="meal-panel" role="tabpanel" aria-labelledby="meal-tab-2"></section>
+
+        <section class="card today-top" aria-labelledby="today-top-title">
+          <div class="today-top__head">
+            <h2 id="today-top-title">오늘 인기 TOP 3</h2>
+            <a class="today-top__more" href="/ranking.html">전체 순위</a>
+          </div>
+          <div id="today-top-list"></div>
+        </section>
+
+        <p class="today__note">
+          메뉴와 알레르기 정보, 칼로리는 나이스 교육정보 개방 포털의 대덕소프트웨어마이스터고 급식 정보를 따릅니다.
         </p>
       </div>
     </main>

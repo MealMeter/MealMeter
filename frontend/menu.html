@@ -1,5 +1,6 @@
 <!doctype html>
-<!-- 역할: 메뉴 상세 페이지 (menu.html?menuId=3) — 평가 작성 + 평가 목록 (명세서 3장 기능 2). 담당: 박준호
+<!-- 역할: 메뉴 상세 페이지 (menu.html?menuId=3&meal=2) — 평가 작성 + 평가 목록 (명세서 3장 기능 2). 담당: 박준호
+     meal(식사 코드)은 있으면 "중식" 같은 표시와 알레르기 찾기에 쓰고, 없어도 동작한다.
      폼의 뼈대는 여기 있고, 태그 버튼·평가 목록·요약은 js/pages/menu.js가 채운다. -->
 <html lang="ko">
   <head>
@@ -16,7 +17,7 @@
   <body>
     <main id="main" class="site-main" tabindex="-1">
       <div class="menu-detail">
-        <a class="back-link" href="/">← 오늘의 메뉴로 돌아가기</a>
+        <a class="back-link" href="/"><span aria-hidden="true">←</span> 오늘의 메뉴</a>
 
         <!-- 불러오는 중 / 오류가 이 자리에 나온다 -->
         <div id="menu-state"></div>
@@ -24,72 +25,73 @@
         <!-- 불러오기에 성공하면 hidden을 풀어서 보여 준다 -->
         <div id="menu-content" class="menu-detail__content" hidden>
           <!-- 메뉴 이름과 지금까지의 평가 요약 -->
-          <header class="menu-detail__header">
-            <p class="muted" id="menu-date"></p>
+          <section class="menu-detail__header" aria-labelledby="menu-name">
+            <p class="menu-detail__meta" id="menu-meta"></p>
             <h1 id="menu-name"></h1>
             <p class="menu-detail__summary" id="menu-summary"></p>
-          </header>
+            <p class="menu-detail__allergy" id="menu-allergy" hidden></p>
+          </section>
 
-          <!-- aria-labelledby: 이 구역의 이름을 아래 h2 글자로 정한다 (화면 낭독기가 구역 이름을 읽음) -->
-          <section aria-labelledby="form-title">
-            <h2 id="form-title" class="menu-detail__heading">평가 남기기</h2>
-
+          <div class="menu-detail__columns">
             <!-- novalidate: 브라우저 기본 경고창 대신 우리가 만든 안내 문구를 쓴다 -->
-            <form id="review-form" class="review-form" novalidate>
+            <form id="review-form" class="review-form" novalidate aria-labelledby="form-title">
+              <h2 id="form-title" class="review-form__title">평가 남기기</h2>
+
               <!-- 1. 별점 (필수). fieldset + legend: "이 라디오 버튼 5개는 '별점' 한 묶음"이라고 알려 준다.
                    진짜 입력은 숨긴 라디오 버튼이라 Tab으로 들어와서 화살표 키로 고를 수 있다. -->
-              <fieldset class="star-input" id="star-input" aria-describedby="rating-hint">
-                <legend class="review-form__legend">별점 <span class="star-input__required">(필수)</span></legend>
+              <fieldset class="star-input" id="star-input">
+                <legend class="review-form__legend">별점 <span class="chip chip--required">필수</span></legend>
                 <div class="star-input__stars">
-                  <label class="star-input__option"><input type="radio" name="rating" value="1" class="sr-only" /><span class="star-input__star" aria-hidden="true">☆</span><span class="sr-only">1점</span></label>
-                  <label class="star-input__option"><input type="radio" name="rating" value="2" class="sr-only" /><span class="star-input__star" aria-hidden="true">☆</span><span class="sr-only">2점</span></label>
-                  <label class="star-input__option"><input type="radio" name="rating" value="3" class="sr-only" /><span class="star-input__star" aria-hidden="true">☆</span><span class="sr-only">3점</span></label>
-                  <label class="star-input__option"><input type="radio" name="rating" value="4" class="sr-only" /><span class="star-input__star" aria-hidden="true">☆</span><span class="sr-only">4점</span></label>
-                  <label class="star-input__option"><input type="radio" name="rating" value="5" class="sr-only" /><span class="star-input__star" aria-hidden="true">☆</span><span class="sr-only">5점</span></label>
-                  <span class="star-input__value" id="rating-value" aria-hidden="true">골라 주세요</span>
+                  <label class="star-input__option"><input type="radio" name="rating" value="1" class="sr-only" /><span class="star-input__star" aria-hidden="true">☆</span><span class="sr-only">1점, 별로예요</span></label>
+                  <label class="star-input__option"><input type="radio" name="rating" value="2" class="sr-only" /><span class="star-input__star" aria-hidden="true">☆</span><span class="sr-only">2점, 아쉬워요</span></label>
+                  <label class="star-input__option"><input type="radio" name="rating" value="3" class="sr-only" /><span class="star-input__star" aria-hidden="true">☆</span><span class="sr-only">3점, 보통이에요</span></label>
+                  <label class="star-input__option"><input type="radio" name="rating" value="4" class="sr-only" /><span class="star-input__star" aria-hidden="true">☆</span><span class="sr-only">4점, 좋아요</span></label>
+                  <label class="star-input__option"><input type="radio" name="rating" value="5" class="sr-only" /><span class="star-input__star" aria-hidden="true">☆</span><span class="sr-only">5점, 최고예요</span></label>
                 </div>
+                <!-- 고른 점수를 글로 보여 준다 (라디오 이름에 이미 들어 있어서 낭독기에는 숨긴다) -->
+                <p class="star-input__value" id="rating-value" aria-hidden="true"></p>
               </fieldset>
 
               <!-- 2. 간·양·온도·식감 태그 (선택). 버튼은 menu.js가 reviewFields.js를 보고 만든다 -->
               <fieldset class="review-form__group">
-                <legend class="review-form__legend">항목별 평가 <span class="muted">(선택, 다시 누르면 취소)</span></legend>
+                <legend class="review-form__legend">맛 태그 <span class="review-form__optional">(선택, 다시 누르면 취소)</span></legend>
                 <div class="review-form__tags" id="tag-groups"></div>
               </fieldset>
 
               <!-- 3. 위생 — 사고 신고 성격이라 다른 태그와 떨어뜨려 눈에 띄게 그린다 -->
-              <div class="review-form__hygiene" id="hygiene-group">
-                <p class="review-form__help">이물질이 나왔거나 상한 것 같다면 "문제 있음"을 골라 주세요.</p>
-              </div>
+              <fieldset class="review-form__hygiene" id="hygiene-group">
+                <legend class="review-form__legend review-form__legend--danger"><span class="review-form__alert-icon" aria-hidden="true">!</span>위생 문제 신고</legend>
+                <p class="review-form__help">이물질, 덜 익은 음식, 상한 냄새처럼 위생 문제가 있었나요?</p>
+                <div class="review-form__hygiene-options" id="hygiene-options"></div>
+                <p class="review-form__hygiene-hint" id="hygiene-hint" hidden>어떤 문제였는지 아래 의견란에 적어 주면 개선에 큰 도움이 돼요.</p>
+              </fieldset>
 
               <!-- 4. 자유 의견 (선택) -->
-              <div>
-                <label for="review-comment" class="review-form__legend">의견 <span class="muted">(선택)</span></label>
+              <div class="review-form__comment">
+                <label for="review-comment" class="review-form__legend">자유 의견 <span class="review-form__optional">(선택)</span></label>
                 <!-- 명세서: 입력창 위에 안내 문구를 둔다 -->
-                <p id="comment-guide" class="review-form__help">메뉴에 대한 의견만 써주세요. 특정인을 향한 글은 삼가주세요</p>
+                <p id="comment-guide" class="review-form__note"><span aria-hidden="true">i</span>메뉴에 대한 의견만 써주세요. 특정인을 향한 글은 삼가주세요</p>
                 <!-- maxlength는 menu.js가 reviewFields.js의 값(100자)으로 채운다 -->
                 <textarea id="review-comment" class="review-form__textarea" rows="3"
+                  placeholder="예: 고기는 부드러웠는데 조금 짰어요."
                   aria-describedby="comment-guide comment-count"></textarea>
                 <p id="comment-count" class="review-form__count">0자</p>
               </div>
 
-              <!-- 서버가 거절했을 때(금칙어 등) 폼 바로 근처에 메시지가 나온다 -->
+              <!-- 별점을 안 골랐거나 서버가 거절했을 때(금칙어 등) 여기에 오류가 나온다 -->
               <div id="review-form-error"></div>
-
-              <div class="review-form__actions">
-                <!-- 별점을 안 골랐을 때만 보이는 안내 -->
-                <p id="rating-hint" class="review-form__hint">별점을 먼저 골라 주세요.</p>
-                <button type="submit" class="btn btn--primary" id="review-submit" disabled>평가 등록</button>
-              </div>
 
               <!-- role="status": 화면 낭독기가 "평가가 등록됐어요"를 알아서 읽어 준다 -->
               <p role="status" id="review-form-success" class="review-form__success"></p>
-            </form>
-          </section>
 
-          <section aria-labelledby="list-title">
-            <h2 id="list-title" class="menu-detail__heading">평가 목록</h2>
-            <div id="review-list"></div>
-          </section>
+              <button type="submit" class="btn btn--primary review-form__submit" id="review-submit">평가 등록</button>
+            </form>
+
+            <section class="review-section" aria-labelledby="list-title">
+              <h2 id="list-title" class="review-section__title">이 메뉴의 평가 <span class="review-section__sort">최신순</span></h2>
+              <div id="review-list"></div>
+            </section>
+          </div>
         </div>
       </div>
     </main>

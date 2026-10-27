@@ -6,6 +6,7 @@
 // tagBadgeHtml('간', '적당')                → [간 · 적당]
 // tagBadgeHtml('위생', '문제 있음', true)   → 눈에 띄는 경고 배지
 // linkButtonHtml('/', '홈으로')             → 버튼 모양 링크 (variant: 'primary' | 'secondary' | 'danger')
+// dishIcon('소고기무국')                    → '🍲' (메뉴 이름으로 고른 장식용 그림 글자)
 import { escapeHtml } from './format.js';
 
 export function starRatingHtml(value = 0, { showValue = true } = {}) {
@@ -39,4 +40,22 @@ export function tagBadgeHtml(category, value, warning = false) {
 export function linkButtonHtml(href, label, { variant = 'primary', ariaLabel } = {}) {
   const aria = ariaLabel ? ` aria-label="${escapeHtml(ariaLabel)}"` : '';
   return `<a class="btn btn--${variant}" href="${escapeHtml(href)}"${aria}>${escapeHtml(label)}</a>`;
+}
+
+// 메뉴 이름을 보고 장식용 그림 글자를 고른다. 화면 낭독기에는 읽히지 않게 aria-hidden 자리에 쓴다.
+// 위에서부터 먼저 맞는 것을 쓴다 (예: "딸기요구르트"는 음료가 디저트보다 먼저)
+const DISH_ICONS = [
+  [/우유|주스|요구르트|요거트|에이드|음료|라떼/, '🥛'],
+  [/푸딩|케이크|과일|사과|배$|귤|수박|딸기|바나나|아이스|빵|쿠키|브레드|떡$/, '🍮'],
+  [/김치|깍두기|섞박지|단무지|피클/, '🥬'],
+  [/국$|탕$|찌개|국밥|스프|수프/, '🍲'],
+  [/면|국수|우동|짜장|짬뽕|파스타|스파게티/, '🍜'],
+  [/밥|라이스|덮밥|죽/, '🍚'],
+  [/샐러드|나물|무침|쌈/, '🥗'],
+  [/까스|가스|튀김|너겟|가라아게|강정|치킨|전$/, '🍗'],
+  [/볶음|구이|불고기|갈비|제육|고기|스테이크|조림|찜/, '🍖'],
+];
+
+export function dishIcon(name) {
+  return DISH_ICONS.find(([pattern]) => pattern.test(name))?.[1] ?? '🍽️';
 }

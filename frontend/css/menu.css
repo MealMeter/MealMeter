@@ -2,14 +2,20 @@
 
 /* ---------- 페이지 전체 ---------- */
 .menu-detail {
-  max-width: 640px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.menu-detail .back-link {
+  align-self: flex-start;
+  margin: calc(var(--space-2) * -1) 0 calc(var(--space-1) * -1);
 }
 
 .menu-detail__content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-3);
 }
 
 /* hidden 속성이 display:flex에 덮이지 않게 한다 */
@@ -17,101 +23,237 @@
   display: none;
 }
 
-.menu-detail__summary {
+/* 메뉴 이름 카드 */
+.menu-detail__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.menu-detail__meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2);
-  margin-top: var(--space-2);
+  font-size: var(--font-size-sub);
+  color: var(--color-text-muted);
 }
 
-.menu-detail__heading {
-  margin-bottom: var(--space-3);
-  font-size: 22px;
+.menu-detail__summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.menu-detail__star {
+  font-size: 20px;
+  color: var(--color-accent);
+}
+
+.menu-detail__average {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.menu-detail__count {
+  color: var(--color-text-muted);
+}
+
+.menu-detail__allergy {
+  font-size: var(--font-size-sub);
+  color: var(--color-text-muted);
+}
+
+/* 넓은 화면에서는 폼과 목록을 나란히, 좁으면 위아래로 */
+.menu-detail__columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+  align-items: start;
+  gap: var(--space-3);
 }
 
 /* ---------- 평가 폼 ---------- */
 .review-form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
-  padding: var(--space-5);
+  gap: var(--space-4);
+  padding: var(--space-4);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-card);
 }
 
-/* fieldset의 기본 테두리·여백을 없앤다 (묶음 정보는 화면 낭독기용으로 그대로 남는다) */
-.review-form fieldset {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  min-width: 0;
-}
-
-.review-form__legend {
-  display: block;
-  margin-bottom: var(--space-2);
-  padding: 0;
+.review-form__title,
+.review-section__title {
+  font-family: var(--font-body);
+  font-size: 20px;
   font-weight: 700;
 }
 
-.review-form__tags {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--space-3);
+/* fieldset의 기본 테두리·여백을 없앤다 (묶음 정보는 화면 낭독기용으로 그대로 남는다) */
+.review-form fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
-.review-form__hygiene {
-  padding: var(--space-3);
-  border: 2px solid var(--color-danger);
+.review-form__legend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  padding: 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.review-form__optional {
+  font-size: var(--font-size-body);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.review-form__tags {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* 위생 — 빨간 테두리 상자 */
+.review-form fieldset.review-form__hygiene {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  border: 1.5px solid var(--color-danger);
   border-radius: var(--radius-button);
   background: var(--color-danger-soft);
 }
 
-.review-form__help {
-  margin: var(--space-1) 0 var(--space-2);
+.review-form__legend--danger {
+  margin-bottom: 0;
+  padding: 0 6px;
+  color: var(--color-danger);
+}
+
+.review-form__alert-icon {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-danger);
+  color: var(--color-surface);
   font-size: var(--font-size-small);
+  font-weight: 800;
+}
+
+.review-form__help {
+  color: var(--color-text);
+}
+
+.review-form__hygiene-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.review-form__hygiene-hint {
+  font-weight: 600;
+  color: var(--color-danger);
+}
+
+.review-form__comment {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.review-form__comment .review-form__legend {
+  margin-bottom: 0;
+}
+
+.review-form__note {
+  display: flex;
+  gap: var(--space-2);
+  padding: 10px var(--space-3);
+  border-radius: var(--radius-small);
+  background: var(--color-bg);
   color: var(--color-text-muted);
 }
 
-.review-form__hygiene .review-form__help {
-  margin-bottom: 0;
+.review-form__note [aria-hidden="true"] {
+  flex: none;
+  font-weight: 800;
+  color: var(--color-accent-strong);
 }
 
 .review-form__textarea {
   display: block;
   width: 100%;
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--color-border-input);
+  min-height: 96px;
+  padding: var(--space-3) 14px;
+  border: 1.5px solid var(--color-border-input);
   border-radius: var(--radius-button);
   background: var(--color-surface);
+  line-height: 1.55;
   resize: vertical;
 }
 
-.review-form__count {
-  margin-top: var(--space-1);
-  text-align: right;
-  font-size: var(--font-size-small);
+.review-form__textarea::placeholder {
   color: var(--color-text-muted);
 }
 
-.review-form__actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--space-3);
+.review-form__count {
+  text-align: right;
+  font-size: var(--font-size-sub);
+  color: var(--color-text-muted);
 }
 
-.review-form__hint {
-  font-size: var(--font-size-small);
+/* 오류 상자: "등록하지 못했어요" + "오류" 글자 + 메시지 (색만으로 구분하지 않기) */
+.review-form__error {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: 10px var(--space-4);
+  border: 1.5px solid var(--color-danger);
+  border-radius: var(--radius-button);
+  background: var(--color-danger-soft);
+}
+
+.review-form__error-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-danger);
+}
+
+.review-form__error-line {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.review-form__error-tag {
+  flex: none;
+  font-weight: 800;
   color: var(--color-danger);
 }
 
 .review-form__success {
-  color: var(--color-success);
-  font-weight: 700;
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 1.5px solid var(--color-accent-pressed);
+  border-radius: var(--radius-button);
+  background: var(--color-accent-soft);
+  font-weight: 600;
+  color: var(--color-accent-strong);
 }
 
 /* 등록 성공 문구가 없을 때는 자리를 차지하지 않게 한다 (role="status" 요소 자체는 남겨 둬야 낭독기가 읽는다) */
@@ -119,21 +261,49 @@
   display: none;
 }
 
+.review-form__submit {
+  min-height: 52px;
+  font-size: 17px;
+}
+
 /* ---------- 별점 입력 ---------- */
-.star-input__required {
-  color: var(--color-danger);
-  font-weight: 400;
+.review-form fieldset.star-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-button);
+}
+
+.star-input .review-form__legend {
+  margin-bottom: 0;
+  padding: 0 6px;
+}
+
+/* 별점을 안 고르고 등록하려 했을 때 */
+.review-form fieldset.star-input.is-invalid {
+  border: 2px solid var(--color-danger);
+  background: var(--color-danger-soft);
 }
 
 .star-input__stars {
   display: flex;
-  align-items: center;
-  gap: var(--space-1);
+  flex-wrap: wrap;
+  gap: 2px;
 }
 
 .star-input__option {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-small);
   cursor: pointer;
-  border-radius: var(--radius-button);
+}
+
+.star-input__option:hover {
+  background: var(--color-accent-soft);
 }
 
 /* 숨긴 라디오 버튼에 키보드 포커스가 오면, 감싸고 있는 별에 테두리를 그려 어디 있는지 보이게 한다 */
@@ -143,49 +313,62 @@
 }
 
 .star-input__star {
-  display: inline-block;
-  font-size: 34px;
+  font-size: 36px;
   line-height: 1;
-  color: var(--color-border-input);
-}
-
-.star-input__star.is-filled {
-  color: var(--color-star);
-}
-
-.star-input__value {
-  margin-left: var(--space-2);
   color: var(--color-text-muted);
 }
 
-/* ---------- 태그 선택 ---------- */
-.tag-selector__legend {
-  margin-bottom: var(--space-1);
-  padding: 0;
-  font-size: var(--font-size-sub);
+.star-input__star.is-filled {
+  color: var(--color-accent);
 }
 
-.tag-selector--warning .tag-selector__legend {
-  font-weight: 700;
+.star-input__value {
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.star-input__value.is-chosen {
+  color: var(--color-accent-strong);
+}
+
+.star-input.is-invalid .star-input__value {
   color: var(--color-danger);
 }
 
-.tag-selector__options {
+/* ---------- 태그 선택 ---------- */
+/* 맛 태그 한 줄: 왼쪽에 항목 이름, 오른쪽에 선택지 3개 */
+.review-form .tag-selector:not(.review-form__hygiene) {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
+  align-items: center;
+  gap: 10px;
+}
+
+.tag-selector__label {
+  flex: none;
+  width: 40px;
+  font-weight: 700;
+}
+
+.tag-selector__options {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
 }
 
 .tag-selector__option {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-1);
-  min-height: 40px; /* 손가락으로 누르기 쉬운 크기 */
-  padding: var(--space-1) var(--space-3);
-  border: 1px solid var(--color-border-input);
-  border-radius: var(--radius-chip);
+  min-height: 48px; /* 손가락으로 누르기 쉬운 크기 */
+  padding: 0 var(--space-1);
+  border: 1.5px solid var(--color-border-input);
+  border-radius: var(--radius-button);
   background: var(--color-surface);
   color: var(--color-text);
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .tag-selector__option:hover {
@@ -197,31 +380,86 @@
   display: none;
 }
 
-/* 고른 태그: 색 + 굵은 글씨 + ✓ 표시로 함께 구분한다 (색만으로 구분하지 않기) */
+/* 고른 태그: 색 + 두꺼운 테두리 + ✓ 표시로 함께 구분한다 (색만으로 구분하지 않기) */
 .tag-selector__option[aria-pressed="true"] {
-  border-color: var(--color-accent-strong);
-  background: var(--color-accent-strong);
-  color: var(--color-surface);
-  font-weight: 700;
+  border: 2px solid var(--color-accent);
+  background: var(--color-accent-soft);
 }
 
 .tag-selector__option[aria-pressed="true"] .tag-selector__check {
   display: inline;
 }
 
+/* 위생 버튼: "문제 있음"은 빨간 글자, 고르면 꽉 찬 색 */
+.tag-selector--warning .tag-selector__option {
+  min-height: 52px;
+  font-weight: 700;
+}
+
+.tag-selector--warning .tag-selector__option[data-value="문제 있음"] {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
 .tag-selector--warning .tag-selector__option[aria-pressed="true"] {
+  border: 1.5px solid var(--color-text);
+  background: var(--color-text);
+  color: var(--color-surface);
+}
+
+.tag-selector--warning .tag-selector__option[data-value="문제 있음"][aria-pressed="true"] {
   border-color: var(--color-danger);
   background: var(--color-danger);
+  color: var(--color-surface);
 }
 
 /* ---------- 평가 목록 ---------- */
-.review-list {
+.review-section {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+}
+
+.review-section__title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.review-section__sort {
+  font-size: var(--font-size-body);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.review-list {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   padding: 0;
+  overflow: hidden;
   list-style: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.review-list__item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.review-list__item:last-child {
+  border-bottom: 0;
+}
+
+/* 방금 등록한 평가: 배경 + 왼쪽 줄 + "방금 등록" 글자 */
+.review-list__item.is-new {
+  background: var(--color-accent-soft);
+  box-shadow: inset 3px 0 0 var(--color-accent);
 }
 
 .review-list__top {
@@ -232,17 +470,43 @@
   gap: var(--space-2);
 }
 
+.review-list__rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 700;
+}
+
+.review-list__stars {
+  color: var(--color-star);
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+.review-list__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sub);
+  color: var(--color-text-muted);
+}
+
 .review-list__tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
-  margin: var(--space-2) 0 0;
+  gap: 6px;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .review-list__comment {
-  margin-top: var(--space-2);
   white-space: pre-wrap; /* 줄바꿈을 쓴 그대로 보여 준다 */
   overflow-wrap: anywhere; /* 띄어쓰기 없이 긴 글도 카드 밖으로 넘치지 않게 */
+  text-wrap: pretty;
+}
+
+/* 오류가 없을 때 빈 자리가 폼 간격을 차지하지 않게 */
+#review-form-error:empty {
+  display: none;
 }
