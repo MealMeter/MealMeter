@@ -38,7 +38,7 @@ npm run dev        # http://localhost:5173
 | 파일 | 내용 | 담당 |
 | --- | --- | --- |
 | `js/api/` | 서버 부르는 함수 4개 + 나이스 급식 정보(`index.js`, `neis.js`), 가짜 데이터(`mock.js`), 태그 목록(`reviewFields.js`) | 박준호 |
-| `js/common/layout.js` | 모든 페이지의 헤더·푸터·본문 건너뛰기 링크 | 박준호 |
+| `js/common/layout.js` + `css/base.css` 2번 구역 | 모든 페이지의 헤더·푸터·본문 건너뛰기 링크 | 김태건 |
 | `js/common/format.js` | 글자 안전하게 바꾸기(`escapeHtml`), 날짜 형식 | 박준호 |
 | `js/common/ui.js` + `css/base.css` 3번 구역 | 별점 표시, 태그 배지, 버튼, 카드, 메뉴 그림 글자 | 조현우 |
 | `js/common/state.js` + `css/base.css` 4번 구역 | 불러오는 중, 오류, 빈 화면, `loadData` | 김근영 |
@@ -51,8 +51,8 @@ npm run dev        # http://localhost:5173
 
 | 담당 | 맡은 것 |
 | --- | --- |
-| 박준호 | 메뉴 상세 페이지, `js/api/` 전체(서버·나이스·가짜 데이터), `layout.js`, `format.js`, `vite.config.js` |
-| 김태건 | 오늘의 메뉴(메인) 페이지 — 식사 탭, 칼로리·영양소, 메뉴 목록, 별점 바로 남기기, 알레르기 |
+| 박준호 | 메뉴 상세 페이지, `js/api/` 전체(서버·나이스·가짜 데이터), `format.js`, `vite.config.js` |
+| 김태건 | 오늘의 메뉴(메인) 페이지 — 식사 탭, 칼로리·영양소, 메뉴 목록, 별점 바로 남기기, 알레르기 / 공통 틀(헤더·푸터) `layout.js` + `base.css` 2번 구역 |
 | 김근영 | 이용 안내·404 페이지, `state.js`(불러오는 중·오류·빈 화면), 디자인 규칙 `tokens.css`, `base.css` 1번 구역 |
 | 조현우 | 인기 순위 페이지, 메인의 오늘 인기 TOP 3(`todayTop.js`), 공통 UI 부품 `ui.js` + `base.css` 3번 구역, 접근성·QA |
 
