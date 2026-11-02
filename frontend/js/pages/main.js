@@ -1,4 +1,4 @@
-// 역할: 메인 페이지 동작 — 오늘의 메뉴 (명세서 3장 기능 1). 담당: 김태건 (아래쪽 "오늘 인기 TOP 3"은 todayTop.js, 담당: 조현우)
+// 역할: 메인 페이지 동작 — 오늘의 메뉴 (명세서 3장 기능 1). 담당: 김태건 (아래쪽 "오늘 인기 TOP 3"은 todayTop.js에 따로 있다)
 // 순서: 서버에서 조식·중식·석식 메뉴를 한 번에 불러온다 → 고른 식사를 그린다 → 나이스에서 칼로리·알레르기를 받아 덧붙인다.
 // 별을 누르면 바로 평가가 등록된다 (별점만 있는 평가). 태그·의견은 메뉴 이름을 눌러 상세 페이지에서 남긴다.
 import { createReview, getMealInfo, getTodayMenus } from '../api/index.js';
@@ -236,7 +236,7 @@ function renderPanel() {
 }
 
 // ================= 오늘 인기 TOP 3 =================
-// 그리는 코드는 todayTop.js (담당: 조현우). 여기서는 지금 가진 메뉴 정보(meals)를 넘겨주기만 한다.
+// 그리는 코드는 todayTop.js. 여기서는 지금 가진 메뉴 정보(meals)를 넘겨주기만 한다.
 
 function renderTop() {
   renderTodayTop(topList, meals);
