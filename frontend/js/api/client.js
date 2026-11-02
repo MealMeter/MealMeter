@@ -3,8 +3,11 @@
 
 const DEFAULT_ERROR = '요청을 처리하지 못했어요. 잠시 후 다시 시도해 주세요.';
 
+// path: '/api/ranking' 같은 주소, options: fetch에 그대로 넘길 설정 (예: { method: 'POST', body })
+// 성공하면 서버가 준 JSON을 객체로 돌려주고, 실패하면 화면에 그대로 보여 줄 한국어 메시지로 Error를 던진다
 export async function request(path, options = {}) {
   let response;
+  // 1) 서버에 요청 보내기. 여기서 실패하면 인터넷이 끊겼거나 서버가 꺼진 것이다
   try {
     response = await fetch(path, {
       headers: { 'Content-Type': 'application/json' },
@@ -14,9 +17,15 @@ export async function request(path, options = {}) {
     throw new Error('서버에 연결하지 못했어요. 인터넷 연결을 확인해 주세요.');
   }
 
-  const body = await response.json().catch(() => null);
+  // 본문이 JSON이 아니면(깨진 응답 등) INVALID로 표시해 둔다
+  const INVALID = Symbol('invalid');
+  const body = await response.json().catch(() => INVALID);
   if (!response.ok) {
-    throw new Error(body?.message || DEFAULT_ERROR);
+    throw new Error((body !== INVALID && body?.message) || DEFAULT_ERROR);
+  }
+  // 성공 응답인데 JSON이 깨졌으면 오류로 알려 준다 (그냥 넘기면 화면이 "불러오는 중"에 멈춘다)
+  if (body === INVALID) {
+    throw new Error('서버 응답을 읽지 못했어요. 잠시 후 다시 시도해 주세요.');
   }
   return body;
 }

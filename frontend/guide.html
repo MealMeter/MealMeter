@@ -1,6 +1,7 @@
 <!doctype html>
 <!-- 역할: 이용 안내 페이지 (guide.html). 서버를 부르지 않는 정적 페이지로,
-     평가 방법과 의견이 급식 개선으로 이어지는 과정을 설명한다. 담당: 김근영 -->
+     평가 방법(3단계)과 의견을 쓸 때 지킬 약속을 설명한다. 담당: 김근영
+     단계 옆의 작은 그림(메뉴 줄, 별, 버튼)은 보기용 예시라서 aria-hidden으로 낭독기에서 뺀다. -->
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
@@ -15,67 +16,84 @@
   </head>
   <body>
     <main id="main" class="site-main" tabindex="-1">
-      <div class="guide-page">
-        <header class="guide-page__head">
-          <h1>이용 안내</h1>
-          <p class="muted">MealMeter는 로그인 없이, 이름을 남기지 않고 급식을 평가하는 서비스예요.</p>
-        </header>
+      <article class="guide-page" aria-labelledby="guide-title">
+        <div class="guide-hero">
+          <svg class="guide-hero__logo" aria-hidden="true" viewBox="0 0 34 34">
+            <circle cx="17" cy="17" r="16" fill="#D9480F"></circle>
+            <circle cx="17" cy="17" r="11.5" fill="none" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="1.5"></circle>
+            <path d="M9 21 A8 8 0 0 1 25 21" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"></path>
+            <path d="M17 21 L21.5 14.5" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"></path>
+            <circle cx="17" cy="21" r="2.2" fill="#FFFFFF"></circle>
+          </svg>
+          <div class="guide-hero__text">
+            <p class="eyebrow">이용 안내</p>
+            <h1 id="guide-title">“오늘 국 짰다” 이제 교실에서 끝나지 않아요</h1>
+            <p>별점 한 번이 쌓이면 데이터가 되고, 데이터가 쌓이면 급식이 바뀌어요. 로그인도 이름도 없어서 부담도 없어요.</p>
+          </div>
+          <a class="btn btn--primary guide-hero__cta" href="/">평가하러 가기</a>
+        </div>
 
-        <section class="card guide-page__section" aria-labelledby="guide-why">
-          <h2 id="guide-why">왜 평가해야 하나요?</h2>
-          <p>
-            급식에 대한 불만은 말로만 오가고 어디에도 쌓이지 않아요. 양이 부족한 건 예산으로 풀 수 있지만,
-            맛과 품질은 <strong>평가 데이터</strong>가 있어야 고칠 수 있어요. 여러분이 남긴 별점과 태그가
-            모이면 어떤 메뉴가 왜 아쉬웠는지 숫자로 보여 줄 수 있어요.
-          </p>
-        </section>
-
-        <section class="card guide-page__section" aria-labelledby="guide-how">
-          <h2 id="guide-how">평가하는 방법</h2>
-          <ol class="guide-page__steps">
-            <li><strong>오늘의 메뉴</strong>에서 평가할 메뉴의 "평가하기" 버튼을 눌러요.</li>
-            <li><strong>별점(1~5점)</strong>을 골라요. 별점은 꼭 골라야 등록할 수 있어요.</li>
-            <li>원하면 <strong>항목별 태그</strong>를 골라요. 같은 태그를 다시 누르면 취소돼요.</li>
-            <li>하고 싶은 말이 있으면 <strong>의견</strong>을 100자까지 써요. (선택)</li>
-            <li><strong>평가 등록</strong>을 누르면 바로 평가 목록 맨 위에 보여요.</li>
+        <section class="card guide-section" aria-labelledby="guide-steps">
+          <h2 id="guide-steps" class="guide-section__title">30초면 끝나는 평가 3단계</h2>
+          <ol class="guide-steps">
+            <li class="guide-steps__item">
+              <span class="guide-steps__num" aria-hidden="true">1</span>
+              <div class="guide-steps__body">
+                <h3>먹은 메뉴 찾기</h3>
+                <p>오늘의 메뉴에서 조식·중식·석식 탭을 골라요. 알레르기와 칼로리도 여기서 볼 수 있어요.</p>
+                <div class="guide-steps__demo guide-steps__demo--menu" aria-hidden="true">
+                  <span class="guide-steps__icon">🍖</span><strong>제육볶음</strong><span><span class="guide-steps__star">★</span> 4.5</span>
+                </div>
+              </div>
+            </li>
+            <li class="guide-steps__item">
+              <span class="guide-steps__num" aria-hidden="true">2</span>
+              <div class="guide-steps__body">
+                <h3>별 누르기</h3>
+                <p>별만 눌러도 평가 끝! 시간이 있으면 메뉴 이름을 눌러 간·양·온도·식감도 골라 주세요.</p>
+                <div class="guide-steps__demo" aria-hidden="true">
+                  <span class="guide-steps__stars">★★★★<span>☆</span></span>
+                  <span class="guide-steps__tag">✓ 간 적당</span><span class="guide-steps__tag">✓ 양 적다</span>
+                </div>
+              </div>
+            </li>
+            <li class="guide-steps__item">
+              <span class="guide-steps__num" aria-hidden="true">3</span>
+              <div class="guide-steps__body">
+                <h3>한마디 남기기 <span class="guide-steps__optional">(선택)</span></h3>
+                <p>하고 싶은 말은 의견에 100자까지 남겨요. 이상한 게 나왔다면 위생 문제 신고를 꼭 눌러 주세요.</p>
+                <div class="guide-steps__demo" aria-hidden="true">
+                  <span class="guide-steps__button">평가 등록</span><span class="guide-steps__button guide-steps__button--danger">! 위생 문제 신고</span>
+                </div>
+              </div>
+            </li>
           </ol>
         </section>
 
-        <section class="card guide-page__section" aria-labelledby="guide-tags">
-          <h2 id="guide-tags">태그 설명</h2>
-          <dl class="guide-page__tags">
-            <div><dt>간</dt><dd>짜다 / 적당 / 싱겁다</dd></div>
-            <div><dt>양</dt><dd>많다 / 적당 / 적다</dd></div>
-            <div><dt>온도</dt><dd>뜨겁다 / 적당 / 차갑다</dd></div>
-            <div><dt>식감</dt><dd>무름 / 적당 / 딱딱</dd></div>
-            <div class="guide-page__tag--warning">
-              <dt>위생</dt>
-              <dd>문제 있음 / 없음 — 이물질이 나왔거나 상한 것 같을 때 골라 주세요. 다른 태그와 달리 눈에 띄게 표시돼요.</dd>
+        <section class="card guide-section" aria-labelledby="guide-rules">
+          <h2 id="guide-rules" class="guide-section__title">이렇게 써 주세요</h2>
+          <p class="guide-section__desc">욕설이나 특정인을 향한 글은 금칙어 필터에 걸려서 등록되지 않아요.</p>
+          <div class="guide-examples">
+            <div class="guide-examples__box guide-examples__box--good">
+              <p class="guide-examples__title">✓ 좋은 예</p>
+              <p>“고기는 부드러웠는데 국이 좀 싱거웠어요.”</p>
+              <p>“밥이 덜 익은 것 같아요. 확인 부탁드려요.”</p>
             </div>
-          </dl>
-        </section>
-
-        <section class="card guide-page__section" aria-labelledby="guide-ranking">
-          <h2 id="guide-ranking">인기 순위는 어떻게 정하나요?</h2>
-          <p>
-            지금까지 쌓인 평가의 <strong>평균 별점이 높은 순서</strong>로 보여 줘요.
-            같은 메뉴가 다른 날 또 나오면 메뉴 이름을 기준으로 하나로 합쳐서 계산해요.
-          </p>
-        </section>
-
-        <section class="card guide-page__section" aria-labelledby="guide-rules">
-          <h2 id="guide-rules">지켜 주세요</h2>
-          <ul class="guide-page__list">
-            <li>메뉴에 대한 의견만 써 주세요. 특정인(조리원, 친구 등)을 향한 글은 삼가 주세요.</li>
-            <li>욕설이나 비방 표현이 들어간 의견은 등록되지 않아요.</li>
-            <li>로그인이 없어서 같은 사람이 여러 번 평가하는 걸 막지 못해요. 한 메뉴에 한 번만 솔직하게 평가해 주세요.</li>
+            <div class="guide-examples__box guide-examples__box--bad">
+              <p class="guide-examples__title">✕ 안 돼요</p>
+              <p><s>“배식하는 ○○ 진짜 별로임”</s> <span class="guide-examples__why">특정인 비방</span></p>
+              <p><s>“오늘 급식 ○○ 같네”</s> <span class="guide-examples__why">욕설·비속어</span></p>
+            </div>
+          </div>
+          <ul class="guide-promises">
+            <li class="guide-promises__item guide-promises__item--danger">금지 · 욕설과 비속어</li>
+            <li class="guide-promises__item guide-promises__item--danger">금지 · 특정인 비방</li>
+            <li class="guide-promises__item">약속 · 위생은 본 그대로</li>
+            <li class="guide-promises__item">약속 · 먹어 본 메뉴만</li>
+            <li class="guide-promises__item">약속 · 한 메뉴에 한 번만</li>
           </ul>
         </section>
-
-        <p class="guide-page__cta">
-          <a class="btn btn--primary" href="/">오늘의 메뉴 평가하러 가기</a>
-        </p>
-      </div>
+      </article>
     </main>
 
     <script type="module" src="/js/common/layout.js"></script>
