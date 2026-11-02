@@ -28,7 +28,7 @@ Backend: see the MealMeter-BE repo (runs on port 8080).
 ## Conventions
 
 - Styling: plain CSS. Design tokens live in `css/tokens.css` (`var(--color-…)`, `--space-…`); don't hard-code colors or sizes elsewhere. Page CSS is `css/<page>.css`, with class names prefixed by the page or component (e.g. `.menu-detail`, `.review-form__…`).
-- Ownership (see README.md): `js/api/`, `vite.config.js`, menu page → 박준호; main page (incl. TOP 3 in `js/pages/todayTop.js`), `js/common/layout.js` + `base.css` section 2, `css/tokens.css` + `base.css` section 1, `js/common/format.js` → 김태건; `js/common/state.js` + `base.css` section 4, guide and 404 pages → 김근영; ranking page, `js/common/ui.js` + `base.css` section 3, accessibility/QA → 조현우. Usage of shared functions is documented in a comment at the top of each file. Keep it updated when signatures change.
+- Ownership (see README.md): menu page, `vite.config.js` → 박준호; main page (incl. TOP 3 in `js/pages/todayTop.js`), `js/common/format.js` → 김태건; guide and 404 pages, `js/common/layout.js` + `base.css` section 2, `js/common/ui.js` + `base.css` section 3, `js/common/state.js` + `base.css` section 4 → 김근영; ranking page, `js/api/`, `css/tokens.css` + `base.css` section 1, accessibility/QA → 조현우. Usage of shared functions is documented in a comment at the top of each file. Keep it updated when signatures change.
 - Accessibility is part of the spec: tags are never distinguished by color alone (always show a text label), forms use `fieldset`/`legend`, everything is keyboard-operable, and live messages use `role="alert"`/`role="status"`.
 - Code comments and user-facing text are in Korean.
 - Git: work on `feature/<kebab-name>` branches, merge via PR only, never force-push.

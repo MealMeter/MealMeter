@@ -37,24 +37,26 @@ npm run dev        # http://localhost:5173
 
 | 파일 | 내용 | 담당 |
 | --- | --- | --- |
-| `js/api/` | 서버 부르는 함수 4개 + 나이스 급식 정보(`index.js`, `neis.js`), 가짜 데이터(`mock.js`), 태그 목록(`reviewFields.js`) | 박준호 |
-| `js/common/layout.js` + `css/base.css` 2번 구역 | 모든 페이지의 헤더·푸터·본문 건너뛰기 링크 | 김태건 |
+| `js/api/` | 서버 부르는 함수 4개 + 나이스 급식 정보(`index.js`, `neis.js`), 가짜 데이터(`mock.js`), 태그 목록(`reviewFields.js`) | 조현우 |
+| `js/common/layout.js` + `css/base.css` 2번 구역 | 모든 페이지의 헤더·푸터·본문 건너뛰기 링크 | 김근영 |
 | `js/common/format.js` | 글자 안전하게 바꾸기(`escapeHtml`), 날짜 형식 | 김태건 |
-| `js/common/ui.js` + `css/base.css` 3번 구역 | 별점 표시, 태그 배지, 버튼, 카드, 메뉴 그림 글자 | 조현우 |
+| `js/common/ui.js` + `css/base.css` 3번 구역 | 별점 표시, 태그 배지, 버튼, 카드, 메뉴 그림 글자 | 김근영 |
 | `js/common/state.js` + `css/base.css` 4번 구역 | 불러오는 중, 오류, 빈 화면, `loadData` | 김근영 |
-| `css/tokens.css`, `css/base.css` 1번 구역 | 색·글자·간격 규칙, 전체 기본 스타일 | 김태건 |
+| `css/tokens.css`, `css/base.css` 1번 구역 | 색·글자·간격 규칙, 전체 기본 스타일 | 조현우 |
 | `vite.config.js` | 개발 서버 설정, `/api` proxy, 404 처리, 페이지 목록 | 박준호 |
 
 공통 함수의 사용법은 각 파일 맨 위 주석에 적혀 있어요.
 
 ## 사람별 담당 한눈에 보기
 
-| 담당 | 맡은 것 |
-| --- | --- |
-| 박준호 | 메뉴 상세 페이지, `js/api/` 전체(서버·나이스·가짜 데이터), `vite.config.js` |
-| 김태건 | 오늘의 메뉴(메인) 페이지 전체(오늘 인기 TOP 3 포함), 공통 틀(헤더·푸터) `layout.js` + `base.css` 2번 구역, 디자인 규칙 `tokens.css` + `base.css` 1번 구역, `format.js` |
-| 김근영 | 이용 안내·404 페이지, `state.js` + `base.css` 4번 구역(불러오는 중·오류·빈 화면) |
-| 조현우 | 인기 순위 페이지, 공통 UI 부품 `ui.js` + `base.css` 3번 구역, 접근성·QA |
+코드 줄 수 기준으로 한 사람당 약 950줄이 되게 나눴어요.
+
+| 담당 | 맡은 것 | 분량 |
+| --- | --- | --- |
+| 박준호 | 메뉴 상세 페이지(`menu.html`, `menu.js`, `menu.css`), `vite.config.js` | 약 1000줄 |
+| 김태건 | 오늘의 메뉴(메인) 페이지 전체(오늘 인기 TOP 3 `todayTop.js` 포함), `format.js` | 약 940줄 |
+| 김근영 | 이용 안내·404 페이지, `layout.js` + `base.css` 2번(헤더·푸터), `ui.js` + `base.css` 3번(공통 UI 부품), `state.js` + `base.css` 4번(상태 표시) | 약 940줄 |
+| 조현우 | 인기 순위 페이지, `js/api/` 전체(서버·나이스·가짜 데이터), `tokens.css` + `base.css` 1번(디자인 규칙), 접근성·QA | 약 915줄 + QA |
 
 ## 새 페이지를 만들 때
 

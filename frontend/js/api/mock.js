@@ -1,4 +1,4 @@
-// 역할: 서버가 준비되기 전에 쓰는 가짜 서버. 진짜 서버와 같은 모양의 값을 돌려준다. 담당: 박준호
+// 역할: 서버가 준비되기 전에 쓰는 가짜 서버. 진짜 서버와 같은 모양의 값을 돌려준다. 담당: 조현우
 // 페이지를 옮겨도 등록한 평가가 남도록 브라우저 저장소(localStorage)에 보관한다.
 // 처음 상태로 되돌리려면 개발자 도구 콘솔에서 localStorage.removeItem('mealmeter-mock-reviews-v2') 실행.
 import { HYGIENE_FIELD, HYGIENE_PROBLEM, MEAL_TYPES, TAG_FIELDS } from './reviewFields.js';
