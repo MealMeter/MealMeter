@@ -44,6 +44,7 @@ const HYGIENE_TEXT = { [HYGIENE_PROBLEM]: '문제 있음', 없음: '문제 없�
 
 // ================= 태그 선택 버튼 =================
 
+// 태그 선택 버튼 하나. option: 서버로 보낼 값, text: 화면에 보일 글자 (보통 같다)
 function optionButtonHtml(option, text = option) {
   // type="button": form 안의 버튼은 기본이 "제출"이라, 이걸 안 쓰면 태그만 눌러도 평가가 등록돼 버린다
   // aria-pressed: 화면 낭독기가 "눌림 / 안 눌림"을 읽어 준다 (켜고 끄는 버튼)
@@ -64,6 +65,7 @@ function tagSelectorHtml(field) {
     </fieldset>`;
 }
 
+// 태그 버튼들을 화면에 만든다 (간·양·온도·식감 + 위생)
 function buildTagSelectors() {
   document.getElementById('tag-groups').innerHTML = TAG_FIELDS.map(tagSelectorHtml).join('');
   // 위생은 "문제 없음"을 앞에 두고, 이미 있는 위생 fieldset 안에 넣는다
@@ -143,6 +145,7 @@ function averageOf(reviews) {
   return Math.round((total / reviews.length) * 10) / 10;
 }
 
+// 페이지 위쪽 메뉴 카드: 식사 구분·날짜, 메뉴 이름, 평균 별점·평가 수
 function renderSummary() {
   const meal = mealCode ? `<span class="chip chip--accent">${MEAL_TYPES[mealCode]}</span>` : '';
   document.getElementById('menu-meta').innerHTML = `${meal}<span>${formatDate(menu.date)}</span>`;
@@ -211,6 +214,7 @@ function reviewHtml(review) {
     </li>`;
 }
 
+// 평가 목록 전체를 다시 그린다 (없으면 "아직 평가가 없어요")
 function renderReviews() {
   if (menu.reviews.length === 0) {
     renderEmpty(listBox, '아직 평가가 없어요', '<p class="small">첫 평가를 남겨 보세요. 등록하면 여기에 바로 보여요.</p>');
@@ -221,6 +225,7 @@ function renderReviews() {
 
 // ================= 폼 동작 연결 =================
 
+// 평가를 등록한 뒤 폼을 처음 상태로 비운다
 function resetForm() {
   form.reset(); // 별점 라디오와 의견 입력창을 처음 상태로
   ALL_FIELDS.forEach((field) => { tags[field.key] = null; });
@@ -229,6 +234,7 @@ function resetForm() {
   updateRatingUi();
 }
 
+// 폼의 모든 동작(별점, 태그, 의견 글자 수, 등록)을 연결한다. 페이지를 열 때 한 번만 실행한다
 function setupForm() {
   commentInput.maxLength = COMMENT_MAX_LENGTH; // 정해진 글자 수보다 더 못 쓰게 막는다
 

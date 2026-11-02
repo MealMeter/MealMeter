@@ -1,4 +1,5 @@
-/* 역할: 메인 페이지 전용 스타일 (.today, .meal-tabs, .meal-card, .dish, .quick-rate, .today-top). 담당: 김태건 */
+/* 역할: 메인 페이지 전용 스타일 (.today, .meal-tabs, .meal-card, .dish, .quick-rate, .today-top). 담당: 김태건
+   단, 맨 아래 "오늘 인기 TOP 3"(.today-top) 구역은 조현우 담당 (js/pages/todayTop.js와 짝) */
 
 .today {
   display: flex;
@@ -321,7 +322,7 @@
   letter-spacing: 2px;
 }
 
-/* ---------- 오늘 인기 TOP 3 ---------- */
+/* ---------- 오늘 인기 TOP 3 (담당: 조현우) ---------- */
 .today-top {
   padding: 0;
   overflow: hidden;

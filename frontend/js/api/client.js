@@ -3,8 +3,11 @@
 
 const DEFAULT_ERROR = '요청을 처리하지 못했어요. 잠시 후 다시 시도해 주세요.';
 
+// path: '/api/ranking' 같은 주소, options: fetch에 그대로 넘길 설정 (예: { method: 'POST', body })
+// 성공하면 서버가 준 JSON을 객체로 돌려주고, 실패하면 화면에 그대로 보여 줄 한국어 메시지로 Error를 던진다
 export async function request(path, options = {}) {
   let response;
+  // 1) 서버에 요청 보내기. 여기서 실패하면 인터넷이 끊겼거나 서버가 꺼진 것이다
   try {
     response = await fetch(path, {
       headers: { 'Content-Type': 'application/json' },

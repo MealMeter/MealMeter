@@ -24,6 +24,7 @@ function rankHtml(item) {
   return `<span class="ranking-page__rank${item.rank <= 3 ? ' is-top' : ''}"><span class="sr-only">순위 </span>${item.rank}</span>`;
 }
 
+// "★ 4.5" 평균 별점 (낭독기는 "평균 별점 4.5"로 읽는다)
 function scoreHtml(item) {
   return `<span class="ranking-page__star" aria-hidden="true">★</span> <span class="sr-only">평균 별점 </span><strong>${item.averageRating.toFixed(1)}</strong>`;
 }
@@ -53,6 +54,7 @@ function cardHtml(item) {
     </li>`;
 }
 
+// 받은 순위를 그린다. 순위가 하나도 없으면 빈 화면 + "평가하러 가기" 버튼
 function render(items) {
   if (items.length === 0) {
     renderEmpty(
@@ -83,4 +85,5 @@ function render(items) {
     <ol class="ranking-list" aria-label="메뉴 인기 순위, 평균 별점 높은 순">${items.map(cardHtml).join('')}</ol>`;
 }
 
+// 페이지를 열면: 불러오는 중 표시 → 서버에서 순위 받기 → render로 그리기 (실패하면 오류 + 다시 시도)
 loadData(contentBox, () => getRanking(), render, '순위를 불러오는 중이에요');

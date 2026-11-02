@@ -1,4 +1,4 @@
-// 역할: 공통 UI 부품을 HTML 글자로 만들어 주는 함수 모음 (별점 표시, 태그 배지, 링크 버튼). 담당: 김태건
+// 역할: 공통 UI 부품을 HTML 글자로 만들어 주는 함수 모음 (별점 표시, 태그 배지, 링크 버튼, 메뉴 그림 글자). 담당: 조현우
 // 스타일은 css/base.css의 "3) 공통 UI 부품"에 있다. 카드는 함수 없이 class="card"만 붙이면 된다.
 //
 // starRatingHtml(4.2)                       → ★★★★☆ 4.2
@@ -9,6 +9,7 @@
 // dishIcon('소고기무국')                    → '🍲' (메뉴 이름으로 고른 장식용 그림 글자)
 import { escapeHtml } from './format.js';
 
+// 읽기 전용 별점 표시. value는 0~5 숫자 (4.2처럼 소수도 된다)
 export function starRatingHtml(value = 0, { showValue = true } = {}) {
   const score = Math.min(5, Math.max(0, Number(value) || 0)); // 0~5 사이로 맞춘다
   const filled = Math.round(score); // 4.2 → 별 4개
@@ -56,6 +57,7 @@ const DISH_ICONS = [
   [/볶음|구이|불고기|갈비|제육|고기|스테이크|조림|찜/, '🍖'],
 ];
 
+// 위 목록에서 이름이 처음 맞는 그림을 돌려준다. 하나도 안 맞으면 기본 접시 🍽️
 export function dishIcon(name) {
   return DISH_ICONS.find(([pattern]) => pattern.test(name))?.[1] ?? '🍽️';
 }

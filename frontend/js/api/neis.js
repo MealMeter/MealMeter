@@ -58,6 +58,7 @@ function parseRow(row) {
  * @returns {Promise<Record<number, MealInfo>>} 식사 코드(1·2·3) → 정보. 급식이 없는 날은 빈 객체
  */
 export async function fetchMealInfo(date) {
+  // 나이스에 보낼 조건: 교육청 코드, 학교 코드, 날짜("20261027" 모양)
   const params = new URLSearchParams({
     Type: 'json',
     ATPT_OFCDC_SC_CODE: OFFICE_CODE,

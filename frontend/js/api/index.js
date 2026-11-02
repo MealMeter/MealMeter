@@ -6,6 +6,7 @@ import * as mock from './mock.js';
 import { fetchMealInfo } from './neis.js';
 import { DEFAULT_MEAL_CODE } from './reviewFields.js';
 
+// true면 가짜 서버(mock.js), false면 진짜 서버. 값을 따로 안 정하면 가짜 서버를 쓴다
 const USE_MOCK = import.meta.env.VITE_USE_MOCK !== 'false';
 
 /**

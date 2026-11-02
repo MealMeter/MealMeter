@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- 역할: 메인 페이지 (/) — 오늘의 메뉴 (명세서 3장 기능 1). 담당: 김태건
+<!-- 역할: 메인 페이지 (/) — 오늘의 메뉴 (명세서 3장 기능 1). 담당: 김태건 (오늘 인기 TOP 3 상자는 조현우)
      조식·중식·석식 탭, 칼로리·영양소, 메뉴마다 알레르기와 바로 별점 남기기, 오늘 인기 TOP 3.
      화면 틀만 여기 있고, 내용은 js/pages/main.js가 서버(메뉴·평가)와 나이스(칼로리·알레르기) 데이터로 채운다. -->
 <html lang="ko">
@@ -43,6 +43,7 @@
         <!-- 고른 식사의 메뉴 목록 (불러오는 중 / 오류 / 급식 없음도 이 자리에 나온다) -->
         <section class="today__panel" id="meal-panel" role="tabpanel" aria-labelledby="meal-tab-2"></section>
 
+        <!-- 오늘 인기 TOP 3 (내용은 js/pages/todayTop.js가 채운다) -->
         <section class="card today-top" aria-labelledby="today-top-title">
           <div class="today-top__head">
             <h2 id="today-top-title">오늘 인기 TOP 3</h2>

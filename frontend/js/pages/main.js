@@ -1,4 +1,4 @@
-// 역할: 메인 페이지 동작 — 오늘의 메뉴 (명세서 3장 기능 1). 담당: 김태건
+// 역할: 메인 페이지 동작 — 오늘의 메뉴 (명세서 3장 기능 1). 담당: 김태건 (아래쪽 "오늘 인기 TOP 3"은 todayTop.js, 담당: 조현우)
 // 순서: 서버에서 조식·중식·석식 메뉴를 한 번에 불러온다 → 고른 식사를 그린다 → 나이스에서 칼로리·알레르기를 받아 덧붙인다.
 // 별을 누르면 바로 평가가 등록된다 (별점만 있는 평가). 태그·의견은 메뉴 이름을 눌러 상세 페이지에서 남긴다.
 import { createReview, getMealInfo, getTodayMenus } from '../api/index.js';
@@ -7,8 +7,9 @@ import { MEAL_TYPES, RATING_LABELS } from '../api/reviewFields.js';
 import { escapeHtml, formatDate } from '../common/format.js';
 import { renderEmpty, renderError, renderLoading } from '../common/state.js';
 import { dishIcon } from '../common/ui.js';
+import { renderTodayTop } from './todayTop.js';
 
-const MEAL_CODES = [1, 2, 3];
+const MEAL_CODES = [1, 2, 3]; // 1 조식 / 2 중식 / 3 석식
 const RATED_KEY = 'mealmeter-quick-ratings'; // 바로 남긴 별점을 기억하는 브라우저 저장소 이름
 
 // HTML에서 내용을 채울 자리를 찾아 둔다
@@ -23,7 +24,7 @@ const topList = document.getElementById('today-top-list');
 let meals = {};
 let date = null; // 서버가 정한 오늘 날짜 "2026-10-27"
 let info = null; // 나이스 정보 { 1: MealInfo, 2: …, 3: … }. 아직 없거나 실패하면 null
-let infoFailed = false;
+let infoFailed = false; // 나이스 정보를 불러오다 실패했는지 (실패하면 "못 불러왔어요" 안내를 보여 준다)
 let selected = null; // 지금 고른 식사 코드
 
 // 이 브라우저에서 이미 바로 별점을 남긴 메뉴 { menuId: 별점 }. 같은 메뉴에 여러 번 누르지 않게 한다
@@ -54,6 +55,7 @@ function mealByTime() {
 
 // ================= 식사 탭 =================
 
+// 그 식사에 메뉴가 하나라도 있는지 (불러오는 중·실패·급식 없음이면 false)
 function hasMenus(code) {
   return (meals[code]?.menus?.length ?? 0) > 0;
 }
@@ -63,6 +65,7 @@ function isEmptyMeal(code) {
   return meals[code]?.menus?.length === 0;
 }
 
+// 탭 이름 아래 작은 글자: 불러오는 중이면 "…", 칼로리를 알면 "812 kcal", 모르면 "6가지"
 function tabSubText(code) {
   if (!meals[code]) return '…';
   if (meals[code].error) return '불러오기 실패';
@@ -71,6 +74,7 @@ function tabSubText(code) {
   return kcal ? `${Math.round(kcal)} kcal` : `${meals[code].menus.length}가지`;
 }
 
+// 탭 세 개의 선택 표시·막힘·작은 글자를 지금 값(selected, meals, info)에 맞게 다시 그린다
 function renderTabs() {
   tabs.forEach((tab) => {
     const code = Number(tab.dataset.meal);
@@ -84,6 +88,7 @@ function renderTabs() {
   panel.setAttribute('aria-labelledby', `meal-tab-${selected}`);
 }
 
+// 식사를 바꾼다. 키보드로 옮긴 경우(focus: true)에는 포커스도 새 탭으로 옮긴다
 function selectMeal(code, { focus = false } = {}) {
   selected = code;
   renderTabs();
@@ -91,6 +96,7 @@ function selectMeal(code, { focus = false } = {}) {
   if (focus) document.getElementById(`meal-tab-${code}`).focus();
 }
 
+// 탭 클릭·키보드 동작을 연결한다 (탭마다 따로 연결하지 않고 탭 묶음 하나에서 받는다)
 function setupTabs() {
   tabList.addEventListener('click', (event) => {
     const tab = event.target.closest('[role="tab"]');
@@ -116,6 +122,7 @@ function setupTabs() {
 
 // ================= 메뉴 목록 =================
 
+// 메뉴 이름 옆 "★ 4.5 · 2명". 평가가 없으면 아무것도 안 그린다
 function scoreHtml(menu) {
   if (menu.reviewCount === 0) return '';
   return `
@@ -137,6 +144,7 @@ function quickRateHtml(menu) {
   return `<div class="quick-rate" role="group" aria-label="${escapeHtml(menu.name)} 별점 바로 남기기">${stars}</div>`;
 }
 
+// 메뉴 상세(평가 작성) 페이지 주소. 예: /menu.html?menuId=8&meal=2
 function detailHref(menu) {
   return `/menu.html?menuId=${encodeURIComponent(menu.menuId)}&meal=${selected}`;
 }
@@ -150,6 +158,8 @@ function statusHtml(menu) {
   return `<span class="dish__prompt">${menu.reviewCount > 0 ? '별을 눌러 바로 평가해요' : '아직 평가가 없어요. 첫 평가를 남겨 보세요'}</span>`;
 }
 
+// 메뉴 한 줄 (그림 글자, 이름, 평균 별점, 바로 별점 버튼, 알레르기 버튼)
+// 알레르기는 나이스 정보에서 이름으로 찾는다. 못 찾으면 버튼을 아예 안 만든다
 function dishHtml(menu) {
   const allergies = findDish(info?.[selected], menu.name)?.allergies ?? [];
   const allergyId = `allergy-${menu.menuId}`;
@@ -203,6 +213,7 @@ function summaryHtml(menus) {
     </div>`;
 }
 
+// 고른 식사의 내용 자리를 그린다: 불러오는 중 → 오류 → 급식 없음 → 메뉴 목록 순서로 확인
 function renderPanel() {
   const meal = meals[selected];
   if (!meal) {
@@ -225,38 +236,16 @@ function renderPanel() {
 }
 
 // ================= 오늘 인기 TOP 3 =================
+// 그리는 코드는 todayTop.js (담당: 조현우). 여기서는 지금 가진 메뉴 정보(meals)를 넘겨주기만 한다.
 
 function renderTop() {
-  // 세 끼를 모두 모아 평가가 있는 메뉴만, 평균 별점 → 평가 수 순서로 3개
-  const seen = new Set();
-  const list = MEAL_CODES.flatMap((code) => (meals[code]?.menus ?? []).map((menu) => ({ ...menu, code })))
-    .filter((menu) => menu.reviewCount > 0 && !seen.has(menu.name) && seen.add(menu.name))
-    .sort((a, b) => b.averageRating - a.averageRating || b.reviewCount - a.reviewCount)
-    .slice(0, 3);
-
-  if (!MEAL_CODES.some((code) => meals[code]?.menus)) {
-    // 세 끼 모두 불러오지 못했으면 "평가가 없다"고 하지 않는다 (위 오류 안내의 "다시 시도"로 해결)
-    topList.innerHTML = '<p class="today-top__empty">메뉴를 불러오지 못해서 순위를 보여 줄 수 없어요.</p>';
-    return;
-  }
-  if (list.length === 0) {
-    topList.innerHTML = '<p class="today-top__empty">아직 오늘 평가가 없어요. 첫 평가를 남겨 보세요.</p>';
-    return;
-  }
-  topList.innerHTML = `
-    <ol class="today-top__list">
-      ${list.map((menu, index) => `
-        <li class="today-top__item">
-          <span class="today-top__rank"><span class="sr-only">순위 </span>${index + 1}</span>
-          <span class="today-top__icon" aria-hidden="true">${dishIcon(menu.name)}</span>
-          <a class="today-top__name" href="/menu.html?menuId=${encodeURIComponent(menu.menuId)}&meal=${menu.code}">${escapeHtml(menu.name)}</a>
-          <span class="today-top__score"><span aria-hidden="true">★</span> <span class="sr-only">평균 별점 </span><strong>${menu.averageRating.toFixed(1)}</strong></span>
-        </li>`).join('')}
-    </ol>`;
+  renderTodayTop(topList, meals);
 }
 
 // ================= 별점 바로 남기기 · 알레르기 =================
 
+// 별을 눌렀을 때: 서버에 별점만 있는 평가를 보내고, 성공하면 그 메뉴 줄만 새로 그린다
+// item: 누른 별이 들어 있는 <li class="dish">, rating: 누른 별 번호(1~5)
 async function quickRate(item, rating) {
   const menu = meals[selected].menus.find((m) => m.menuId === Number(item.dataset.menuId));
   const buttons = item.querySelectorAll('.quick-rate__star');
@@ -298,6 +287,8 @@ async function quickRate(item, rating) {
   renderTop();
 }
 
+// 메뉴 목록 안의 클릭(별 버튼, 알레르기 열기/닫기)을 한 곳에서 받는다.
+// 목록은 innerHTML로 계속 새로 그려지므로, 버튼마다가 아니라 바깥 상자(panel)에 연결해야 한다
 function setupPanel() {
   panel.addEventListener('click', (event) => {
     const star = event.target.closest('.quick-rate__star');
@@ -306,6 +297,7 @@ function setupPanel() {
       return;
     }
 
+    // 알레르기 버튼: 누를 때마다 열고 닫는다 (aria-expanded로 낭독기에도 열림/닫힘을 알린다)
     const toggle = event.target.closest('.dish__allergy-toggle');
     if (toggle) {
       const open = toggle.getAttribute('aria-expanded') !== 'true';
@@ -318,6 +310,7 @@ function setupPanel() {
 
 // ================= 불러오기 =================
 
+// Promise.allSettled 결과 하나 → meals에 넣을 값 ({ menus } 또는 { error })
 function toMealResult(result) {
   return result.status === 'fulfilled' ? { menus: result.value.menus } : { error: result.reason.message };
 }
@@ -352,6 +345,7 @@ async function reloadMeal(code) {
   renderTop();
 }
 
+// 페이지를 열면 한 번 실행된다
 async function start() {
   selected = mealByTime();
   renderTabs();

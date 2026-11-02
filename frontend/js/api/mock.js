@@ -1,19 +1,22 @@
-// 역할: 서버가 준비되기 전에 쓰는 가짜 서버. 진짜 서버와 같은 모양의 값을 돌려준다.
+// 역할: 서버가 준비되기 전에 쓰는 가짜 서버. 진짜 서버와 같은 모양의 값을 돌려준다. 담당: 박준호
 // 페이지를 옮겨도 등록한 평가가 남도록 브라우저 저장소(localStorage)에 보관한다.
 // 처음 상태로 되돌리려면 개발자 도구 콘솔에서 localStorage.removeItem('mealmeter-mock-reviews-v2') 실행.
 import { HYGIENE_FIELD, HYGIENE_PROBLEM, MEAL_TYPES, TAG_FIELDS } from './reviewFields.js';
 
+// 욕설 거르기 흉내용 단어 목록 (진짜 거르기는 서버 app/rules.py가 한다)
 const BANNED_WORDS = [
   '바보', '멍청이', '씨발', '시발', '병신', '개새끼', '좆',
   '섹스', '성관계', '자위', '자지', '보지', '음란', '꼴린다',
 ];
 
+// Date → "2026-10-27" (서버가 주는 날짜 모양)
 function formatDate(date) {
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
   return `${date.getFullYear()}-${month}-${day}`;
 }
 
+// 오늘에서 며칠 전 날짜 (지난 메뉴 예시를 만들 때 쓴다)
 function daysAgo(days) {
   const date = new Date();
   date.setDate(date.getDate() - days);
@@ -62,8 +65,9 @@ const MEAL_INFO = {
   } },
 };
 
-let nextReviewId = 1;
+let nextReviewId = 1; // 다음에 만들 평가 번호 (하나 만들 때마다 1씩 늘어난다)
 
+// 예시 평가 한 건 만들기. tags 순서: [간, 양, 온도, 식감, 위생], hoursAgo: 몇 시간 전에 쓴 평가인지
 function makeReview(menuId, rating, tags, comment, hoursAgo) {
   const createdAt = new Date(Date.now() - hoursAgo * 60 * 60 * 1000).toISOString();
   return {
@@ -120,10 +124,12 @@ function saveReviews() {
 const reviews = loadReviews();
 nextReviewId = Math.max(0, ...reviews.map((review) => review.reviewId)) + 1;
 
+// 진짜 서버처럼 잠깐(0.3초) 기다렸다가 답한다. 그래야 "불러오는 중" 화면도 확인할 수 있다
 function wait(ms = 300) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+// 평가 목록 → { averageRating: 평균 별점(소수 첫째 자리), reviewCount: 평가 수 }
 function summarize(list) {
   const reviewCount = list.length;
   const total = list.reduce((sum, review) => sum + review.rating, 0);
@@ -149,10 +155,14 @@ function topTags(list) {
   return result;
 }
 
+// 깊은 복사. 페이지가 받은 값을 고쳐도 가짜 서버의 원본은 안 바뀌게 한다 (진짜 서버처럼)
 function copy(value) {
   return structuredClone(value);
 }
 
+// 아래 함수들은 index.js의 같은 이름 함수와 똑같은 모양으로 돌려준다 (모양은 index.js의 JSDoc 참고)
+
+// 오늘 날짜 + 그 식사의 메뉴 목록 (메뉴마다 평균 별점·평가 수를 붙인다)
 export async function getTodayMenus(mealCode) {
   await wait();
   return {
@@ -168,6 +178,7 @@ export async function getTodayMenus(mealCode) {
   };
 }
 
+// 메뉴 하나의 정보 + 그 메뉴의 평가 전부
 export async function getMenuReviews(menuId) {
   await wait();
   const menu = menus.find((item) => item.menuId === Number(menuId));
@@ -186,6 +197,7 @@ export async function getMenuReviews(menuId) {
   };
 }
 
+// 평가 등록. 진짜 서버처럼 별점·메뉴 번호·욕설을 검사하고, 문제가 있으면 한국어 메시지로 Error를 던진다
 export async function createReview(review) {
   await wait();
   const rating = Number(review.rating);
@@ -213,6 +225,7 @@ export async function createReview(review) {
   return copy(saved);
 }
 
+// 인기 순위. 평가가 있는 메뉴만, 평균 별점 높은 순
 export async function getRanking() {
   await wait();
   // 메뉴 이름 기준으로 모은다 (다른 날 같은 메뉴는 하나로 합침)
