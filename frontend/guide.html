@@ -2,46 +2,84 @@
 <!-- 역할: 이용 안내 페이지 (guide.html). 서버를 부르지 않는 정적 페이지로,
      평가 방법(3단계)과 의견을 쓸 때 지킬 약속을 설명한다. 담당: 김근영
      단계 옆의 작은 그림(메뉴 줄, 별, 버튼)은 보기용 예시라서 aria-hidden으로 낭독기에서 뺀다. -->
+<!-- [문법] <!doctype html>: HTML5 문서라는 선언. 반드시 맨 첫 줄. -->
+<!-- [문법] <html lang="ko">: 문서의 뿌리 요소, 한국어 문서. -->
 <html lang="ko">
+  <!-- [문법] <head>: 화면에 안 보이는 문서 정보 영역. -->
   <head>
+    <!-- 글자 인코딩 UTF-8(한글 깨짐 방지) -->
     <meta charset="UTF-8" />
+    <!-- 휴대폰에서 화면 폭을 기기 폭에 맞춘다 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 휴대폰 브라우저 주소창 색 -->
     <meta name="theme-color" content="#fff9f4" />
+    <!-- 브라우저 탭 제목 -->
     <title>이용 안내 · MealMeter</title>
+    <!-- 구글 폰트 서버에 미리 연결 -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- 제목용 글꼴 Jua -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap" />
+    <!-- 본문용 글꼴 Pretendard (버전 고정) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <!-- 모든 페이지 공통 스타일 -->
     <link rel="stylesheet" href="/css/base.css" />
+    <!-- 이 페이지 전용 스타일. 공통 스타일 "뒤"에 불러와서 같은 규칙이면 이쪽이 이긴다(나중에 쓴 CSS 우선). -->
     <link rel="stylesheet" href="/css/guide.css" />
   </head>
+  <!-- [문법] <body>: 화면에 보이는 내용. 헤더·푸터는 layout.js가 넣는다. -->
   <body>
+    <!-- [문법] <main id="main" tabindex="-1">: 핵심 내용 영역. 건너뛰기 링크의 도착점이며, 포커스를 받을 수 있다. -->
     <main id="main" class="site-main" tabindex="-1">
+      <!-- [문법] <article>: 그 자체로 완결된 글 한 편. -->
+      <!-- [문법] aria-labelledby="guide-title": 이 영역의 이름을 id="guide-title"인 요소(아래 h1)의 글자로 정한다. -->
       <article class="guide-page" aria-labelledby="guide-title">
+        <!-- 맨 위 소개 영역(로고 + 제목 + 버튼). 모양은 guide.css의 .guide-hero -->
         <div class="guide-hero">
+          <!-- [문법] <svg>: 벡터 그림. layout.js의 로고와 같은 그림을 크게(64px) 그린다. aria-hidden: 장식이라 낭독기 제외. -->
+          <!-- [문법] viewBox="0 0 34 34": 그림 좌표계(가로·세로 34칸). 실제 크기는 CSS가 정한다. -->
           <svg class="guide-hero__logo" aria-hidden="true" viewBox="0 0 34 34">
+            <!-- [문법] <circle cx cy r fill>: 중심 (17,17), 반지름 16인 주황색 원(접시 바탕). -->
             <circle cx="17" cy="17" r="16" fill="#D9480F"></circle>
+            <!-- 안쪽 반투명 흰 테두리 원(접시 테두리). fill="none": 속은 비움, stroke: 테두리 색, stroke-opacity: 투명도 35% -->
             <circle cx="17" cy="17" r="11.5" fill="none" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="1.5"></circle>
+            <!-- [문법] <path d>: M9 21(시작점으로 이동) A8 8 0 0 1 25 21(반지름 8인 원호를 (25,21)까지) → 계기판 눈금 반원. linecap=round: 선 끝 둥글게 -->
             <path d="M9 21 A8 8 0 0 1 25 21" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"></path>
+            <!-- M17 21 L21.5 14.5: (17,21)에서 (21.5,14.5)까지 직선 → 계기판 바늘 -->
             <path d="M17 21 L21.5 14.5" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"></path>
+            <!-- 바늘 중심의 작은 흰 원 -->
             <circle cx="17" cy="21" r="2.2" fill="#FFFFFF"></circle>
           </svg>
+          <!-- 소개 글 묶음 -->
           <div class="guide-hero__text">
+            <!-- 제목 위의 작은 안내 글(base.css의 .eyebrow) -->
             <p class="eyebrow">이용 안내</p>
+            <!-- [문법] <h1 id="guide-title">: 페이지 대제목. id는 위 article의 aria-labelledby가 가리키는 이름표. -->
             <h1 id="guide-title">“오늘 국 짰다” 이제 교실에서 끝나지 않아요</h1>
             <p>별점 한 번이 쌓이면 데이터가 되고, 데이터가 쌓이면 급식이 바뀌어요. 로그인도 이름도 없어서 부담도 없어요.</p>
           </div>
+          <!-- [문법] <a href="/">: 첫 페이지(오늘의 메뉴)로 가는 링크. 클래스 3개: 버튼 모양 + 주 버튼 색 + 이 영역 전용 크기 -->
           <a class="btn btn--primary guide-hero__cta" href="/">평가하러 가기</a>
         </div>
 
+        <!-- [문법] <section>: 주제가 있는 구역. aria-labelledby로 아래 h2 글자를 구역 이름으로 쓴다. -->
+        <!-- class="card guide-section": 공통 카드 모양(base.css) + 이 페이지 구역 모양(guide.css)을 함께 적용 -->
         <section class="card guide-section" aria-labelledby="guide-steps">
+          <!-- [문법] <h2>: 2단계 제목(h1 아래). -->
           <h2 id="guide-steps" class="guide-section__title">30초면 끝나는 평가 3단계</h2>
+          <!-- [문법] <ol>: 순서 있는 목록(1, 2, 3 단계라서 ol). 기본 번호는 CSS(list-style: none)로 숨기고 직접 번호를 그린다. -->
           <ol class="guide-steps">
+            <!-- [문법] <li>: 목록의 항목 하나 -->
             <li class="guide-steps__item">
+              <!-- 동그라미 번호 "1". ol이 이미 순서를 알려 주므로 낭독기에는 숨긴다(aria-hidden) -->
               <span class="guide-steps__num" aria-hidden="true">1</span>
+              <!-- 단계 설명 묶음 -->
               <div class="guide-steps__body">
+                <!-- [문법] <h3>: 3단계 제목 -->
                 <h3>먹은 메뉴 찾기</h3>
                 <p>오늘의 메뉴에서 조식·중식·석식 탭을 골라요. 알레르기와 칼로리도 여기서 볼 수 있어요.</p>
+                <!-- 보기용 작은 그림(메뉴 한 줄 모양). 클래스 2개: 공통 그림 모양 + 메뉴 줄 전용(--menu) 모양 -->
                 <div class="guide-steps__demo guide-steps__demo--menu" aria-hidden="true">
+                  <!-- 그림 글자 🍖 / <strong>: 굵은 메뉴 이름 / 별 1개와 점수 4.5 (span 안에 span을 넣어 별만 노란색) -->
                   <span class="guide-steps__icon">🍖</span><strong>제육볶음</strong><span><span class="guide-steps__star">★</span> 4.5</span>
                 </div>
               </div>
@@ -51,6 +89,7 @@
               <div class="guide-steps__body">
                 <h3>별 누르기</h3>
                 <p>별만 눌러도 평가 끝! 시간이 있으면 메뉴 이름을 눌러 간·양·온도·식감도 골라 주세요.</p>
+                <!-- 보기용 그림: 별 4개 + 빈 별 1개(안쪽 span만 회색), 그리고 태그 예시 2개 -->
                 <div class="guide-steps__demo" aria-hidden="true">
                   <span class="guide-steps__stars">★★★★<span>☆</span></span>
                   <span class="guide-steps__tag">✓ 간 적당</span><span class="guide-steps__tag">✓ 양 적다</span>
@@ -60,8 +99,10 @@
             <li class="guide-steps__item">
               <span class="guide-steps__num" aria-hidden="true">3</span>
               <div class="guide-steps__body">
+                <!-- 제목 안에 작은 "(선택)" 표시를 span으로 넣어 글자 크기·색만 다르게 한다 -->
                 <h3>한마디 남기기 <span class="guide-steps__optional">(선택)</span></h3>
                 <p>하고 싶은 말은 의견에 100자까지 남겨요. 이상한 게 나왔다면 위생 문제 신고를 꼭 눌러 주세요.</p>
+                <!-- 보기용 버튼 모양 2개. 진짜 버튼이 아니라 span이라 눌리지 않는다. --danger: 빨간 테두리 신고 버튼 모양 -->
                 <div class="guide-steps__demo" aria-hidden="true">
                   <span class="guide-steps__button">평가 등록</span><span class="guide-steps__button guide-steps__button--danger">! 위생 문제 신고</span>
                 </div>
@@ -70,24 +111,34 @@
           </ol>
         </section>
 
+        <!-- 두 번째 구역: 의견 작성 규칙 -->
         <section class="card guide-section" aria-labelledby="guide-rules">
           <h2 id="guide-rules" class="guide-section__title">이렇게 써 주세요</h2>
+          <!-- 제목 아래 흐린 설명 문단 -->
           <p class="guide-section__desc">욕설이나 특정인을 향한 글은 금칙어 필터에 걸려서 등록되지 않아요.</p>
+          <!-- 좋은 예 / 안 되는 예 상자 두 개를 나란히(좁은 화면에서는 위아래로) 놓는 격자 -->
           <div class="guide-examples">
+            <!-- 좋은 예 상자. 클래스 2개: 공통 상자 모양 + 좋은 예 색(--good) -->
             <div class="guide-examples__box guide-examples__box--good">
               <p class="guide-examples__title">✓ 좋은 예</p>
+              <!-- “ ”: 한글 둥근 따옴표 글자(그냥 글자) -->
               <p>“고기는 부드러웠는데 국이 좀 싱거웠어요.”</p>
               <p>“밥이 덜 익은 것 같아요. 확인 부탁드려요.”</p>
             </div>
+            <!-- 안 되는 예 상자(빨간 색 --bad) -->
             <div class="guide-examples__box guide-examples__box--bad">
               <p class="guide-examples__title">✕ 안 돼요</p>
+              <!-- [문법] <s>: 더 이상 맞지 않는 내용을 나타내는 취소선. 옆 span에 이유를 글자로 적는다(색만으로 구분하지 않기). -->
               <p><s>“배식하는 ○○ 진짜 별로임”</s> <span class="guide-examples__why">특정인 비방</span></p>
               <p><s>“오늘 급식 ○○ 같네”</s> <span class="guide-examples__why">욕설·비속어</span></p>
             </div>
           </div>
+          <!-- [문법] <ul>: 순서 없는 목록. 약속들을 알약 모양 라벨로 늘어놓는다. -->
           <ul class="guide-promises">
+            <!-- 금지 항목: 기본 모양 + 빨간색(--danger). "금지 ·"라는 글자로도 구분한다(색만으로 구분하지 않기) -->
             <li class="guide-promises__item guide-promises__item--danger">금지 · 욕설과 비속어</li>
             <li class="guide-promises__item guide-promises__item--danger">금지 · 특정인 비방</li>
+            <!-- 약속 항목: 기본 주황 모양 -->
             <li class="guide-promises__item">약속 · 위생은 본 그대로</li>
             <li class="guide-promises__item">약속 · 먹어 본 메뉴만</li>
             <li class="guide-promises__item">약속 · 한 메뉴에 한 번만</li>
@@ -96,6 +147,7 @@
       </article>
     </main>
 
+    <!-- 공통 헤더·푸터를 붙이는 JS. type="module"이라 HTML을 다 읽은 뒤 실행된다. 이 페이지는 다른 JS가 없다(정적 페이지). -->
     <script type="module" src="/js/common/layout.js"></script>
   </body>
 </html>

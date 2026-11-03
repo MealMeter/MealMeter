@@ -104,377 +104,433 @@ button {
 /* ================= 2) 공통 틀 (김근영) ================= */
 
 /* 본문 건너뛰기 링크: 평소에는 화면 위쪽 밖에 숨어 있다가, Tab으로 포커스를 받으면 내려온다 */
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .skip-link {
-  position: absolute;
-  top: -100px;
-  left: var(--space-3);
-  z-index: 10;
-  padding: var(--space-2) var(--space-3);
-  background: var(--color-accent-strong);
-  color: var(--color-surface);
-  border-radius: var(--radius-button);
+  position: absolute; /* position: 위치를 정하는 방식 / absolute: 원래 자리에서 빠져나와 top/left 값으로 위치를 잡는다 */
+  top: -100px; /* top: 위쪽 기준 위치 / px = 화면 픽셀 단위 / 음수: 화면 위쪽 밖으로 밀어 숨긴다 */
+  left: var(--space-3); /* left: 왼쪽 기준 위치 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-3) */
+  z-index: 10; /* z-index: 겹칠 때 쌓이는 순서(숫자가 클수록 위). position이 있는 요소에만 적용 */
+  padding: var(--space-2) var(--space-3); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2, --space-3) */
+  background: var(--color-accent-strong); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-strong) */
+  color: var(--color-surface); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
+  border-radius: var(--radius-button); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-button) */
 }
 
+/* [선택자] :focus = 키보드(Tab) 등으로 선택(포커스)됐을 때 */
 .skip-link:focus {
-  top: var(--space-3);
+  top: var(--space-3); /* top: 위쪽 기준 위치 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-3) */
 }
 
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .site-header {
+  /* position: 위치를 정하는 방식 / sticky: 스크롤하다가 지정 위치(top: 0)에 닿으면 그 자리에 붙어 있다 */
   position: sticky; /* 스크롤해도 메뉴가 위에 붙어 있다 */
-  top: 0;
-  z-index: 10;
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
+  top: 0; /* top: 위쪽 기준 위치 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  z-index: 10; /* z-index: 겹칠 때 쌓이는 순서(숫자가 클수록 위). position이 있는 요소에만 적용 */
+  background: var(--color-surface); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
+  border-bottom: 1px solid var(--color-border); /* border-bottom: 아래쪽 테두리만 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-border) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .site-header__inner {
-  display: flex;
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  /* flex-wrap: flex 항목이 한 줄에 다 안 들어가면 줄바꿈할지 / wrap: 넘치면 다음 줄로 */
   flex-wrap: wrap; /* 화면이 좁으면 메뉴가 다음 줄로 내려간다 */
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-1) var(--space-5);
-  max-width: var(--content-width);
-  margin: 0 auto;
-  padding: var(--space-2) var(--space-4);
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  justify-content: space-between; /* justify-content: 주축(가로 배치면 가로) 정렬과 남는 공간 분배 / space-between: 양 끝에 붙이고 남은 공간을 사이에 나눈다 */
+  gap: var(--space-1) var(--space-5); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-1, --space-5) */
+  max-width: var(--content-width); /* max-width: 최대 가로 크기(이보다 넓어지지 않음) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--content-width) */
+  margin: 0 auto; /* margin: 바깥 여백(다른 요소와의 거리). 값 개수 규칙은 padding과 같다 / 0 auto: 위아래 0, 좌우 auto(남는 공간을 양쪽에 똑같이) → 가로 가운데 정렬 */
+  padding: var(--space-2) var(--space-4); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2, --space-4) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .site-header__logo {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 48px;
-  border-radius: var(--radius-small);
-  font-family: var(--font-title);
-  font-size: 25px;
-  line-height: 1;
-  color: var(--color-text);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  gap: var(--space-2); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
+  min-height: 48px; /* min-height: 최소 세로 크기(손가락으로 누르기 쉽게 44~48px 이상을 자주 쓴다) / px = 화면 픽셀 단위 */
+  border-radius: var(--radius-small); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-small) */
+  font-family: var(--font-title); /* font-family: 글꼴 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-title) */
+  font-size: 25px; /* font-size: 글자 크기 / px = 화면 픽셀 단위 */
+  line-height: 1; /* line-height: 줄 높이(단위 없는 숫자는 글자 크기의 배수) */
+  color: var(--color-text); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / :hover = 마우스를 올렸을 때 */
 .site-header__logo:hover {
-  text-decoration: none;
-  color: var(--color-text);
+  text-decoration: none; /* text-decoration: 밑줄 같은 글자 장식 / none: 밑줄을 없앤다 */
+  color: var(--color-text); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text) */
 }
 
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .site-logo {
-  width: 34px;
-  height: 34px;
-  flex: none;
+  width: 34px; /* width: 가로 크기 / px = 화면 픽셀 단위 */
+  height: 34px; /* height: 세로 크기 / px = 화면 픽셀 단위 */
+  flex: none; /* flex: flex 상자 안에서 늘어나고(grow) 줄어드는(shrink) 정도와 기본 크기(basis) / none: 늘어나지도 줄어들지도 않는다(0 0 auto) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .site-header__nav {
-  flex: 1 1 300px;
-  max-width: 380px;
+  flex: 1 1 300px; /* flex: flex 상자 안에서 늘어나고(grow) 줄어드는(shrink) 정도와 기본 크기(basis) / 1 1 300px: 기본 300px에서 시작해 남으면 늘어나고(1) 모자라면 줄어든다(1) */
+  max-width: 380px; /* max-width: 최대 가로 크기(이보다 넓어지지 않음) / px = 화면 픽셀 단위 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .site-header__list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  display: grid; /* display: 요소를 어떤 상자 방식으로 배치할지 / grid: 자식들을 격자(행·열)로 배치 */
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* grid-template-columns: grid의 열(세로 칸) 개수와 너비 / repeat(n, 크기): 같은 크기의 열을 n번 반복 / minmax(최소, 최대): 열 너비를 이 범위 안에서 조절 / 1fr: 남는 공간을 1몫씩 나눠 가짐 */
+  gap: 2px; /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / px = 화면 픽셀 단위 */
+  margin: 0; /* margin: 바깥 여백(다른 요소와의 거리). 값 개수 규칙은 padding과 같다 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  padding: 0; /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  list-style: none; /* list-style: 목록(ul/ol) 앞 점·번호 모양 / none: 점·번호를 없앤다 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .site-header__link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  border-radius: var(--radius-small);
-  color: var(--color-text-muted);
-  font-weight: 500;
-  white-space: nowrap;
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  justify-content: center; /* justify-content: 주축(가로 배치면 가로) 정렬과 남는 공간 분배 / center: 가운데로 모은다 */
+  min-height: 48px; /* min-height: 최소 세로 크기(손가락으로 누르기 쉽게 44~48px 이상을 자주 쓴다) / px = 화면 픽셀 단위 */
+  border-radius: var(--radius-small); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-small) */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
+  font-weight: 500; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  white-space: nowrap; /* white-space: 공백·줄바꿈 처리 방식 / nowrap: 줄바꿈하지 않고 한 줄로 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / :hover = 마우스를 올렸을 때 */
 .site-header__link:hover {
-  background: var(--color-accent-soft);
-  color: var(--color-accent-strong);
-  text-decoration: none;
+  background: var(--color-accent-soft); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-soft) */
+  color: var(--color-accent-strong); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-strong) */
+  text-decoration: none; /* text-decoration: 밑줄 같은 글자 장식 / none: 밑줄을 없앤다 */
 }
 
 /* 지금 보고 있는 페이지 링크. 색만으로 구분하지 않도록 배경 + 굵은 글씨도 함께 쓴다 */
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / [속성="값"] = 그 HTML 속성 값을 가진 요소만 고른다 */
 .site-header__link[aria-current="page"] {
-  background: var(--color-accent-soft);
-  color: var(--color-accent-strong);
-  font-weight: 700;
+  background: var(--color-accent-soft); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-soft) */
+  color: var(--color-accent-strong); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-strong) */
+  font-weight: 700; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
 }
 
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .site-main {
-  width: 100%;
-  max-width: var(--content-width);
+  width: 100%; /* width: 가로 크기 */
+  max-width: var(--content-width); /* max-width: 최대 가로 크기(이보다 넓어지지 않음) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--content-width) */
+  /* min-height: 최소 세로 크기(손가락으로 누르기 쉽게 44~48px 이상을 자주 쓴다) / calc(): 단위가 다른 값끼리 계산한다. 100vh = 화면 높이 전체 */
   min-height: calc(100vh - 160px); /* 내용이 짧아도 푸터가 아래쪽에 있게 */
-  margin: 0 auto;
-  padding: var(--space-4) var(--space-4) 40px;
+  margin: 0 auto; /* margin: 바깥 여백(다른 요소와의 거리). 값 개수 규칙은 padding과 같다 / 0 auto: 위아래 0, 좌우 auto(남는 공간을 양쪽에 똑같이) → 가로 가운데 정렬 */
+  padding: var(--space-4) var(--space-4) 40px; /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-4, --space-4) */
 }
 
 /* 건너뛰기 링크로 본문에 포커스가 와도 테두리는 그리지 않는다 (누를 수 있는 요소가 아니라서) */
+/* [선택자] :focus = 키보드(Tab) 등으로 선택(포커스)됐을 때 */
 .site-main:focus {
-  outline: none;
+  outline: none; /* outline: 테두리 바깥에 그리는 선(주로 키보드 포커스 표시) / none: 포커스 테두리를 그리지 않는다 */
 }
 
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .site-footer {
-  border-top: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sub);
+  border-top: 1px solid var(--color-border); /* border-top: 위쪽 테두리만 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-border) */
+  background: var(--color-surface); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
+  font-size: var(--font-size-sub); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-sub) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .site-footer__inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2) var(--space-4);
-  max-width: var(--content-width);
-  margin: 0 auto;
-  padding: var(--space-4);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-wrap: wrap; /* flex-wrap: flex 항목이 한 줄에 다 안 들어가면 줄바꿈할지 / wrap: 넘치면 다음 줄로 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  justify-content: space-between; /* justify-content: 주축(가로 배치면 가로) 정렬과 남는 공간 분배 / space-between: 양 끝에 붙이고 남은 공간을 사이에 나눈다 */
+  gap: var(--space-2) var(--space-4); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2, --space-4) */
+  max-width: var(--content-width); /* max-width: 최대 가로 크기(이보다 넓어지지 않음) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--content-width) */
+  margin: 0 auto; /* margin: 바깥 여백(다른 요소와의 거리). 값 개수 규칙은 padding과 같다 / 0 auto: 위아래 0, 좌우 auto(남는 공간을 양쪽에 똑같이) → 가로 가운데 정렬 */
+  padding: var(--space-4); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-4) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .site-footer__link {
-  display: flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 var(--space-2);
-  border-radius: var(--radius-small);
-  color: var(--color-text-muted);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  min-height: 44px; /* min-height: 최소 세로 크기(손가락으로 누르기 쉽게 44~48px 이상을 자주 쓴다) / px = 화면 픽셀 단위 */
+  padding: 0 var(--space-2); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
+  border-radius: var(--radius-small); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-small) */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
 }
 
 /* 페이지 맨 위 "← 돌아가기" 같은 작은 링크 */
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 44px;
-  border-radius: var(--radius-small);
-  font-weight: 600;
-  color: var(--color-text-muted);
+  display: inline-flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / inline-flex: 글자처럼 줄 안에 들어가면서 안쪽은 flex 배치 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  gap: 6px; /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / px = 화면 픽셀 단위 */
+  min-height: 44px; /* min-height: 최소 세로 크기(손가락으로 누르기 쉽게 44~48px 이상을 자주 쓴다) / px = 화면 픽셀 단위 */
+  border-radius: var(--radius-small); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-small) */
+  font-weight: 600; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
 }
 
+/* [선택자] :hover = 마우스를 올렸을 때 */
 .back-link:hover {
-  color: var(--color-text);
-  text-decoration: none;
+  color: var(--color-text); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text) */
+  text-decoration: none; /* text-decoration: 밑줄 같은 글자 장식 / none: 밑줄을 없앤다 */
 }
 
 /* 페이지 제목 위의 작은 안내 글 (예: "누적 평가 기준") */
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .eyebrow {
-  font-size: var(--font-size-sub);
-  font-weight: 600;
-  color: var(--color-accent-strong);
+  font-size: var(--font-size-sub); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-sub) */
+  font-weight: 600; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  color: var(--color-accent-strong); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-strong) */
 }
 
 /* ================= 3) 공통 UI 부품 (김근영) ================= */
 
 /* 버튼: <button class="btn btn--primary"> 또는 <a class="btn btn--secondary" href="..."> */
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid transparent;
-  border-radius: var(--radius-button);
-  font-family: var(--font-body);
-  font-size: var(--font-size-body);
-  font-weight: 700;
-  line-height: 1.4;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s, opacity 0.15s;
+  display: inline-flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / inline-flex: 글자처럼 줄 안에 들어가면서 안쪽은 flex 배치 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  justify-content: center; /* justify-content: 주축(가로 배치면 가로) 정렬과 남는 공간 분배 / center: 가운데로 모은다 */
+  padding: var(--space-3) var(--space-4); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-3, --space-4) */
+  border: 1px solid transparent; /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / transparent: 투명 테두리. 다른 버튼과 크기를 맞추려고 자리만 잡아 둔다 */
+  border-radius: var(--radius-button); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-button) */
+  font-family: var(--font-body); /* font-family: 글꼴 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-body) */
+  font-size: var(--font-size-body); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-body) */
+  font-weight: 700; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  line-height: 1.4; /* line-height: 줄 높이(단위 없는 숫자는 글자 크기의 배수) */
+  text-decoration: none; /* text-decoration: 밑줄 같은 글자 장식 / none: 밑줄을 없앤다 */
+  cursor: pointer; /* cursor: 마우스를 올렸을 때 커서 모양 / pointer: 손가락 모양(누를 수 있다는 표시) */
+  transition: background 0.15s, color 0.15s, opacity 0.15s; /* transition: 값이 바뀔 때 부드럽게 변하는 효과. '속성 시간'을 쉼표로 여러 개 쓸 수 있다 / s = 초 */
 }
 
+/* [선택자] :hover = 마우스를 올렸을 때 */
 .btn:hover {
-  text-decoration: none;
+  text-decoration: none; /* text-decoration: 밑줄 같은 글자 장식 / none: 밑줄을 없앤다 */
 }
 
 /* 채워진 주 버튼 (평가 등록). 흰 글자 대비 4.5:1을 넘기려고 진한 주황(accent-strong)을 쓴다 */
+/* [선택자] '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 */
 .btn--primary {
-  background: var(--color-accent-strong);
-  color: var(--color-surface);
+  background: var(--color-accent-strong); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-strong) */
+  color: var(--color-surface); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
 }
+/* [선택자] '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 / :hover = 마우스를 올렸을 때 */
 .btn--primary:hover {
-  background: var(--color-text);
+  background: var(--color-text); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text) */
 }
 
 /* 테두리 버튼 (전체 순위) */
+/* [선택자] '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 */
 .btn--secondary {
-  background: var(--color-surface);
-  border-color: var(--color-accent);
-  color: var(--color-accent-strong);
+  background: var(--color-surface); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
+  border-color: var(--color-accent); /* border-color: 테두리 색만 바꾼다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent) */
+  color: var(--color-accent-strong); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-strong) */
 }
+/* [선택자] '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 / :hover = 마우스를 올렸을 때 */
 .btn--secondary:hover {
-  background: var(--color-accent-soft);
+  background: var(--color-accent-soft); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-soft) */
 }
 
 /* 위험/신고 버튼 (위생 문제 제보) */
+/* [선택자] '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 */
 .btn--danger {
-  background: var(--color-surface);
-  border-color: var(--color-danger);
-  color: var(--color-danger);
+  background: var(--color-surface); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
+  border-color: var(--color-danger); /* border-color: 테두리 색만 바꾼다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
+  color: var(--color-danger); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
 }
+/* [선택자] '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 / :hover = 마우스를 올렸을 때 */
 .btn--danger:hover {
-  background: var(--color-danger-soft);
+  background: var(--color-danger-soft); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger-soft) */
 }
 
 /* 비활성 (비활성 버튼은 호버 효과 없음) */
+/* [선택자] :disabled = disabled 속성이 붙어 누를 수 없을 때 */
 .btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  opacity: 0.5; /* opacity: 불투명도(1 = 그대로, 0 = 투명) */
+  cursor: not-allowed; /* cursor: 마우스를 올렸을 때 커서 모양 / not-allowed: 금지 모양(누를 수 없음) */
 }
+/* [선택자] '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 / :hover = 마우스를 올렸을 때 / :disabled = disabled 속성이 붙어 누를 수 없을 때 */
 .btn--primary:disabled:hover {
-  background: var(--color-accent-strong);
+  background: var(--color-accent-strong); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-strong) */
 }
+/* [선택자] '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 / :hover = 마우스를 올렸을 때 / :disabled = disabled 속성이 붙어 누를 수 없을 때 / 쉼표(,) = 여러 선택자에 같은 스타일을 한 번에 적용 */
 .btn--secondary:disabled:hover,
+/* [선택자] '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 / :hover = 마우스를 올렸을 때 / :disabled = disabled 속성이 붙어 누를 수 없을 때 */
 .btn--danger:disabled:hover {
-  background: var(--color-surface);
+  background: var(--color-surface); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
 }
 
 /* 카드 틀 (흰 배경 + 테두리). 메뉴 카드, 평가 카드 등에 쓴다 */
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-card);
-  padding: var(--space-4);
-  color: var(--color-text);
+  background: var(--color-surface); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
+  border: 1px solid var(--color-border); /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-border) */
+  border-radius: var(--radius-card); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-card) */
+  padding: var(--space-4); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-4) */
+  color: var(--color-text); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text) */
 }
 
 /* 별점 표시 (읽기 전용) → js/common/ui.js의 starRatingHtml() */
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .star-rating {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
+  display: inline-flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / inline-flex: 글자처럼 줄 안에 들어가면서 안쪽은 flex 배치 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  gap: var(--space-1); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-1) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .star-rating__stars {
-  letter-spacing: 2px;
+  letter-spacing: 2px; /* letter-spacing: 글자 사이 간격 / px = 화면 픽셀 단위 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .star-rating__star {
-  color: var(--color-star-empty);
+  color: var(--color-star-empty); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-star-empty) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / .a.b(붙여 씀) = 두 클래스를 모두 가진 요소만 */
 .star-rating__star.is-filled {
-  color: var(--color-star);
+  color: var(--color-star); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-star) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .star-rating__value {
-  font-size: var(--font-size-small);
-  color: var(--color-text);
+  font-size: var(--font-size-small); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-small) */
+  color: var(--color-text); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text) */
 }
 
 /* 태그 배지 → js/common/ui.js의 tagBadgeHtml() */
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .tag-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  padding: 2px 10px;
-  border: 1px solid transparent;
-  border-radius: var(--radius-chip);
-  background: var(--color-bg);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sub);
-  font-weight: 600;
-  white-space: nowrap;
+  display: inline-flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / inline-flex: 글자처럼 줄 안에 들어가면서 안쪽은 flex 배치 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  gap: var(--space-1); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-1) */
+  padding: 2px 10px; /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / px = 화면 픽셀 단위 */
+  border: 1px solid transparent; /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / transparent: 투명 테두리. 다른 버튼과 크기를 맞추려고 자리만 잡아 둔다 */
+  border-radius: var(--radius-chip); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-chip) */
+  background: var(--color-bg); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-bg) */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
+  font-size: var(--font-size-sub); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-sub) */
+  font-weight: 600; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  white-space: nowrap; /* white-space: 공백·줄바꿈 처리 방식 / nowrap: 줄바꿈하지 않고 한 줄로 */
 }
 
 /* 위생 "문제 있음" 같은 경고 배지. 색 + 느낌표 + 굵은 글씨로 함께 구분한다 */
+/* [선택자] '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 */
 .tag-badge--warning {
-  border-color: var(--color-danger);
-  background: var(--color-danger-soft);
-  color: var(--color-danger);
-  font-weight: 700;
+  border-color: var(--color-danger); /* border-color: 테두리 색만 바꾼다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
+  background: var(--color-danger-soft); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger-soft) */
+  color: var(--color-danger); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
+  font-weight: 700; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
 }
 
 /* 작은 알약 모양 라벨. 기본은 연한 배경 + 흐린 글자 (예: 태그 "간 적당") */
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .chip {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  padding: 2px 10px;
-  border-radius: var(--radius-chip);
-  background: var(--color-bg);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sub);
-  font-weight: 600;
-  white-space: nowrap;
+  display: inline-flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / inline-flex: 글자처럼 줄 안에 들어가면서 안쪽은 flex 배치 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  gap: var(--space-1); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-1) */
+  padding: 2px 10px; /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / px = 화면 픽셀 단위 */
+  border-radius: var(--radius-chip); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-chip) */
+  background: var(--color-bg); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-bg) */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
+  font-size: var(--font-size-sub); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-sub) */
+  font-weight: 600; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  white-space: nowrap; /* white-space: 공백·줄바꿈 처리 방식 / nowrap: 줄바꿈하지 않고 한 줄로 */
 }
 
 /* 강조 라벨 (예: 식사 구분 "중식") */
+/* [선택자] '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 */
 .chip--accent {
-  background: var(--color-accent-soft);
-  color: var(--color-accent-strong);
-  font-weight: 700;
+  background: var(--color-accent-soft); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-soft) */
+  color: var(--color-accent-strong); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-strong) */
+  font-weight: 700; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
 }
 
 /* "필수" 표시 */
+/* [선택자] '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 */
 .chip--required {
-  padding: 1px 8px;
-  background: var(--color-text);
-  color: var(--color-surface);
-  font-size: var(--font-size-small);
-  font-weight: 700;
+  padding: 1px 8px; /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / px = 화면 픽셀 단위 */
+  background: var(--color-text); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text) */
+  color: var(--color-surface); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
+  font-size: var(--font-size-small); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-small) */
+  font-weight: 700; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
 }
 
 /* 막 등록한 평가 표시 */
+/* [선택자] '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 */
 .chip--new {
-  padding: 1px 8px;
-  background: var(--color-accent-strong);
-  color: var(--color-surface);
-  font-size: var(--font-size-small);
-  font-weight: 700;
+  padding: 1px 8px; /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / px = 화면 픽셀 단위 */
+  background: var(--color-accent-strong); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-strong) */
+  color: var(--color-surface); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
+  font-size: var(--font-size-small); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-small) */
+  font-weight: 700; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
 }
 
 /* ================= 4) 상태 표시 (김근영) ================= */
 /* → js/common/state.js의 renderLoading / renderError / renderEmpty */
 
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .state-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-6) var(--space-4);
-  border-radius: var(--radius-card);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  text-align: center;
-  color: var(--color-text-muted);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-direction: column; /* flex-direction: flex 항목을 늘어놓는 방향 / column: 위에서 아래(세로)로 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  gap: var(--space-3); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-3) */
+  padding: var(--space-6) var(--space-4); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-6, --space-4) */
+  border-radius: var(--radius-card); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-card) */
+  background: var(--color-surface); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
+  border: 1px solid var(--color-border); /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-border) */
+  text-align: center; /* text-align: 글자 가로 정렬 / center: 가운데 정렬 */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
 }
 
+/* [선택자] '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 */
 .state-box--error {
-  border-color: var(--color-danger);
-  background: var(--color-danger-soft);
-  color: var(--color-danger);
+  border-color: var(--color-danger); /* border-color: 테두리 색만 바꾼다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
+  background: var(--color-danger-soft); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger-soft) */
+  color: var(--color-danger); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
 }
 
 /* 폼 안에 들어가는 작은 오류 상자 */
+/* [선택자] '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 */
 .state-box--inline {
-  flex-direction: row;
-  justify-content: center;
-  padding: var(--space-3) var(--space-4);
+  flex-direction: row; /* flex-direction: flex 항목을 늘어놓는 방향 / row: 왼쪽에서 오른쪽(가로)으로 */
+  justify-content: center; /* justify-content: 주축(가로 배치면 가로) 정렬과 남는 공간 분배 / center: 가운데로 모은다 */
+  padding: var(--space-3) var(--space-4); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-3, --space-4) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .state-box__icon {
-  font-size: 32px;
-  line-height: 1;
+  font-size: 32px; /* font-size: 글자 크기 / px = 화면 픽셀 단위 */
+  line-height: 1; /* line-height: 줄 높이(단위 없는 숫자는 글자 크기의 배수) */
 }
 
 /* 빙글빙글 도는 불러오는 중 표시 */
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .state-box__spinner {
-  width: 28px;
-  height: 28px;
-  border: 3px solid var(--color-border);
-  border-top-color: var(--color-accent);
-  border-radius: 50%;
-  animation: state-spin 0.8s linear infinite;
+  width: 28px; /* width: 가로 크기 / px = 화면 픽셀 단위 */
+  height: 28px; /* height: 세로 크기 / px = 화면 픽셀 단위 */
+  border: 3px solid var(--color-border); /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-border) */
+  border-top-color: var(--color-accent); /* border-top-color: 위쪽 테두리 색만 바꾼다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent) */
+  border-radius: 50%; /* border-radius: 모서리를 둥글게 깎는 반지름 / 50%: 정사각형이면 완전한 원이 된다 */
+  animation: state-spin 0.8s linear infinite; /* animation: @keyframes로 만든 움직임 재생. '이름 시간 속도곡선 반복' / s = 초 / linear: 일정한 속도 / infinite: 무한 반복 */
 }
 
+/* [문법] @keyframes 이름 { }: 애니메이션의 단계별 모습을 정의한다. 'to'는 끝(100%) 상태. animation 속성에서 이 이름으로 부른다. */
 @keyframes state-spin {
+  /* [문법] to: 애니메이션 끝 지점(100%). 시작(from)은 생략하면 원래 상태. */
   to {
-    transform: rotate(360deg);
+    transform: rotate(360deg); /* transform: 요소를 회전·이동·확대하는 변형 / rotate(360deg): 한 바퀴(360도) 회전 */
   }
 }
 
 /* "움직임 줄이기"를 켠 사용자에게는 돌지 않게 한다 (접근성) */
+/* [문법] @media (조건) { }: 조건이 맞을 때만 안의 CSS를 적용한다. prefers-reduced-motion: reduce = 사용자가 OS에서 '동작 줄이기'를 켰을 때. */
 @media (prefers-reduced-motion: reduce) {
+  /* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
   .state-box__spinner {
-    animation: none;
+    animation: none; /* animation: @keyframes로 만든 움직임 재생. '이름 시간 속도곡선 반복' / none: 애니메이션을 끈다 */
   }
 }
