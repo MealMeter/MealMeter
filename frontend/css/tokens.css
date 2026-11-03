@@ -1,49 +1,55 @@
-/* 역할: 디자인 규칙 (색·글자·간격·모서리 등 CSS 변수). 담당: 조현우
+/* 역할: 디자인 규칙 (색·글자·간격·모서리 등 CSS 변수). 담당: 김근영
    다른 파일에서는 색이나 크기를 직접 쓰지 말고 var(--color-…), var(--space-…)로 가져다 쓴다.
    색은 글자/배경 대비 4.5:1 이상을 유지한다. */
 
+/* [선택자] :root = 문서의 가장 바깥 요소(html). 여기 정한 CSS 변수는 모든 곳에서 쓸 수 있다 */
 :root {
   /* ── 색 ── */
-  --color-accent: #D9480F;
-  --color-accent-strong: #B23A0B;
-  --color-accent-soft: #FFEBDD;
-  --color-accent-tint: #FFE3CC;
-  --color-star: #F59F00;
+  --color-accent: #D9480F; /* --color-accent: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-accent)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
+  --color-accent-strong: #B23A0B; /* --color-accent-strong: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-accent-strong)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
+  --color-accent-soft: #FFEBDD; /* --color-accent-soft: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-accent-soft)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
+  --color-accent-tint: #FFE3CC; /* --color-accent-tint: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-accent-tint)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
+  --color-star: #F59F00; /* --color-star: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-star)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
+  /* --color-star-empty: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-star-empty)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
   --color-star-empty: #B8A898; /* 빈 별 (읽기 전용 표시) */
-  --color-text: #211C18;
-  --color-text-muted: #6B625B;
-  --color-bg: #FFF9F4;
-  --color-surface: #FFFFFF;
-  --color-border: #F1E4D8;
-  --color-border-input: #D8C6B6;
-  --color-danger: #B42318;
-  --color-danger-soft: #FEF3F2;
-  --color-success: #157F3D;
+  --color-text: #211C18; /* --color-text: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-text)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
+  --color-text-muted: #6B625B; /* --color-text-muted: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-text-muted)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
+  --color-bg: #FFF9F4; /* --color-bg: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-bg)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
+  --color-surface: #FFFFFF; /* --color-surface: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-surface)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
+  --color-border: #F1E4D8; /* --color-border: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-border)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
+  --color-border-input: #D8C6B6; /* --color-border-input: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-border-input)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
+  --color-danger: #B42318; /* --color-danger: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-danger)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
+  --color-danger-soft: #FEF3F2; /* --color-danger-soft: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-danger-soft)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
+  --color-success: #157F3D; /* --color-success: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-success)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
+  /* --color-focus: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-focus)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
   --color-focus: #D9480F; /* 키보드 포커스 테두리 (배경 대비 3:1 이상) */
+  /* --color-accent-pressed: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--color-accent-pressed)로 꺼내 쓴다 / #RRGGBB: 16진수 색 코드 */
   --color-accent-pressed: #FFC9A3; /* 누르는 순간·성공 안내 테두리 */
+  /* --shadow-raised: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--shadow-raised)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
   --shadow-raised: 0 1px 2px rgba(33, 28, 24, 0.12); /* 고른 탭 */
 
   /* ── 글꼴 (HTML의 <link>로 불러온다. 못 불러오면 쉼표 뒤 글꼴을 쓴다) ── */
-  --font-title: "Jua", "Pretendard", system-ui, sans-serif;
-  --font-body: "Pretendard", system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-title: "Jua", "Pretendard", system-ui, sans-serif; /* --font-title: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--font-title)로 꺼내 쓴다 */
+  --font-body: "Pretendard", system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; /* --font-body: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--font-body)로 꺼내 쓴다 */
 
-  --font-size-title: 28px;
-  --font-size-body: 16px;
-  --font-size-sub: 15px;
-  --font-size-small: 14px;
+  --font-size-title: 28px; /* --font-size-title: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--font-size-title)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
+  --font-size-body: 16px; /* --font-size-body: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--font-size-body)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
+  --font-size-sub: 15px; /* --font-size-sub: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--font-size-sub)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
+  --font-size-small: 14px; /* --font-size-small: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--font-size-small)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
 
-  --radius-card: 16px;
-  --radius-button: 12px;
-  --radius-small: 10px;
-  --radius-chip: 999px;
+  --radius-card: 16px; /* --radius-card: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--radius-card)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
+  --radius-button: 12px; /* --radius-button: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--radius-button)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
+  --radius-small: 10px; /* --radius-small: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--radius-small)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
+  --radius-chip: 999px; /* --radius-chip: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--radius-chip)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
 
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 24px;
-  --space-6: 32px;
+  --space-1: 4px; /* --space-1: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--space-1)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
+  --space-2: 8px; /* --space-2: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--space-2)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
+  --space-3: 12px; /* --space-3: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--space-3)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
+  --space-4: 16px; /* --space-4: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--space-4)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
+  --space-5: 24px; /* --space-5: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--space-5)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
+  --space-6: 32px; /* --space-6: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--space-6)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
 
-  --content-width: 1080px;
-  --reading-width: 720px; /* 글 위주 페이지(오늘의 메뉴, 이용 안내)의 폭 */
+  --content-width: 1080px; /* --content-width: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--content-width)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
+  /* --reading-width: CSS 변수(사용자 정의 속성) 정의. 다른 곳에서 var(--reading-width)로 꺼내 쓴다 / px = 화면 픽셀 단위 */
+  --reading-width: 720px; /* 글 위주 페이지(오늘의 메뉴)의 폭 */
 }

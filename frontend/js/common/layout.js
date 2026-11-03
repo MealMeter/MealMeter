@@ -16,10 +16,9 @@ const NAV_ITEMS = [
   // href: 눌렀을 때 갈 주소 / label: 화면에 보일 글자 / paths: "현재 페이지"로 볼 주소 목록(문자열 배열)
   { href: '/', label: '오늘의 메뉴', paths: ['/', '/index.html', '/menu.html', '/menu'] },
   { href: '/ranking.html', label: '인기 순위', paths: ['/ranking.html', '/ranking'] },
-  { href: '/guide.html', label: '이용 안내', paths: ['/guide.html', '/guide'] },
 ];
 
-// 로고 그림 (접시 위 계기판 바늘). guide.html에도 같은 그림이 크게 들어 있다
+// 로고 그림 (접시 위 계기판 바늘)
 // [문법] 백틱(`)으로 감싼 글자는 "템플릿 리터럴"이다. 여러 줄을 그대로 쓸 수 있고, ${식} 자리에 값을 끼워 넣을 수 있다.
 // [SVG] <svg>: 벡터 그림. viewBox="0 0 34 34" → 가로 34, 세로 34 좌표계로 그린다(실제 크기는 CSS가 정함).
 // [SVG] aria-hidden="true": 장식용 그림이라 화면 낭독기가 읽지 않게 한다.
@@ -87,16 +86,13 @@ function renderLayout() {
   );
 
   // body 맨 뒤에 푸터를 넣는다
-  // [HTML] <footer>: 페이지 꼬리 영역 의미 태그. <p>: 문단. <nav aria-label="보조 메뉴">: 덜 중요한 이동 링크 묶음.
+  // [HTML] <footer>: 페이지 꼬리 영역 의미 태그. <p>: 문단.
   document.body.insertAdjacentHTML(
     'beforeend',
     `
     <footer class="site-footer">
       <div class="site-footer__inner">
         <p>MealMeter · 우리 학교 급식 평가</p>
-        <nav aria-label="보조 메뉴">
-          <a class="site-footer__link" href="/guide.html">이용 안내</a>
-        </nav>
       </div>
     </footer>
     `,

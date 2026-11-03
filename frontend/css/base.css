@@ -8,97 +8,121 @@
 
 /* ================= 1) 전체 기본 스타일 (조현우) ================= */
 
+/* [선택자] * = 모든 요소 / 쉼표(,) = 여러 선택자에 같은 스타일을 한 번에 적용 */
 *,
+/* [선택자] * = 모든 요소 / ::before/::after = 요소 안 앞/뒤에 CSS로 만드는 가짜 요소 / 쉼표(,) = 여러 선택자에 같은 스타일을 한 번에 적용 */
 *::before,
+/* [선택자] * = 모든 요소 / ::before/::after = 요소 안 앞/뒤에 CSS로 만드는 가짜 요소 */
 *::after {
-  box-sizing: border-box;
+  box-sizing: border-box; /* box-sizing: width/height에 테두리·안쪽 여백을 포함할지 / border-box: 테두리·안쪽 여백까지 포함해서 크기를 잰다(계산이 쉬워짐) */
 }
 
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 */
 html {
-  -webkit-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; /* -webkit-text-size-adjust: 아이폰이 가로 화면에서 글자를 멋대로 키우지 않게(-webkit- = 브라우저 전용 접두사) */
 }
 
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 */
 body {
-  margin: 0;
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-body);
-  font-size: var(--font-size-body);
-  line-height: 1.6;
+  margin: 0; /* margin: 바깥 여백(다른 요소와의 거리). 값 개수 규칙은 padding과 같다 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  background: var(--color-bg); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-bg) */
+  color: var(--color-text); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text) */
+  font-family: var(--font-body); /* font-family: 글꼴 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-body) */
+  font-size: var(--font-size-body); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-body) */
+  line-height: 1.6; /* line-height: 줄 높이(단위 없는 숫자는 글자 크기의 배수) */
+  /* word-break: word-break / keep-all: 한국어 낱말 중간에서 줄을 바꾸지 않는다 */
   word-break: keep-all; /* 한국어 낱말 중간에서 줄이 바뀌지 않게 */
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased; /* -webkit-font-smoothing: 맥(Safari·Chrome)에서 글자 가장자리를 부드럽게 그리는 방식(-webkit- = 브라우저 전용 접두사) */
 }
 
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 / 쉼표(,) = 여러 선택자에 같은 스타일을 한 번에 적용 */
 h1,
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 / 쉼표(,) = 여러 선택자에 같은 스타일을 한 번에 적용 */
 h2,
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 */
 h3 {
-  margin: 0;
-  font-family: var(--font-title);
-  font-weight: 400;
-  line-height: 1.3;
+  margin: 0; /* margin: 바깥 여백(다른 요소와의 거리). 값 개수 규칙은 padding과 같다 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  font-family: var(--font-title); /* font-family: 글꼴 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-title) */
+  font-weight: 400; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  line-height: 1.3; /* line-height: 줄 높이(단위 없는 숫자는 글자 크기의 배수) */
 }
 
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 */
 h1 {
-  font-size: var(--font-size-title);
+  font-size: var(--font-size-title); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-title) */
 }
 
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 */
 p {
-  margin: 0;
+  margin: 0; /* margin: 바깥 여백(다른 요소와의 거리). 값 개수 규칙은 padding과 같다 / 0: 없앤다(0에는 단위를 안 써도 된다) */
 }
 
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 */
 a {
-  color: var(--color-accent-strong);
-  text-decoration: none;
+  color: var(--color-accent-strong); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-strong) */
+  text-decoration: none; /* text-decoration: 밑줄 같은 글자 장식 / none: 밑줄을 없앤다 */
 }
 
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 / :hover = 마우스를 올렸을 때 */
 a:hover {
-  text-decoration: underline;
+  text-decoration: underline; /* text-decoration: 밑줄 같은 글자 장식 */
 }
 
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 / 쉼표(,) = 여러 선택자에 같은 스타일을 한 번에 적용 */
 img,
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 */
 svg {
-  display: block;
-  max-width: 100%;
+  display: block; /* display: 요소를 어떤 상자 방식으로 배치할지 / block: 한 줄을 통째로 차지하는 상자 */
+  max-width: 100%; /* max-width: 최대 가로 크기(이보다 넓어지지 않음) */
 }
 
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 / 쉼표(,) = 여러 선택자에 같은 스타일을 한 번에 적용 */
 button,
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 / 쉼표(,) = 여러 선택자에 같은 스타일을 한 번에 적용 */
 input,
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 / 쉼표(,) = 여러 선택자에 같은 스타일을 한 번에 적용 */
 select,
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 */
 textarea {
-  font: inherit;
-  color: inherit;
+  font: inherit; /* font: 글꼴 관련 값을 한 번에. inherit면 부모 글꼴을 그대로 / inherit: 부모 값을 물려받는다(버튼·입력창은 기본 글꼴이 따로라서) */
+  color: inherit; /* color: 글자 색 / inherit: 부모의 글자 색을 그대로 */
 }
 
+/* [선택자] 태그 이름(예: body, a, h1) = 그 태그 전부를 고른다 */
 button {
-  cursor: pointer;
+  cursor: pointer; /* cursor: 마우스를 올렸을 때 커서 모양 / pointer: 손가락 모양(누를 수 있다는 표시) */
 }
 
 /* 키보드(Tab)로 이동할 때 지금 어디 있는지 파란 테두리로 보여 준다 (접근성) */
+/* [선택자] :focus-visible = 키보드로 포커스됐을 때만(마우스 클릭은 제외) / :focus = 키보드(Tab) 등으로 선택(포커스)됐을 때 */
 :focus-visible {
-  outline: 3px solid var(--color-focus);
-  outline-offset: 2px;
+  outline: 3px solid var(--color-focus); /* outline: 테두리 바깥에 그리는 선(주로 키보드 포커스 표시) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-focus) */
+  outline-offset: 2px; /* outline-offset: outline을 테두리에서 얼마나 떨어뜨릴지 / px = 화면 픽셀 단위 */
 }
 
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .muted {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sub);
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
+  font-size: var(--font-size-sub); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-sub) */
 }
 
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .small {
-  font-size: var(--font-size-small);
+  font-size: var(--font-size-small); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-small) */
 }
 
 /* 화면에는 안 보이지만 화면 낭독기는 읽는 글자 */
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+  position: absolute; /* position: 위치를 정하는 방식 / absolute: 원래 자리에서 빠져나와 top/left 값으로 위치를 잡는다 */
+  width: 1px; /* width: 가로 크기 / px = 화면 픽셀 단위 */
+  height: 1px; /* height: 세로 크기 / px = 화면 픽셀 단위 */
+  padding: 0; /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  margin: -1px; /* margin: 바깥 여백(다른 요소와의 거리). 값 개수 규칙은 padding과 같다 / px = 화면 픽셀 단위 / 음수: 화면 위쪽 밖으로 밀어 숨긴다 */
+  overflow: hidden; /* overflow: 내용이 상자를 넘칠 때 처리 / hidden: 넘치는 부분을 잘라서 숨긴다(둥근 모서리 밖으로 삐져나오지 않게) */
+  clip: rect(0, 0, 0, 0); /* clip: 보이는 영역을 잘라 낸다(예전 방식, sr-only에 씀) */
+  white-space: nowrap; /* white-space: 공백·줄바꿈 처리 방식 / nowrap: 줄바꿈하지 않고 한 줄로 */
+  border: 0; /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / 0: 테두리를 없앤다 / 0: 없앤다(0에는 단위를 안 써도 된다) */
 }
 
 /* ================= 2) 공통 틀 (김근영) ================= */
@@ -179,7 +203,7 @@ button {
 /* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .site-header__list {
   display: grid; /* display: 요소를 어떤 상자 방식으로 배치할지 / grid: 자식들을 격자(행·열)로 배치 */
-  grid-template-columns: repeat(3, minmax(0, 1fr)); /* grid-template-columns: grid의 열(세로 칸) 개수와 너비 / repeat(n, 크기): 같은 크기의 열을 n번 반복 / minmax(최소, 최대): 열 너비를 이 범위 안에서 조절 / 1fr: 남는 공간을 1몫씩 나눠 가짐 */
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* grid-template-columns: grid의 열(세로 칸) 개수와 너비 / repeat(n, 크기): 같은 크기의 열을 n번 반복 / minmax(최소, 최대): 열 너비를 이 범위 안에서 조절 / 1fr: 남는 공간을 1몫씩 나눠 가짐 */
   gap: 2px; /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / px = 화면 픽셀 단위 */
   margin: 0; /* margin: 바깥 여백(다른 요소와의 거리). 값 개수 규칙은 padding과 같다 / 0: 없앤다(0에는 단위를 안 써도 된다) */
   padding: 0; /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / 0: 없앤다(0에는 단위를 안 써도 된다) */
@@ -247,16 +271,6 @@ button {
   max-width: var(--content-width); /* max-width: 최대 가로 크기(이보다 넓어지지 않음) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--content-width) */
   margin: 0 auto; /* margin: 바깥 여백(다른 요소와의 거리). 값 개수 규칙은 padding과 같다 / 0 auto: 위아래 0, 좌우 auto(남는 공간을 양쪽에 똑같이) → 가로 가운데 정렬 */
   padding: var(--space-4); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-4) */
-}
-
-/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
-.site-footer__link {
-  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
-  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
-  min-height: 44px; /* min-height: 최소 세로 크기(손가락으로 누르기 쉽게 44~48px 이상을 자주 쓴다) / px = 화면 픽셀 단위 */
-  padding: 0 var(--space-2); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
-  border-radius: var(--radius-small); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-small) */
-  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
 }
 
 /* 페이지 맨 위 "← 돌아가기" 같은 작은 링크 */

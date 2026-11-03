@@ -1,512 +1,592 @@
 /* 역할: 메뉴 상세 페이지 전용 스타일 (.menu-detail, .review-form__…, .star-input, .tag-selector, .review-list). 담당: 박준호 */
 
 /* ---------- 페이지 전체 ---------- */
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .menu-detail {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-direction: column; /* flex-direction: flex 항목을 늘어놓는 방향 / column: 위에서 아래(세로)로 */
+  gap: var(--space-3); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-3) */
 }
 
+/* [선택자] A B(띄어쓰기) = A 안에 있는 모든 B(자손)를 고른다 */
 .menu-detail .back-link {
-  align-self: flex-start;
-  margin: calc(var(--space-2) * -1) 0 calc(var(--space-1) * -1);
+  align-self: flex-start; /* align-self: 이 요소만 따로 교차축 정렬 / flex-start: 시작 쪽으로 */
+  margin: calc(var(--space-2) * -1) 0 calc(var(--space-1) * -1); /* margin: 바깥 여백(다른 요소와의 거리). 값 개수 규칙은 padding과 같다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2, --space-1) / calc(): 단위가 다른 값끼리 계산한다. 100vh = 화면 높이 전체 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .menu-detail__content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-direction: column; /* flex-direction: flex 항목을 늘어놓는 방향 / column: 위에서 아래(세로)로 */
+  gap: var(--space-3); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-3) */
 }
 
 /* hidden 속성이 display:flex에 덮이지 않게 한다 */
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / [속성="값"] = 그 HTML 속성 값을 가진 요소만 고른다 */
 .menu-detail__content[hidden] {
-  display: none;
+  display: none; /* display: 요소를 어떤 상자 방식으로 배치할지 / none: 화면에서 완전히 없앤다 */
 }
 
 /* 메뉴 이름 카드 */
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .menu-detail__header {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  padding: var(--space-4);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-card);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-direction: column; /* flex-direction: flex 항목을 늘어놓는 방향 / column: 위에서 아래(세로)로 */
+  gap: var(--space-1); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-1) */
+  padding: var(--space-4); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-4) */
+  background: var(--color-surface); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
+  border: 1px solid var(--color-border); /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-border) */
+  border-radius: var(--radius-card); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-card) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .menu-detail__meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--font-size-sub);
-  color: var(--color-text-muted);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-wrap: wrap; /* flex-wrap: flex 항목이 한 줄에 다 안 들어가면 줄바꿈할지 / wrap: 넘치면 다음 줄로 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  gap: var(--space-2); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
+  font-size: var(--font-size-sub); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-sub) */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .menu-detail__summary {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px;
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-wrap: wrap; /* flex-wrap: flex 항목이 한 줄에 다 안 들어가면 줄바꿈할지 / wrap: 넘치면 다음 줄로 */
+  align-items: baseline; /* align-items: 교차축(가로 배치면 세로) 정렬 / baseline: 글자 밑선을 맞춘다 */
+  gap: 6px; /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / px = 화면 픽셀 단위 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .menu-detail__star {
-  font-size: 20px;
-  color: var(--color-accent);
+  font-size: 20px; /* font-size: 글자 크기 / px = 화면 픽셀 단위 */
+  color: var(--color-accent); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .menu-detail__average {
-  font-size: 24px;
-  font-weight: 800;
-  line-height: 1;
+  font-size: 24px; /* font-size: 글자 크기 / px = 화면 픽셀 단위 */
+  font-weight: 800; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  line-height: 1; /* line-height: 줄 높이(단위 없는 숫자는 글자 크기의 배수) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .menu-detail__count {
-  color: var(--color-text-muted);
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .menu-detail__allergy {
-  font-size: var(--font-size-sub);
-  color: var(--color-text-muted);
+  font-size: var(--font-size-sub); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-sub) */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
 }
 
 /* 넓은 화면에서는 폼과 목록을 나란히, 좁으면 위아래로 */
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .menu-detail__columns {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
-  align-items: start;
-  gap: var(--space-3);
+  display: grid; /* display: 요소를 어떤 상자 방식으로 배치할지 / grid: 자식들을 격자(행·열)로 배치 */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); /* grid-template-columns: grid의 열(세로 칸) 개수와 너비 / repeat(n, 크기): 같은 크기의 열을 n번 반복 / auto-fit: 들어가는 만큼 열 개수를 자동으로 정함 / minmax(최소, 최대): 열 너비를 이 범위 안에서 조절 / min(a, b): 둘 중 작은 값(좁은 화면에서는 100%) / 1fr: 남는 공간을 1몫씩 나눠 가짐 */
+  align-items: start; /* align-items: 교차축(가로 배치면 세로) 정렬 / start: 시작 쪽으로 */
+  gap: var(--space-3); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-3) */
 }
 
 /* ---------- 평가 폼 ---------- */
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .review-form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  padding: var(--space-4);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-card);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-direction: column; /* flex-direction: flex 항목을 늘어놓는 방향 / column: 위에서 아래(세로)로 */
+  gap: var(--space-4); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-4) */
+  padding: var(--space-4); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-4) */
+  background: var(--color-surface); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
+  border: 1px solid var(--color-border); /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-border) */
+  border-radius: var(--radius-card); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-card) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / 쉼표(,) = 여러 선택자에 같은 스타일을 한 번에 적용 */
 .review-form__title,
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-section__title {
-  font-family: var(--font-body);
-  font-size: 20px;
-  font-weight: 700;
+  font-family: var(--font-body); /* font-family: 글꼴 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-body) */
+  font-size: 20px; /* font-size: 글자 크기 / px = 화면 픽셀 단위 */
+  font-weight: 700; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
 }
 
 /* fieldset의 기본 테두리·여백을 없앤다 (묶음 정보는 화면 낭독기용으로 그대로 남는다) */
+/* [선택자] A B(띄어쓰기) = A 안에 있는 모든 B(자손)를 고른다 */
 .review-form fieldset {
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
+  min-width: 0; /* min-width: 최소 가로 크기 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  margin: 0; /* margin: 바깥 여백(다른 요소와의 거리). 값 개수 규칙은 padding과 같다 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  padding: 0; /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  border: 0; /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / 0: 테두리를 없앤다 / 0: 없앤다(0에는 단위를 안 써도 된다) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__legend {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  margin-bottom: var(--space-2);
-  padding: 0;
-  font-size: 17px;
-  font-weight: 700;
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  gap: var(--space-2); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
+  margin-bottom: var(--space-2); /* margin-bottom: 아래쪽 바깥 여백 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
+  padding: 0; /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  font-size: 17px; /* font-size: 글자 크기 / px = 화면 픽셀 단위 */
+  font-weight: 700; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__optional {
-  font-size: var(--font-size-body);
-  font-weight: 500;
-  color: var(--color-text-muted);
+  font-size: var(--font-size-body); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-body) */
+  font-weight: 500; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__tags {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-direction: column; /* flex-direction: flex 항목을 늘어놓는 방향 / column: 위에서 아래(세로)로 */
+  gap: var(--space-2); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
 }
 
 /* 위생 — 빨간 테두리 상자 */
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / A B(띄어쓰기) = A 안에 있는 모든 B(자손)를 고른다 */
 .review-form fieldset.review-form__hygiene {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3) var(--space-3);
-  border: 1.5px solid var(--color-danger);
-  border-radius: var(--radius-button);
-  background: var(--color-danger-soft);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-direction: column; /* flex-direction: flex 항목을 늘어놓는 방향 / column: 위에서 아래(세로)로 */
+  gap: var(--space-2); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
+  padding: var(--space-2) var(--space-3) var(--space-3); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2, --space-3, --space-3) */
+  border: 1.5px solid var(--color-danger); /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
+  border-radius: var(--radius-button); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-button) */
+  background: var(--color-danger-soft); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger-soft) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 */
 .review-form__legend--danger {
-  margin-bottom: 0;
-  padding: 0 6px;
-  color: var(--color-danger);
+  margin-bottom: 0; /* margin-bottom: 아래쪽 바깥 여백 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  padding: 0 6px; /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / px = 화면 픽셀 단위 */
+  color: var(--color-danger); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__alert-icon {
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--color-danger);
-  color: var(--color-surface);
-  font-size: var(--font-size-small);
-  font-weight: 800;
+  display: grid; /* display: 요소를 어떤 상자 방식으로 배치할지 / grid: 자식들을 격자(행·열)로 배치 */
+  place-items: center; /* place-items: grid에서 가로·세로 정렬을 한 번에(align-items + justify-items) / center: 정가운데 */
+  width: 22px; /* width: 가로 크기 / px = 화면 픽셀 단위 */
+  height: 22px; /* height: 세로 크기 / px = 화면 픽셀 단위 */
+  border-radius: 50%; /* border-radius: 모서리를 둥글게 깎는 반지름 / 50%: 정사각형이면 완전한 원이 된다 */
+  background: var(--color-danger); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
+  color: var(--color-surface); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
+  font-size: var(--font-size-small); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-small) */
+  font-weight: 800; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__help {
-  color: var(--color-text);
+  color: var(--color-text); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__hygiene-options {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-2);
+  display: grid; /* display: 요소를 어떤 상자 방식으로 배치할지 / grid: 자식들을 격자(행·열)로 배치 */
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* grid-template-columns: grid의 열(세로 칸) 개수와 너비 / repeat(n, 크기): 같은 크기의 열을 n번 반복 / minmax(최소, 최대): 열 너비를 이 범위 안에서 조절 / 1fr: 남는 공간을 1몫씩 나눠 가짐 */
+  gap: var(--space-2); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__hygiene-hint {
-  font-weight: 600;
-  color: var(--color-danger);
+  font-weight: 600; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  color: var(--color-danger); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__comment {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-direction: column; /* flex-direction: flex 항목을 늘어놓는 방향 / column: 위에서 아래(세로)로 */
+  gap: 6px; /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / px = 화면 픽셀 단위 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / A B(띄어쓰기) = A 안에 있는 모든 B(자손)를 고른다 */
 .review-form__comment .review-form__legend {
-  margin-bottom: 0;
+  margin-bottom: 0; /* margin-bottom: 아래쪽 바깥 여백 / 0: 없앤다(0에는 단위를 안 써도 된다) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__note {
-  display: flex;
-  gap: var(--space-2);
-  padding: 10px var(--space-3);
-  border-radius: var(--radius-small);
-  background: var(--color-bg);
-  color: var(--color-text-muted);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  gap: var(--space-2); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
+  padding: 10px var(--space-3); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-3) */
+  border-radius: var(--radius-small); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-small) */
+  background: var(--color-bg); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-bg) */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / [속성="값"] = 그 HTML 속성 값을 가진 요소만 고른다 */
 .review-form__note [aria-hidden="true"] {
-  flex: none;
-  font-weight: 800;
-  color: var(--color-accent-strong);
+  flex: none; /* flex: flex 상자 안에서 늘어나고(grow) 줄어드는(shrink) 정도와 기본 크기(basis) / none: 늘어나지도 줄어들지도 않는다(0 0 auto) */
+  font-weight: 800; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  color: var(--color-accent-strong); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-strong) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__textarea {
-  display: block;
-  width: 100%;
-  min-height: 96px;
-  padding: var(--space-3) 14px;
-  border: 1.5px solid var(--color-border-input);
-  border-radius: var(--radius-button);
-  background: var(--color-surface);
-  line-height: 1.55;
-  resize: vertical;
+  display: block; /* display: 요소를 어떤 상자 방식으로 배치할지 / block: 한 줄을 통째로 차지하는 상자 */
+  width: 100%; /* width: 가로 크기 */
+  min-height: 96px; /* min-height: 최소 세로 크기(손가락으로 누르기 쉽게 44~48px 이상을 자주 쓴다) / px = 화면 픽셀 단위 */
+  padding: var(--space-3) 14px; /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-3) */
+  border: 1.5px solid var(--color-border-input); /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-border-input) */
+  border-radius: var(--radius-button); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-button) */
+  background: var(--color-surface); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
+  line-height: 1.55; /* line-height: 줄 높이(단위 없는 숫자는 글자 크기의 배수) */
+  resize: vertical; /* resize: 사용자가 모서리를 끌어 크기를 바꿀 수 있는지 / vertical: 세로로만 늘릴 수 있다 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / ::placeholder = 입력창이 비어 있을 때 보이는 흐린 안내 글자 */
 .review-form__textarea::placeholder {
-  color: var(--color-text-muted);
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__count {
-  text-align: right;
-  font-size: var(--font-size-sub);
-  color: var(--color-text-muted);
+  text-align: right; /* text-align: 글자 가로 정렬 / right: 오른쪽 정렬 */
+  font-size: var(--font-size-sub); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-sub) */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
 }
 
 /* 오류 상자: "등록하지 못했어요" + "오류" 글자 + 메시지 (색만으로 구분하지 않기) */
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__error {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  padding: 10px var(--space-4);
-  border: 1.5px solid var(--color-danger);
-  border-radius: var(--radius-button);
-  background: var(--color-danger-soft);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-direction: column; /* flex-direction: flex 항목을 늘어놓는 방향 / column: 위에서 아래(세로)로 */
+  gap: var(--space-2); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
+  padding: 10px var(--space-4); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-4) */
+  border: 1.5px solid var(--color-danger); /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
+  border-radius: var(--radius-button); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-button) */
+  background: var(--color-danger-soft); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger-soft) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__error-title {
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--color-danger);
+  font-size: 17px; /* font-size: 글자 크기 / px = 화면 픽셀 단위 */
+  font-weight: 700; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  color: var(--color-danger); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__error-line {
-  display: flex;
-  gap: var(--space-2);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  gap: var(--space-2); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__error-tag {
-  flex: none;
-  font-weight: 800;
-  color: var(--color-danger);
+  flex: none; /* flex: flex 상자 안에서 늘어나고(grow) 줄어드는(shrink) 정도와 기본 크기(basis) / none: 늘어나지도 줄어들지도 않는다(0 0 auto) */
+  font-weight: 800; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  color: var(--color-danger); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__success {
-  display: flex;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-4);
-  border: 1.5px solid var(--color-accent-pressed);
-  border-radius: var(--radius-button);
-  background: var(--color-accent-soft);
-  font-weight: 600;
-  color: var(--color-accent-strong);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  gap: var(--space-2); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
+  padding: var(--space-3) var(--space-4); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-3, --space-4) */
+  border: 1.5px solid var(--color-accent-pressed); /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-pressed) */
+  border-radius: var(--radius-button); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-button) */
+  background: var(--color-accent-soft); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-soft) */
+  font-weight: 600; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  color: var(--color-accent-strong); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-strong) */
 }
 
 /* 등록 성공 문구가 없을 때는 자리를 차지하지 않게 한다 (role="status" 요소 자체는 남겨 둬야 낭독기가 읽는다) */
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__success:empty {
-  display: none;
+  display: none; /* display: 요소를 어떤 상자 방식으로 배치할지 / none: 화면에서 완전히 없앤다 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-form__submit {
-  min-height: 52px;
-  font-size: 17px;
+  min-height: 52px; /* min-height: 최소 세로 크기(손가락으로 누르기 쉽게 44~48px 이상을 자주 쓴다) / px = 화면 픽셀 단위 */
+  font-size: 17px; /* font-size: 글자 크기 / px = 화면 픽셀 단위 */
 }
 
 /* ---------- 별점 입력 ---------- */
+/* [선택자] A B(띄어쓰기) = A 안에 있는 모든 B(자손)를 고른다 */
 .review-form fieldset.star-input {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  padding: var(--space-2) var(--space-3) var(--space-3);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-button);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-direction: column; /* flex-direction: flex 항목을 늘어놓는 방향 / column: 위에서 아래(세로)로 */
+  gap: var(--space-1); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-1) */
+  padding: var(--space-2) var(--space-3) var(--space-3); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2, --space-3, --space-3) */
+  border: 1px solid var(--color-border); /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-border) */
+  border-radius: var(--radius-button); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-button) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / A B(띄어쓰기) = A 안에 있는 모든 B(자손)를 고른다 */
 .star-input .review-form__legend {
-  margin-bottom: 0;
-  padding: 0 6px;
+  margin-bottom: 0; /* margin-bottom: 아래쪽 바깥 여백 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  padding: 0 6px; /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / px = 화면 픽셀 단위 */
 }
 
 /* 별점을 안 고르고 등록하려 했을 때 */
+/* [선택자] A B(띄어쓰기) = A 안에 있는 모든 B(자손)를 고른다 / .a.b(붙여 씀) = 두 클래스를 모두 가진 요소만 */
 .review-form fieldset.star-input.is-invalid {
-  border: 2px solid var(--color-danger);
-  background: var(--color-danger-soft);
+  border: 2px solid var(--color-danger); /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
+  background: var(--color-danger-soft); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger-soft) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .star-input__stars {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2px;
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-wrap: wrap; /* flex-wrap: flex 항목이 한 줄에 다 안 들어가면 줄바꿈할지 / wrap: 넘치면 다음 줄로 */
+  gap: 2px; /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / px = 화면 픽셀 단위 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .star-input__option {
-  display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-small);
-  cursor: pointer;
+  display: grid; /* display: 요소를 어떤 상자 방식으로 배치할지 / grid: 자식들을 격자(행·열)로 배치 */
+  place-items: center; /* place-items: grid에서 가로·세로 정렬을 한 번에(align-items + justify-items) / center: 정가운데 */
+  width: 52px; /* width: 가로 크기 / px = 화면 픽셀 단위 */
+  height: 52px; /* height: 세로 크기 / px = 화면 픽셀 단위 */
+  border-radius: var(--radius-small); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-small) */
+  cursor: pointer; /* cursor: 마우스를 올렸을 때 커서 모양 / pointer: 손가락 모양(누를 수 있다는 표시) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / :hover = 마우스를 올렸을 때 */
 .star-input__option:hover {
-  background: var(--color-accent-soft);
+  background: var(--color-accent-soft); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-soft) */
 }
 
 /* 숨긴 라디오 버튼에 키보드 포커스가 오면, 감싸고 있는 별에 테두리를 그려 어디 있는지 보이게 한다 */
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / :has(X) = 안에 X를 가진 요소만(부모 선택) / :focus-visible = 키보드로 포커스됐을 때만(마우스 클릭은 제외) / :focus = 키보드(Tab) 등으로 선택(포커스)됐을 때 */
 .star-input__option:has(input:focus-visible) {
-  outline: 3px solid var(--color-focus);
-  outline-offset: 2px;
+  outline: 3px solid var(--color-focus); /* outline: 테두리 바깥에 그리는 선(주로 키보드 포커스 표시) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-focus) */
+  outline-offset: 2px; /* outline-offset: outline을 테두리에서 얼마나 떨어뜨릴지 / px = 화면 픽셀 단위 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .star-input__star {
-  font-size: 36px;
-  line-height: 1;
-  color: var(--color-text-muted);
+  font-size: 36px; /* font-size: 글자 크기 / px = 화면 픽셀 단위 */
+  line-height: 1; /* line-height: 줄 높이(단위 없는 숫자는 글자 크기의 배수) */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / .a.b(붙여 씀) = 두 클래스를 모두 가진 요소만 */
 .star-input__star.is-filled {
-  color: var(--color-accent);
+  color: var(--color-accent); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .star-input__value {
-  font-weight: 600;
-  color: var(--color-text-muted);
+  font-weight: 600; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / .a.b(붙여 씀) = 두 클래스를 모두 가진 요소만 */
 .star-input__value.is-chosen {
-  color: var(--color-accent-strong);
+  color: var(--color-accent-strong); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-strong) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / A B(띄어쓰기) = A 안에 있는 모든 B(자손)를 고른다 / .a.b(붙여 씀) = 두 클래스를 모두 가진 요소만 */
 .star-input.is-invalid .star-input__value {
-  color: var(--color-danger);
+  color: var(--color-danger); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
 }
 
 /* ---------- 태그 선택 ---------- */
 /* 맛 태그 한 줄: 왼쪽에 항목 이름, 오른쪽에 선택지 3개 */
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / :not(X) = X가 아닌 경우만 / A B(띄어쓰기) = A 안에 있는 모든 B(자손)를 고른다 */
 .review-form .tag-selector:not(.review-form__hygiene) {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  gap: 10px; /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / px = 화면 픽셀 단위 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .tag-selector__label {
-  flex: none;
-  width: 40px;
-  font-weight: 700;
+  flex: none; /* flex: flex 상자 안에서 늘어나고(grow) 줄어드는(shrink) 정도와 기본 크기(basis) / none: 늘어나지도 줄어들지도 않는다(0 0 auto) */
+  width: 40px; /* width: 가로 크기 / px = 화면 픽셀 단위 */
+  font-weight: 700; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .tag-selector__options {
-  display: grid;
-  flex: 1;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 6px;
+  display: grid; /* display: 요소를 어떤 상자 방식으로 배치할지 / grid: 자식들을 격자(행·열)로 배치 */
+  flex: 1; /* flex: flex 상자 안에서 늘어나고(grow) 줄어드는(shrink) 정도와 기본 크기(basis) / 1: 남는 공간을 차지하며 늘어난다(1 1 0) */
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* grid-template-columns: grid의 열(세로 칸) 개수와 너비 / repeat(n, 크기): 같은 크기의 열을 n번 반복 / minmax(최소, 최대): 열 너비를 이 범위 안에서 조절 / 1fr: 남는 공간을 1몫씩 나눠 가짐 */
+  gap: 6px; /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / px = 화면 픽셀 단위 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .tag-selector__option {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-1);
+  display: inline-flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / inline-flex: 글자처럼 줄 안에 들어가면서 안쪽은 flex 배치 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  justify-content: center; /* justify-content: 주축(가로 배치면 가로) 정렬과 남는 공간 분배 / center: 가운데로 모은다 */
+  gap: var(--space-1); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-1) */
+  /* min-height: 최소 세로 크기(손가락으로 누르기 쉽게 44~48px 이상을 자주 쓴다) / px = 화면 픽셀 단위 */
   min-height: 48px; /* 손가락으로 누르기 쉬운 크기 */
-  padding: 0 var(--space-1);
-  border: 1.5px solid var(--color-border-input);
-  border-radius: var(--radius-button);
-  background: var(--color-surface);
-  color: var(--color-text);
-  font-weight: 600;
-  white-space: nowrap;
+  padding: 0 var(--space-1); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-1) */
+  border: 1.5px solid var(--color-border-input); /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-border-input) */
+  border-radius: var(--radius-button); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-button) */
+  background: var(--color-surface); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
+  color: var(--color-text); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text) */
+  font-weight: 600; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  white-space: nowrap; /* white-space: 공백·줄바꿈 처리 방식 / nowrap: 줄바꿈하지 않고 한 줄로 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / :hover = 마우스를 올렸을 때 */
 .tag-selector__option:hover {
-  background: var(--color-accent-soft);
+  background: var(--color-accent-soft); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-soft) */
 }
 
 /* ✓ 표시는 평소에 숨겨 두고, 눌린 버튼(aria-pressed="true")에서만 보인다 */
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .tag-selector__check {
-  display: none;
+  display: none; /* display: 요소를 어떤 상자 방식으로 배치할지 / none: 화면에서 완전히 없앤다 */
 }
 
 /* 고른 태그: 색 + 두꺼운 테두리 + ✓ 표시로 함께 구분한다 (색만으로 구분하지 않기) */
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / [속성="값"] = 그 HTML 속성 값을 가진 요소만 고른다 */
 .tag-selector__option[aria-pressed="true"] {
-  border: 2px solid var(--color-accent);
-  background: var(--color-accent-soft);
+  border: 2px solid var(--color-accent); /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent) */
+  background: var(--color-accent-soft); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-soft) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / [속성="값"] = 그 HTML 속성 값을 가진 요소만 고른다 / A B(띄어쓰기) = A 안에 있는 모든 B(자손)를 고른다 */
 .tag-selector__option[aria-pressed="true"] .tag-selector__check {
-  display: inline;
+  display: inline; /* display: 요소를 어떤 상자 방식으로 배치할지 */
 }
 
 /* 위생 버튼: "문제 있음"은 빨간 글자, 고르면 꽉 찬 색 */
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 / A B(띄어쓰기) = A 안에 있는 모든 B(자손)를 고른다 */
 .tag-selector--warning .tag-selector__option {
-  min-height: 52px;
-  font-weight: 700;
+  min-height: 52px; /* min-height: 최소 세로 크기(손가락으로 누르기 쉽게 44~48px 이상을 자주 쓴다) / px = 화면 픽셀 단위 */
+  font-weight: 700; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 / [속성="값"] = 그 HTML 속성 값을 가진 요소만 고른다 / A B(띄어쓰기) = A 안에 있는 모든 B(자손)를 고른다 */
 .tag-selector--warning .tag-selector__option[data-value="문제 있음"] {
-  border-color: var(--color-danger);
-  color: var(--color-danger);
+  border-color: var(--color-danger); /* border-color: 테두리 색만 바꾼다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
+  color: var(--color-danger); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 / [속성="값"] = 그 HTML 속성 값을 가진 요소만 고른다 / A B(띄어쓰기) = A 안에 있는 모든 B(자손)를 고른다 */
 .tag-selector--warning .tag-selector__option[aria-pressed="true"] {
-  border: 1.5px solid var(--color-text);
-  background: var(--color-text);
-  color: var(--color-surface);
+  border: 1.5px solid var(--color-text); /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text) */
+  background: var(--color-text); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text) */
+  color: var(--color-surface); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / '--변형' 이름(BEM 규칙): 기본 모양을 조금 바꾼 버전 / [속성="값"] = 그 HTML 속성 값을 가진 요소만 고른다 / A B(띄어쓰기) = A 안에 있는 모든 B(자손)를 고른다 */
 .tag-selector--warning .tag-selector__option[data-value="문제 있음"][aria-pressed="true"] {
-  border-color: var(--color-danger);
-  background: var(--color-danger);
-  color: var(--color-surface);
+  border-color: var(--color-danger); /* border-color: 테두리 색만 바꾼다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
+  background: var(--color-danger); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-danger) */
+  color: var(--color-surface); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
 }
 
 /* ---------- 평가 목록 ---------- */
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .review-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-direction: column; /* flex-direction: flex 항목을 늘어놓는 방향 / column: 위에서 아래(세로)로 */
+  gap: var(--space-3); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-3) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-section__title {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-2);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  align-items: baseline; /* align-items: 교차축(가로 배치면 세로) 정렬 / baseline: 글자 밑선을 맞춘다 */
+  gap: var(--space-2); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-section__sort {
-  font-size: var(--font-size-body);
-  font-weight: 500;
-  color: var(--color-text-muted);
+  font-size: var(--font-size-body); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-body) */
+  font-weight: 500; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
 }
 
+/* [선택자] .이름 = class="이름"이 붙은 요소를 고른다 */
 .review-list {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  list-style: none;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-card);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-direction: column; /* flex-direction: flex 항목을 늘어놓는 방향 / column: 위에서 아래(세로)로 */
+  margin: 0; /* margin: 바깥 여백(다른 요소와의 거리). 값 개수 규칙은 padding과 같다 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  padding: 0; /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  overflow: hidden; /* overflow: 내용이 상자를 넘칠 때 처리 / hidden: 넘치는 부분을 잘라서 숨긴다(둥근 모서리 밖으로 삐져나오지 않게) */
+  list-style: none; /* list-style: 목록(ul/ol) 앞 점·번호 모양 / none: 점·번호를 없앤다 */
+  background: var(--color-surface); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-surface) */
+  border: 1px solid var(--color-border); /* border: 테두리. '두께 모양 색' 순서로 한 번에 쓴다 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-border) */
+  border-radius: var(--radius-card); /* border-radius: 모서리를 둥글게 깎는 반지름 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--radius-card) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-list__item {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: var(--space-3) var(--space-4);
-  border-bottom: 1px solid var(--color-border);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-direction: column; /* flex-direction: flex 항목을 늘어놓는 방향 / column: 위에서 아래(세로)로 */
+  gap: 6px; /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / px = 화면 픽셀 단위 */
+  padding: var(--space-3) var(--space-4); /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-3, --space-4) */
+  border-bottom: 1px solid var(--color-border); /* border-bottom: 아래쪽 테두리만 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-border) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / :last-child = 형제 중 마지막 요소일 때만 */
 .review-list__item:last-child {
-  border-bottom: 0;
+  border-bottom: 0; /* border-bottom: 아래쪽 테두리만 / 0: 없앤다(0에는 단위를 안 써도 된다) */
 }
 
 /* 방금 등록한 평가: 배경 + 왼쪽 줄 + "방금 등록" 글자 */
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 / .a.b(붙여 씀) = 두 클래스를 모두 가진 요소만 */
 .review-list__item.is-new {
-  background: var(--color-accent-soft);
-  box-shadow: inset 3px 0 0 var(--color-accent);
+  background: var(--color-accent-soft); /* background: 배경(색 또는 그림) / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent-soft) */
+  box-shadow: inset 3px 0 0 var(--color-accent); /* box-shadow: 그림자. '가로 세로 흐림 색' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-accent) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-list__top {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-wrap: wrap; /* flex-wrap: flex 항목이 한 줄에 다 안 들어가면 줄바꿈할지 / wrap: 넘치면 다음 줄로 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  justify-content: space-between; /* justify-content: 주축(가로 배치면 가로) 정렬과 남는 공간 분배 / space-between: 양 끝에 붙이고 남은 공간을 사이에 나눈다 */
+  gap: var(--space-2); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-list__rating {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-weight: 700;
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  gap: var(--space-2); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
+  font-weight: 700; /* font-weight: 글자 굵기(400 보통, 500 약간 굵게, 600~700 굵게, 800 아주 굵게) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-list__stars {
-  color: var(--color-star);
-  font-size: 18px;
-  letter-spacing: 1px;
+  color: var(--color-star); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-star) */
+  font-size: 18px; /* font-size: 글자 크기 / px = 화면 픽셀 단위 */
+  letter-spacing: 1px; /* letter-spacing: 글자 사이 간격 / px = 화면 픽셀 단위 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-list__meta {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--font-size-sub);
-  color: var(--color-text-muted);
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  align-items: center; /* align-items: 교차축(가로 배치면 세로) 정렬 / center: 가운데 */
+  gap: var(--space-2); /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--space-2) */
+  font-size: var(--font-size-sub); /* font-size: 글자 크기 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--font-size-sub) */
+  color: var(--color-text-muted); /* color: 글자 색 / var(--이름): css/tokens.css에 정해 둔 디자인 변수 값을 가져다 쓴다(--color-text-muted) */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-list__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  display: flex; /* display: 요소를 어떤 상자 방식으로 배치할지 / flex: 자식들을 한 줄(가로)로 늘어놓는 배치 */
+  flex-wrap: wrap; /* flex-wrap: flex 항목이 한 줄에 다 안 들어가면 줄바꿈할지 / wrap: 넘치면 다음 줄로 */
+  gap: 6px; /* gap: flex/grid 항목 사이 간격. 값 2개면 '세로(행) 간격 가로(열) 간격' / px = 화면 픽셀 단위 */
+  margin: 0; /* margin: 바깥 여백(다른 요소와의 거리). 값 개수 규칙은 padding과 같다 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  padding: 0; /* padding: 안쪽 여백(테두리와 내용 사이). 값 1개=네 방향, 2개=위아래 좌우, 3개=위 좌우 아래, 4개=위 오른쪽 아래 왼쪽 / 0: 없앤다(0에는 단위를 안 써도 된다) */
+  list-style: none; /* list-style: 목록(ul/ol) 앞 점·번호 모양 / none: 점·번호를 없앤다 */
 }
 
+/* [선택자] '블록__요소' 이름(BEM 규칙): 어느 부품의 어느 부분인지 이름으로 알 수 있다 */
 .review-list__comment {
+  /* white-space: 공백·줄바꿈 처리 방식 */
   white-space: pre-wrap; /* 줄바꿈을 쓴 그대로 보여 준다 */
+  /* overflow-wrap: 긴 낱말이 넘칠 때 줄을 바꿀지 / anywhere: 어디서든 줄을 바꿀 수 있다 */
   overflow-wrap: anywhere; /* 띄어쓰기 없이 긴 글도 카드 밖으로 넘치지 않게 */
-  text-wrap: pretty;
+  text-wrap: pretty; /* text-wrap: 줄바꿈 방식 / pretty: 마지막 줄에 글자 하나만 남지 않게 */
 }
 
 /* 오류가 없을 때 빈 자리가 폼 간격을 차지하지 않게 */
+/* [선택자] 이 선택자에 맞는 요소에 아래 스타일을 적용한다 */
 #review-form-error:empty {
-  display: none;
+  display: none; /* display: 요소를 어떤 상자 방식으로 배치할지 / none: 화면에서 완전히 없앤다 */
 }
