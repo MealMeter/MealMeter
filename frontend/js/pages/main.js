@@ -41,11 +41,22 @@ function loadRated() {
     // [문법] localStorage.getItem(키): 브라우저 저장소에서 글자를 꺼낸다(없으면 null)
     // [문법] JSON.parse(글자): JSON 글자 → 객체. JSON.parse(null)은 null이라 || {} 로 빈 객체를 쓴다
     const saved = JSON.parse(localStorage.getItem(RATED_KEY)) || {};
+    // 모의 평가의 토큰만 골라내고 실제 평가의 수정 토큰은 유지한다.
+    let mockTokens = new Set();
+    try {
+      const mockReviews = JSON.parse(localStorage.getItem('mealmeter-mock-reviews-v2'));
+      if (Array.isArray(mockReviews)) {
+        mockTokens = new Set(mockReviews.map((review) => review?.editToken).filter(Boolean));
+      }
+    } catch {
+      // 이전 모의 데이터가 손상되어도 실제 별점 기록은 계속 읽는다.
+    }
     // 예전 형식 { menuId: 별점 숫자 }은 수정용 값이 없어서 별점만 기억한다
     // [문법] Object.entries(객체): [[키, 값], ...] 배열. for...of로 하나씩 돌며 [menuId, value]로 구조 분해한다
     for (const [menuId, value] of Object.entries(saved)) {
       // [문법] typeof 값: 자료형 이름 글자('number', 'string', 'object' 등)를 돌려준다
-      if (typeof value === 'number') saved[menuId] = { rating: value };
+      if (mockTokens.has(value?.editToken)) delete saved[menuId];
+      else if (typeof value === 'number') saved[menuId] = { rating: value };
     }
     return saved;
   // [문법] try { } catch { }: try 안에서 오류가 나면 catch 안을 실행한다(오류 정보가 필요 없으면 (err) 생략)
