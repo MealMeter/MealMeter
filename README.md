@@ -14,8 +14,7 @@ npm run dev        # http://localhost:5173
 ```
 
 - Vite는 개발 서버로만 써요. 파일을 고치면 브라우저가 바로 새로고침되고, `/api` 요청을 백엔드로 넘겨 줘요.
-- 처음에는 **가짜 데이터**로 동작해요 (`js/api/mock.js`). 서버 없이도 모든 화면을 눌러 볼 수 있어요. 등록한 평가는 브라우저 저장소(localStorage)에 남아서 페이지를 옮겨도 유지돼요.
-- 백엔드 서버(`localhost:8080`, MealMeter-BE 레포)에 연결하려면 `frontend/.env.example`을 `frontend/.env.local`로 복사하고 `VITE_USE_MOCK=false`로 바꾼 뒤 `npm run dev`를 다시 켜요. 이때 칼로리·영양소·알레르기는 나이스 급식 API에서 브라우저가 직접 받아 와요 (`js/api/neis.js`).
+- 메뉴·평가·순위를 쓰려면 MealMeter-BE를 `localhost:8080`에서 먼저 실행해요. 칼로리·영양소·알레르기는 브라우저가 나이스 급식 API에서 직접 받아 와요 (`js/api/neis.js`).
 - HTML 파일을 더블클릭해서(`file://`) 열면 CSS·JS가 안 불러와져서 화면이 깨져요. 꼭 `npm run dev` 주소로 열어요.
 
 ## 백엔드
@@ -35,7 +34,7 @@ npm run dev        # http://localhost:5173
 
 | 파일 | 내용 | 담당 |
 | --- | --- | --- |
-| `js/api/` | 서버 부르는 함수 5개(평가 등록·별점 수정 포함) + 나이스 급식 정보(`index.js`, `neis.js`, `client.js`), 가짜 데이터(`mock.js`), 태그 목록(`reviewFields.js`) | 조현우 |
+| `js/api/` | 서버 부르는 함수 5개(평가 등록·별점 수정 포함) + 나이스 급식 정보(`index.js`, `neis.js`, `client.js`), 태그 목록(`reviewFields.js`) | 조현우 |
 | `css/base.css` 1번 구역 | 전체 기본 스타일 | 조현우 |
 | `js/common/layout.js` + `css/base.css` 2번 구역 | 모든 페이지의 헤더·푸터·본문 건너뛰기 링크 | 김근영 |
 | `js/common/ui.js` + `css/base.css` 3번 구역 | 별점 표시, 태그 배지, 버튼, 카드, 메뉴 그림 글자 | 김근영 |
@@ -55,7 +54,7 @@ npm run dev        # http://localhost:5173
 | --- | --- | --- |
 | 박준호 | 메뉴 상세 페이지(`menu.html`, `menu.js`, `menu.css`) | 약 730줄 |
 | 김태건 | 오늘의 메뉴(메인) 페이지 전체(`index.html`, `main.js`, `main.css`, 오늘 인기 TOP 3 `todayTop.js`) | 약 700줄 |
-| 조현우 | 인기 순위 페이지(`ranking.html`, `ranking.js`, `ranking.css`), `js/api/` 전체(서버·나이스·가짜 데이터), `base.css` 1번(기본 스타일), 접근성·QA | 약 650줄 + QA |
+| 조현우 | 인기 순위 페이지(`ranking.html`, `ranking.js`, `ranking.css`), `js/api/` 전체(서버·나이스), `base.css` 1번(기본 스타일), 접근성·QA | QA 포함 |
 | 김근영 | `layout.js` + `base.css` 2번(헤더·푸터), `ui.js` + `base.css` 3번(공통 UI 부품), `state.js` + `base.css` 4번(상태 표시), `format.js`, `tokens.css`(디자인 변수), `vite.config.js` | 약 500줄 |
 
 ## 새 페이지를 만들 때
