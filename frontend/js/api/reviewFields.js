@@ -22,7 +22,7 @@ export const COMMENT_MAX_LENGTH = 100;
 
 // 식사 구분 (나이스 급식 API 식사코드)
 // [문법] { 1: '조식', ... }: 숫자처럼 보이는 키를 가진 객체. MEAL_TYPES[2] → '중식'
-// [문법] (객체의 키는 사실 문자열 '1', '2'로 저장된다. 그래서 다른 곳에서 Object.keys(...).map(Number)로 숫자로 바꿔 쓴다)
+// [문법] (객체의 키는 사실 문자열 '1', '2'로 저장되지만, MEAL_TYPES[2]처럼 숫자로 꺼내도 된다)
 export const MEAL_TYPES = { 1: '조식', 2: '중식', 3: '석식' };
 export const DEFAULT_MEAL_CODE = 2;
 

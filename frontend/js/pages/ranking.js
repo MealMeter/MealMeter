@@ -16,19 +16,25 @@ const contentBox = document.getElementById('ranking-content');
 // 많이 고른 태그 배지들. 위생 태그(문제 있음)는 경고 배지로 보여 준다
 // [문법] item: 서버가 준 순위 한 줄 { rank, name, averageRating, reviewCount, topTags }
 function tagsHtml(item) {
-  // [문법] if (조건) return 값;: 조건이 맞으면 바로 값을 돌려주고 함수를 끝낸다(중괄호 생략)
-  if (item.topTags.length === 0) return '<span class="ranking-page__none">태그 없음</span>';
-  // [문법] ${item.topTags ... .join('')}: 템플릿 안에 배열 → map → join 결과(글자)를 넣는다. 줄이 길어 여러 줄에 나눠 썼다
-  // [문법] tag.category === HYGIENE_FIELD.label: 위생 태그일 때만 true → 경고 배지(세 번째 인자)
-  return `<ul class="ranking-page__tags" aria-label="가장 많이 선택된 태그">${item.topTags
-    .map((tag) => `<li>${tagBadgeHtml(tag.category, tag.value, tag.category === HYGIENE_FIELD.label)}</li>`)
-    .join('')}</ul>`;
+  if (item.topTags.length === 0) {
+    return '<span class="ranking-page__none">태그 없음</span>';
+  }
+  let badges = '';
+  for (const tag of item.topTags) {
+    // 위생 태그일 때만 경고 배지(세 번째 인자 true)
+    const isHygiene = tag.category === HYGIENE_FIELD.label;
+    badges += `<li>${tagBadgeHtml(tag.category, tag.value, isHygiene)}</li>`;
+  }
+  return `<ul class="ranking-page__tags" aria-label="가장 많이 선택된 태그">${badges}</ul>`;
 }
 
 // 순위 동그라미. 1~3위는 꽉 찬 색으로 강조한다 (숫자가 함께 있어서 색만으로 구분하지 않는다)
-// [문법] 삼항 연산자 조건 ? A : B 로 1~3위면 ' is-top' 클래스를 더 붙인다
 function rankHtml(item) {
-  return `<span class="ranking-page__rank${item.rank <= 3 ? ' is-top' : ''}"><span class="sr-only">순위 </span>${item.rank}</span>`;
+  let topClass = '';
+  if (item.rank <= 3) {
+    topClass = ' is-top';
+  }
+  return `<span class="ranking-page__rank${topClass}"><span class="sr-only">순위 </span>${item.rank}</span>`;
 }
 
 // "★ 4.5" 평균 별점 (낭독기는 "평균 별점 4.5"로 읽는다)
@@ -67,14 +73,18 @@ function cardHtml(item) {
 // [문법] items: 서버가 준 순위 배열
 function render(items) {
   if (items.length === 0) {
-    // [문법] renderEmpty(상자, 메시지, 추가HTML): state.js의 빈 화면 함수. 인자를 여러 줄에 나눠 쓰고 끝에 쉼표(trailing comma)를 둘 수 있다
-    renderEmpty(
-      contentBox,
-      '아직 순위가 없어요',
-      `<p class="small">평가가 하나도 쌓이지 않아서 순위를 매길 수 없어요. 오늘의 메뉴를 먼저 평가해 볼까요?</p>
-       ${linkButtonHtml('/', '오늘의 메뉴 평가하러 가기')}`,
-    );
+    const extra = `<p class="small">평가가 하나도 쌓이지 않아서 순위를 매길 수 없어요. 오늘의 메뉴를 먼저 평가해 볼까요?</p>
+       ${linkButtonHtml('/', '오늘의 메뉴 평가하러 가기')}`;
+    renderEmpty(contentBox, '아직 순위가 없어요', extra);
     return;
+  }
+
+  // 표의 줄들(rows)과 목록의 칸들(cards)을 한 번에 만든다
+  let rows = '';
+  let cards = '';
+  for (const item of items) {
+    rows += rowHtml(item);
+    cards += cardHtml(item);
   }
 
   // [문법] <table>: 표. <caption>: 표 제목(sr-only라 낭독기만 읽음). <thead>/<tbody>: 머리 줄/본문 줄 묶음
@@ -93,13 +103,12 @@ function render(items) {
             <th scope="col">가장 많이 선택된 태그</th>
           </tr>
         </thead>
-        <tbody>${items.map(rowHtml).join('')}</tbody>
+        <tbody>${rows}</tbody>
       </table>
     </div>
-    <ol class="ranking-list" aria-label="메뉴 인기 순위, 평균 별점 높은 순">${items.map(cardHtml).join('')}</ol>`;
+    <ol class="ranking-list" aria-label="메뉴 인기 순위, 평균 별점 높은 순">${cards}</ol>`;
 }
 
 // 페이지를 열면: 불러오는 중 표시 → 서버에서 순위 받기 → render로 그리기 (실패하면 오류 + 다시 시도)
-// [문법] 파일이 실행되면 바로 이 줄이 돈다. () => getRanking(): 나중에 부를 함수를 넘긴다(바로 부르지 않음)
-// [문법] render: 함수 이름만 넘기면 loadData가 데이터를 받은 뒤 render(데이터)로 불러 준다(콜백)
-loadData(contentBox, () => getRanking(), render, '순위를 불러오는 중이에요');
+// [문법] getRanking, render: 함수 이름만 넘긴다(괄호 없이). loadData가 알맞은 때에 대신 불러 준다(콜백)
+loadData(contentBox, getRanking, render, '순위를 불러오는 중이에요');

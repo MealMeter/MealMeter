@@ -3,19 +3,15 @@
 // [문법] import { 이름 } from '경로': 다른 파일에서 내보낸 함수를 가져온다
 import { request } from './client.js';
 import { fetchMealInfo } from './neis.js';
-import { DEFAULT_MEAL_CODE } from './reviewFields.js';
 
-// [문법] /** ... */: JSDoc 주석. @param(매개변수), @returns(돌려주는 값) 모양을 적어 두면 편집기가 자동 완성에 쓴다
-// [문법] Promise<X>: 나중에 X를 돌려주는 비동기 값이라는 뜻
 /**
  * 1. 오늘의 메뉴 조회 — GET /api/menus/today
- * @param {number} [mealCode] 1 조식 / 2 중식 / 3 석식 (없으면 중식)
+ * @param {number} mealCode 1 조식 / 2 중식 / 3 석식
  * @returns {Promise<{ date: string, mealType: string,
  *   menus: { menuId: number, name: string, averageRating: number, reviewCount: number }[] }>}
  */
-// [문법] mealCode = DEFAULT_MEAL_CODE: 인자를 안 주면 기본값(중식 2)
-export function getTodayMenus(mealCode = DEFAULT_MEAL_CODE) {
-  // [문법] `...?mealCode=${mealCode}`: 주소 뒤 ? 다음은 쿼리 문자열(이름=값). 템플릿 리터럴로 값을 끼워 넣는다
+export function getTodayMenus(mealCode) {
+  // [문법] 주소 뒤 ? 다음은 쿼리 문자열(이름=값). 템플릿 리터럴 ${ } 자리에 값을 끼워 넣는다
   return request(`/api/menus/today?mealCode=${mealCode}`);
 }
 
@@ -37,9 +33,8 @@ export function getMenuReviews(menuId) {
  *   editToken은 이 응답에만 오는 수정용 비밀 값이다. 별점을 고치려면 저장해 둔다
  */
 export function createReview(review) {
-  // [문법] method: 'POST': 새로 만들기 요청. body: 보내는 내용
-  // [문법] JSON.stringify(객체): 객체를 JSON 글자로 바꾼다(서버로 보낼 수 있는 모양)
-  return request('/api/reviews', { method: 'POST', body: JSON.stringify(review) });
+  // [문법] 'POST': 새로 만들기 요청
+  return request('/api/reviews', 'POST', review);
 }
 
 /**
@@ -51,9 +46,8 @@ export function createReview(review) {
  * @returns {Promise<Review>} 고친 평가
  */
 export function updateReviewRating(reviewId, rating, editToken) {
-  // [문법] method: 'PATCH': 이미 있는 것의 일부를 고치는 요청
-  // [문법] { rating, editToken }: { rating: rating, editToken: editToken } 의 줄임(단축 속성)
-  return request(`/api/reviews/${reviewId}`, { method: 'PATCH', body: JSON.stringify({ rating, editToken }) });
+  // [문법] 'PATCH': 이미 있는 것의 일부를 고치는 요청
+  return request(`/api/reviews/${reviewId}`, 'PATCH', { rating: rating, editToken: editToken });
 }
 
 /**
@@ -63,24 +57,39 @@ export function updateReviewRating(reviewId, rating, editToken) {
  */
 export async function getRanking() {
   const items = await request('/api/ranking');
-  if (!Array.isArray(items) || !items.every(isRankingItem)) {
+  // 응답 모양이 이상하면 화면이 깨지지 않게 오류로 알려 준다
+  // [문법] Array.isArray(값): 배열이면 true
+  if (!Array.isArray(items)) {
     throw new Error('순위 응답을 읽지 못했어요. 잠시 후 다시 시도해 주세요.');
+  }
+  // [문법] for (const 이름 of 배열): 배열 요소를 하나씩 꺼내 반복한다
+  for (const item of items) {
+    if (!isRankingItem(item)) {
+      throw new Error('순위 응답을 읽지 못했어요. 잠시 후 다시 시도해 주세요.');
+    }
   }
   return items;
 }
 
+// 순위 한 줄이 { rank, name, averageRating, reviewCount, topTags } 모양이 맞는지 확인한다
 function isRankingItem(item) {
-  return item && Number.isInteger(item.rank) && item.rank > 0
-    && typeof item.name === 'string' && Number.isFinite(item.averageRating)
-    && Number.isInteger(item.reviewCount) && item.reviewCount >= 0
-    && Array.isArray(item.topTags) && item.topTags.every((tag) => (
-      tag && typeof tag.category === 'string' && typeof tag.value === 'string'
-    ));
+  if (!item) return false;
+  // [문법] Number.isInteger(값): 정수면 true. typeof 값: 자료형 이름 글자('string' 등)
+  if (!Number.isInteger(item.rank) || item.rank <= 0) return false;
+  if (typeof item.name !== 'string') return false;
+  // [문법] Number.isFinite(값): NaN·무한대가 아닌 진짜 숫자면 true
+  if (!Number.isFinite(item.averageRating)) return false;
+  if (!Number.isInteger(item.reviewCount) || item.reviewCount < 0) return false;
+  if (!Array.isArray(item.topTags)) return false;
+  for (const tag of item.topTags) {
+    if (!tag || typeof tag.category !== 'string' || typeof tag.value !== 'string') return false;
+  }
+  return true;
 }
 
 // 같은 날짜는 한 번만 부른다 (탭을 바꿀 때마다 나이스를 다시 부르지 않게)
-// [문법] new Map(): 키 → 값을 저장하는 표. set(키, 값), get(키), has(키), delete(키)를 쓴다
-const mealInfoCache = new Map();
+// [문법] { }: 빈 객체. mealInfoCache['2026-10-27'] 처럼 날짜를 키로 써서 저장한다
+const mealInfoCache = {};
 
 /**
  * 5. 그날 급식의 칼로리·영양소·알레르기 — 나이스 급식 API (우리 서버를 거치지 않는다)
@@ -90,22 +99,21 @@ const mealInfoCache = new Map();
  * @returns {Promise<Record<number, import('./neis.js').MealInfo>>} 식사 코드(1·2·3) → 정보
  */
 export function getMealInfo(date) {
-  // [문법] has(키): 표에 그 키가 있는지. 없을 때만 새로 부른다(캐시)
-  if (!mealInfoCache.has(date)) {
+  // 저장해 둔 게 없을 때만 새로 부른다
+  if (!mealInfoCache[date]) {
     // Promise를 저장해 같은 날짜의 중복 요청을 공유한다.
     const promise = fetchMealInfo(date);
     // 실패한 결과는 기억하지 않는다 (다시 시도하면 새로 부르도록)
-    // [문법] promise.catch(함수): 실패했을 때만 함수를 실행한다. 실패한 기록을 지워 다음에 다시 시도하게 한다
-    promise.catch(() => mealInfoCache.delete(date));
-    // [문법] set(키, 값): 표에 저장
-    mealInfoCache.set(date, promise);
+    // [문법] promise.catch(함수): 실패했을 때만 함수를 실행한다. delete 객체[키]: 그 키를 지운다
+    promise.catch(function () {
+      delete mealInfoCache[date];
+    });
+    mealInfoCache[date] = promise;
   }
-  // [문법] get(키): 저장해 둔 Promise를 꺼내 돌려준다
-  return mealInfoCache.get(date);
+  return mealInfoCache[date];
 }
 
 /**
- // [문법] @typedef: JSDoc에서 '이런 모양의 객체를 Review라고 부르겠다'고 이름을 붙이는 문법
  * @typedef {object} Review
  * @property {number} reviewId
  * @property {number} menuId

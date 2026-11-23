@@ -13,8 +13,12 @@ import { escapeHtml } from './format.js';
 
 // [문법] export function: 다른 파일에서 import 해서 쓸 수 있게 내보내는 함수.
 // [문법] container: HTML 요소(예: document.querySelector('#list')로 찾은 상자)를 받는다.
-// [문법] message = '...': 기본 매개변수. 메시지를 안 넘기면 '불러오는 중이에요…'를 쓴다.
-export function renderLoading(container, message = '불러오는 중이에요…') {
+// 메시지를 안 넘기면 '불러오는 중이에요…'를 쓴다.
+export function renderLoading(container, message) {
+  // [문법] 인자를 안 넘기면 undefined라서 !message 가 true가 된다
+  if (!message) {
+    message = '불러오는 중이에요…';
+  }
   // [문법] 요소.innerHTML = 'HTML 글자': 요소 안의 내용을 통째로 이 HTML로 바꾼다(기존 내용은 사라진다).
   // [HTML] role="status": 낭독기가 하던 말을 끝낸 뒤 이 글을 조용히 읽어 준다(중요도 낮은 실시간 알림).
   // [HTML] state-box__spinner: CSS로 빙글빙글 도는 원. 장식이라 aria-hidden="true".
@@ -29,23 +33,31 @@ export function renderLoading(container, message = '불러오는 중이에요…
 export function renderError(container, message, onRetry) {
   // [HTML] role="alert": 낭독기가 하던 말을 끊고 바로 읽어 주는 중요한 알림.
   // [HTML] <button type="button">: 폼을 제출하지 않는 일반 버튼(type을 안 쓰면 폼 안에서 submit이 된다).
-  // [문법] ${onRetry ? '버튼 HTML' : ''}: 다시 시도 함수가 있을 때만 버튼을 넣는다.
+  // 다시 시도 함수가 있을 때만 버튼을 넣는다.
+  let retryButton = '';
+  if (onRetry) {
+    retryButton = '<button type="button" class="btn btn--secondary state-box__retry">다시 시도</button>';
+  }
   // [HTML] ⚠️ 그림은 장식이라 aria-hidden="true".
   container.innerHTML = `
     <div class="state-box state-box--error" role="alert">
       <span class="state-box__icon" aria-hidden="true">⚠️</span>
       <p>${escapeHtml(message)}</p>
-      ${onRetry ? '<button type="button" class="btn btn--secondary state-box__retry">다시 시도</button>' : ''}
+      ${retryButton}
     </div>`;
   // "다시 시도" 버튼을 누르면 받은 함수를 실행한다
-  // [문법] if (조건) 한 문장;: 중괄호 없이 한 줄만 조건부로 실행할 수도 있다.
   // [문법] 요소.querySelector('.클래스'): 요소 안에서 CSS 선택자에 맞는 첫 번째 요소를 찾는다(점(.)은 클래스).
   // [문법] 요소.addEventListener('click', 함수): 그 요소를 클릭할 때마다 함수를 실행하도록 등록한다.
-  if (onRetry) container.querySelector('.state-box__retry').addEventListener('click', onRetry);
+  if (onRetry) {
+    container.querySelector('.state-box__retry').addEventListener('click', onRetry);
+  }
 }
 
-// [문법] extraHtml = '': 추가 HTML을 안 넘기면 빈 글자.
-export function renderEmpty(container, message, extraHtml = '') {
+// 추가 HTML을 안 넘기면 빈 글자를 쓴다.
+export function renderEmpty(container, message, extraHtml) {
+  if (!extraHtml) {
+    extraHtml = '';
+  }
   // 빈 화면: 접시 그림 + 메시지 + (있다면) 추가 HTML(예: "다른 날짜 보기" 버튼).
   // extraHtml은 코드에서 직접 만든 HTML이라 escapeHtml을 쓰지 않는다(쓰면 버튼이 글자로 보여 버린다).
   container.innerHTML = `
@@ -66,7 +78,7 @@ export function errorHtml(message) {
 // 서버에서 데이터를 불러오는 공통 흐름.
 // 1) 상자에 "불러오는 중" 표시 → 2) 성공하면 onSuccess(데이터) 실행 → 3) 실패하면 오류 + "다시 시도" 버튼
 // [문법] async function: 비동기 함수. 안에서 await를 쓸 수 있고, 호출하면 Promise(나중에 끝나는 작업)를 돌려준다.
-// [문법] fetcher: 데이터를 불러오는 함수(예: () => getRanking()). onSuccess: 데이터를 받아 화면을 그리는 함수.
+// [문법] fetcher: 데이터를 불러오는 함수(예: getRanking). onSuccess: 데이터를 받아 화면을 그리는 함수.
 export async function loadData(container, fetcher, onSuccess, loadingMessage) {
   // 먼저 "불러오는 중" 표시. loadingMessage가 undefined면 renderLoading의 기본 문구가 쓰인다.
   renderLoading(container, loadingMessage);
@@ -79,9 +91,11 @@ export async function loadData(container, fetcher, onSuccess, loadingMessage) {
   } catch (err) {
     // 서버가 보낸 한 줄 메시지를 그대로 보여 준다. 다시 시도를 누르면 이 함수를 처음부터 다시 실행한다
     // [문법] err.message: 오류 객체(Error)에 담긴 메시지 글자.
-    // [문법] () => loadData(...): 인자 없는 화살표 함수. 지금 바로 실행하지 않고, 버튼을 누를 때 실행할 함수로 넘긴다.
+    // [문법] function () { ... }: 이름 없는 함수. 지금 바로 실행하지 않고, 버튼을 누를 때 실행할 함수로 넘긴다.
     //        함수가 자기 자신(loadData)을 다시 부르므로 "재귀 호출" 형태다.
-    renderError(container, err.message, () => loadData(container, fetcher, onSuccess, loadingMessage));
+    renderError(container, err.message, function () {
+      loadData(container, fetcher, onSuccess, loadingMessage);
+    });
     // [문법] return;: 값 없이 함수를 끝낸다. 실패했으니 아래 onSuccess를 실행하지 않는다.
     return;
   }

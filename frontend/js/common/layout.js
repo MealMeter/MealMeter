@@ -40,19 +40,20 @@ function renderLayout() {
   // [문법] window.location.pathname: 지금 주소에서 도메인 뒤의 경로 부분. 예) http://localhost:5173/ranking.html → '/ranking.html'
   const currentPath = window.location.pathname;
 
-  // [문법] 배열.map(함수): 배열의 요소 하나하나에 함수를 실행해, 그 결과들로 "새 배열"을 만든다.
-  // [문법] (item) => { ... }: 화살표 함수. function(item) { ... }을 짧게 쓴 것. item에 배열 요소가 하나씩 들어온다.
-  const links = NAV_ITEMS.map((item) => {
+  // 메뉴 링크 <li>들을 하나의 글자로 이어 붙인다
+  // [문법] let: 나중에 값을 바꿀 수 있는 변수. 아래 반복문에서 계속 이어 붙인다
+  let links = '';
+  // [문법] for (const 이름 of 배열): 배열 요소를 하나씩 item에 담아 반복한다
+  for (const item of NAV_ITEMS) {
     // aria-current="page": 화면 낭독기가 "현재 페이지"라고 읽어 주고, CSS도 이걸 보고 강조한다
     // [문법] 배열.includes(값): 배열 안에 그 값이 있으면 true, 없으면 false.
-    // [문법] 조건 ? A : B: 삼항 연산자. 조건이 true면 A, false면 B가 된다.
-    const current = item.paths.includes(currentPath) ? ' aria-current="page"' : '';
-    // [문법] return: 함수의 결과값을 돌려주고 함수를 끝낸다. 여기서는 <li> 한 줄짜리 HTML 글자를 돌려준다.
-    // [문법] ${item.href}: 템플릿 리터럴 안에 변수 값을 끼워 넣는다.
-    return `<li><a class="site-header__link" href="${item.href}"${current}>${item.label}</a></li>`;
-    // [문법] .join(''): 배열 요소들을 사이에 아무것도 넣지 않고('') 하나의 문자열로 이어 붙인다.
-    // [문법] 메서드 체이닝: map(...)의 결과(배열)에 바로 .join(...)을 이어서 호출했다.
-  }).join('');
+    let current = '';
+    if (item.paths.includes(currentPath)) {
+      current = ' aria-current="page"';
+    }
+    // [문법] += : 뒤에 이어 붙인다(links = links + ...). ${item.href}: 템플릿 리터럴 안에 값을 끼워 넣는다
+    links += `<li><a class="site-header__link" href="${item.href}"${current}>${item.label}</a></li>`;
+  }
 
   // body 맨 앞에 건너뛰기 링크 + 헤더를 넣는다
   // [문법] document.body: 지금 페이지의 <body> 요소.
@@ -67,7 +68,6 @@ function renderLayout() {
   //   <nav aria-label="주요 메뉴">: 이동 메뉴 묶음. 이름을 붙여 푸터의 "보조 메뉴"와 구분한다.
   //   <ul>/<li>: 순서 없는 목록. ${links} 자리에 위에서 만든 <li>들이 들어간다.
   //   ${LOGO_SVG}: 위의 로고 SVG 문자열이 그대로 들어간다.
-  // [문법] 함수 인자 목록 끝의 쉼표(trailing comma)도 허용된다.
   document.body.insertAdjacentHTML(
     'afterbegin',
     `
