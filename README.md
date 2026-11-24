@@ -47,15 +47,15 @@ npm run dev        # http://localhost:5173
 
 ## 사람별 담당 한눈에 보기
 
-분량은 주석과 빈 줄을 뺀 실제 코드 줄 수예요. 이용 안내·404 페이지를 없애면서 다시 나눴어요.
-김근영은 지금까지 기여도(문법 주석 정리, 별점 수정 기능, 페이지 정리)를 반영해 다른 세 명보다 약 30% 적게 맡아요.
+분량은 주석과 빈 줄을 뺀 실제 코드 줄 수예요. JS를 기초 문법으로 다시 쓴 뒤(mock 삭제 포함) 다시 셌어요.
+김근영은 지금까지 기여도(문법 주석 정리, 별점 수정 기능, 페이지 정리)를 반영해 페이지 담당 두 명보다 약 35% 적게 맡아요.
 
 | 담당 | 맡은 것 | 분량 |
 | --- | --- | --- |
-| 박준호 | 메뉴 상세 페이지(`menu.html`, `menu.js`, `menu.css`) | 약 730줄 |
-| 김태건 | 오늘의 메뉴(메인) 페이지 전체(`index.html`, `main.js`, `main.css`, 오늘 인기 TOP 3 `todayTop.js`) | 약 700줄 |
-| 조현우 | 인기 순위 페이지(`ranking.html`, `ranking.js`, `ranking.css`), `js/api/` 전체(서버·나이스), `base.css` 1번(기본 스타일), 접근성·QA | QA 포함 |
-| 김근영 | `layout.js` + `base.css` 2번(헤더·푸터), `ui.js` + `base.css` 3번(공통 UI 부품), `state.js` + `base.css` 4번(상태 표시), `format.js`, `tokens.css`(디자인 변수), `vite.config.js` | 약 500줄 |
+| 박준호 | 메뉴 상세 페이지(`menu.html`, `menu.js`, `menu.css`) | 약 820줄 |
+| 김태건 | 오늘의 메뉴(메인) 페이지 전체(`index.html`, `main.js`, `main.css`, 오늘 인기 TOP 3 `todayTop.js`) | 약 850줄 |
+| 조현우 | 인기 순위 페이지(`ranking.html`, `ranking.js`, `ranking.css`), `js/api/` 전체(서버·나이스), `base.css` 1번(기본 스타일), 접근성·QA | 약 490줄 + QA |
+| 김근영 | `layout.js` + `base.css` 2번(헤더·푸터), `ui.js` + `base.css` 3번(공통 UI 부품), `state.js` + `base.css` 4번(상태 표시), `format.js`, `tokens.css`(디자인 변수), `vite.config.js` | 약 540줄 |
 
 ## 새 페이지를 만들 때
 
